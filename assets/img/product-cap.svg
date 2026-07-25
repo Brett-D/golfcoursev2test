@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" role="img" aria-label="Embroidered course cap">
+  <rect width="480" height="360" fill="#efe8d8"/>
+  <circle cx="240" cy="200" r="150" fill="#e2d8c0"/>
+  
+    <path d="M110 250c0-70 60-120 130-120s130 50 130 120z" fill="#143a28"/>
+    <path d="M96 250h230c0 22-18 34-46 34H130c-22 0-34-14-34-34z" fill="#0e2a1d"/>
+    <circle cx="240" cy="140" r="10" fill="#e8ddc7"/>
+</svg>

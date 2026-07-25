@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" role="img" aria-label="Knit driver headcover">
+  <rect width="480" height="360" fill="#efe8d8"/>
+  <circle cx="240" cy="200" r="150" fill="#e2d8c0"/>
+  
+    <path d="M180 320V190a60 60 0 01120 0v130z" fill="#0e2a1d"/>
+    <path d="M180 220h120M180 250h120M180 280h120" stroke="#2f8a5f" stroke-width="8"/>
+    <circle cx="240" cy="120" r="18" fill="#e8ddc7"/>
+</svg>

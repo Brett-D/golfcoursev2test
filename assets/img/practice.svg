@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560" role="img" aria-label="Driving range and practice green">
+  <defs>
+    <linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a9cddb"/><stop offset="100%" stop-color="#eae3d2"/></linearGradient>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3f9a68"/><stop offset="100%" stop-color="#1c5138"/></linearGradient>
+  </defs>
+  <rect width="800" height="560" fill="url(#s)"/>
+  
+  <rect y="290" width="800" height="270" fill="url(#g)"/>
+  <path d="M0 300c160 26 300-18 440 2s220 34 360 6v34H0z" fill="#37855b" opacity=".6"/>
+  <g fill="#f6f1e6">
+    <circle cx="180" cy="470" r="12"/><circle cx="240" cy="500" r="12"/><circle cx="140" cy="516" r="12"/>
+    <circle cx="300" cy="466" r="12"/><circle cx="360" cy="510" r="12"/>
+  </g>
+  <path d="M560 430V300" stroke="#f6f1e6" stroke-width="6"/>
+  <path d="M564 302l58 18-58 18z" fill="#f0c14b"/>
+  <path d="M120 300c120-40 240-70 380-84" fill="none" stroke="#ffffff" stroke-width="4" stroke-dasharray="12 14" opacity=".7"/>
+
+</svg>

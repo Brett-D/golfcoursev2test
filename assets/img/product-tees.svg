@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" role="img" aria-label="Bamboo tee pack">
+  <rect width="480" height="360" fill="#efe8d8"/>
+  <circle cx="240" cy="200" r="150" fill="#e2d8c0"/>
+  
+    <rect x="140" y="150" width="200" height="170" rx="12" fill="#e8ddc7" stroke="#c9c2b4" stroke-width="4"/>
+    <g fill="#2f8a5f"><path d="M180 180h30l-8 90h-14z"/><path d="M225 180h30l-8 90h-14z"/><path d="M270 180h30l-8 90h-14z"/></g>
+</svg>
