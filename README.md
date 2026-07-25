@@ -52,6 +52,24 @@ python3 -m http.server 8000
 
 Then open <http://localhost:8000/>.
 
+## Publishing to GitHub Pages
+
+The site is static and every link is relative, so it can be served from GitHub Pages as-is —
+including from a project sub-path such as `https://<user>.github.io/golfcoursev2test/`.
+
+1. Merge this branch into the default branch (`main`) so the site files are published from there.
+2. In the repository, go to **Settings → Pages → Build and deployment** and set
+   **Source** to *Deploy from a branch*, **Branch** to `main` and the folder to `/ (root)`, then save.
+   (To publish without merging, pick this branch instead of `main`.)
+3. Wait for the `pages-build-deployment` workflow to finish, then open
+   <https://brett-d.github.io/golfcoursev2test/>.
+
+The empty `.nojekyll` file at the repository root tells Pages to serve the files verbatim
+instead of running them through Jekyll.
+
+For a custom domain, add a `CNAME` file at the root containing the domain and point the
+domain's DNS at GitHub Pages.
+
 ## Notes
 
 * Imagery is original SVG artwork created for this site (coastal course scenes, clubhouse,
