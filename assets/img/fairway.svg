@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 560" role="img" aria-label="Rolling fairway framed by evergreens">
+  <defs>
+    <linearGradient id="s" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#a9cddb"/><stop offset="100%" stop-color="#eae3d2"/></linearGradient>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#3f9a68"/><stop offset="100%" stop-color="#1c5138"/></linearGradient>
+  </defs>
+  <rect width="800" height="560" fill="url(#s)"/>
+  
+  <rect y="250" width="800" height="310" fill="url(#g)"/>
+  <path d="M0 250c140 30 260-16 400 4s260 40 400 2v40H0z" fill="#2f8a5f" opacity=".7"/>
+  <ellipse cx="250" cy="430" rx="150" ry="46" fill="#e8ddc7"/>
+  <g fill="#123a27">
+    <path d="M40 260c30-80 50-110 70-140 20 30 40 60 70 140z"/>
+    <path d="M660 262c28-74 46-104 66-134 20 30 38 60 66 134z"/>
+    <path d="M560 258c22-58 36-82 52-106 16 24 30 48 52 106z"/>
+  </g>
+  <path d="M600 400V270" stroke="#f6f1e6" stroke-width="6"/>
+  <path d="M604 272l62 20-62 20z" fill="#c4433a"/>
+
+</svg>

@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" role="img" aria-label="Windbreaker quarter-zip">
+  <rect width="480" height="360" fill="#efe8d8"/>
+  <circle cx="240" cy="200" r="150" fill="#e2d8c0"/>
+  
+    <path d="M120 130l70-30h100l70 30-24 66-26-10v154H170V186l-26 10z" fill="#2b6c86"/>
+    <path d="M240 100v220" stroke="#e8ddc7" stroke-width="8"/>
+</svg>

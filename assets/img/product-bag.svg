@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" role="img" aria-label="Lightweight carry stand bag">
+  <rect width="480" height="360" fill="#efe8d8"/>
+  <circle cx="240" cy="200" r="150" fill="#e2d8c0"/>
+  
+    <rect x="180" y="120" width="120" height="220" rx="40" fill="#1c5138"/>
+    <path d="M300 160l70 190M180 160l-60 190" stroke="#0e2a1d" stroke-width="10"/>
+    <g fill="#e8ddc7"><rect x="205" y="90" width="10" height="50"/><rect x="235" y="80" width="10" height="60"/><rect x="265" y="95" width="10" height="45"/></g>
+</svg>

@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120" role="img" aria-label="Agate Beach Golf Course logo">
+  <circle cx="60" cy="60" r="58" fill="#143a28"/>
+  <circle cx="60" cy="60" r="50" fill="none" stroke="#e8ddc7" stroke-width="2"/>
+  <path d="M10 78c14-8 26-4 40 0s34 6 60-6v38H10z" fill="#2b6c86"/>
+  <path d="M10 70c16-10 30-4 44 1s32 5 56-9" fill="none" stroke="#e8ddc7" stroke-width="3" stroke-linecap="round"/>
+  <path d="M55 30v42" stroke="#e8ddc7" stroke-width="4" stroke-linecap="round"/>
+  <path d="M57 31l26 8-26 9z" fill="#2f8a5f"/>
+  <circle cx="43" cy="70" r="6" fill="#f6f1e6"/>
+</svg>

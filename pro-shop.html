@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Pro Shop | Agate Beach Golf Course</title>
+<meta name="description" content="Shop Agate Beach Golf Course apparel, equipment, accessories and gift cards online, then pick up at the pro shop counter in Newport, Oregon.">
+<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to content</a>
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="index.html">
+      <img src="assets/img/logo.svg" alt="" width="42" height="42">
+      <span class="brand-text">
+        <span class="brand-name">Agate Beach Golf</span>
+        <span class="brand-tag">Newport, Oregon &middot; Est. 1931</span>
+      </span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+    <ul class="nav-menu" id="nav-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="course.html">The Course</a></li>
+      <li><a href="rates.html">Rates &amp; Tee Times</a></li>
+      <li><a href="pro-shop.html">Pro Shop</a></li>
+      <li><a href="coffee-shop.html">Café</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li><a class="nav-cta" href="rates.html#book">Book a Tee Time</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero hero-page">
+    <div class="container hero-inner">
+      <p class="eyebrow">Pro Shop</p>
+      <h1>The Pro Shop</h1>
+      <p>Apparel, equipment and course-logo gear. Build your bag online and collect it at the counter before your round.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="shop-toolbar" role="group" aria-label="Filter products by category">
+        <button class="filter-btn" type="button" data-filter="all" aria-pressed="true">All products</button>
+        <button class="filter-btn" type="button" data-filter="apparel" aria-pressed="false">Apparel</button>
+        <button class="filter-btn" type="button" data-filter="equipment" aria-pressed="false">Equipment</button>
+        <button class="filter-btn" type="button" data-filter="accessories" aria-pressed="false">Accessories</button>
+        <button class="filter-btn" type="button" data-filter="gifts" aria-pressed="false">Gifts</button>
+      </div>
+
+      <div class="shop-layout">
+        <div class="grid grid-3" id="product-grid"></div>
+
+        <aside class="cart-panel" aria-labelledby="cart-heading">
+          <h2 id="cart-heading">Your bag</h2>
+          <ul class="cart-lines" id="cart-lines"></ul>
+          <div class="cart-total"><span>Total</span><span id="cart-total">$0.00</span></div>
+          <div class="btn-row">
+            <button class="btn btn-primary" type="button" id="checkout-btn">Reserve for pickup</button>
+            <button class="btn btn-ghost" type="button" id="clear-cart">Empty bag</button>
+          </div>
+          <p class="cart-empty" id="cart-status" role="status" aria-live="polite"></p>
+          <p class="cart-empty">Prices exclude tax. Orders are held at the counter for three days.</p>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt">
+    <div class="container">
+      <div class="section-head center">
+        <h2>Services at the counter</h2>
+        <p class="lead">Our PGA professional and staff keep your gear ready for the coast.</p>
+      </div>
+      <div class="grid grid-4">
+        <div class="card"><div class="card-body"><h3>Club fitting</h3><p>Lie, loft and length checks so your irons match your swing.</p></div></div>
+        <div class="card"><div class="card-body"><h3>Regripping</h3><p>Same-week turnaround on grips in every size and texture we stock.</p></div></div>
+        <div class="card"><div class="card-body"><h3>Rentals</h3><p>Right- and left-handed sets, push carts and riding carts.</p></div></div>
+        <div class="card"><div class="card-body"><h3>Lessons</h3><p>Private and group instruction, plus junior clinics in summer.</p></div></div>
+      </div>
+      <p class="notice">Looking for something we do not stock? Call <a href="tel:+15412657331">(541) 265-7331</a> and we will try to special order it.</p>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="container">
+    <div class="footer-grid">
+      <div>
+        <h4>Agate Beach Golf Course</h4>
+        <p>4100 N Coast Hwy<br>Newport, OR 97365</p>
+        <p><a href="tel:+15412657331">(541) 265-7331</a><br><a href="mailto:teeoff@agatebeachgolf.net">teeoff@agatebeachgolf.net</a></p>
+      </div>
+      <div>
+        <h4>Visit</h4>
+        <ul>
+          <li><a href="course.html">The Course</a></li>
+          <li><a href="rates.html">Rates &amp; Tee Times</a></li>
+          <li><a class="cart-link" href="pro-shop.html">Pro Shop<span class="cart-count" aria-label="items in bag">0</span></a></li>
+          <li><a href="coffee-shop.html">Café</a></li>
+          <li><a href="contact.html">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hours</h4>
+        <ul>
+          <li>Course: daily, 7:00 AM – sunset</li>
+          <li>Pro shop: daily, 7:00 AM – 6:00 PM</li>
+          <li>Café: daily, 7:00 AM – 2:00 PM</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>&copy; <span id="year">2026</span> Agate Beach Golf Course. All rights reserved.</span>
+      <span>Open year round on the Oregon coast.</span>
+    </div>
+  </div>
+</footer>
+
+<script src="assets/js/cart.js"></script>
+<script src="assets/js/main.js"></script>
+<script src="assets/js/shop.js"></script>
+</body>
+</html>
