@@ -506,6 +506,9 @@ input:focus, textarea:focus, select:focus { outline: 0; border-color: var(--blue
 .sc-tee-btn { display: block; margin: 0.3rem auto 0; padding: 0.18rem 0.55rem; font: 700 0.68rem/1.2 var(--font-body); border-radius: 999px; border: 1px solid transparent; cursor: pointer; white-space: nowrap; }
 .sc-tee-btn.is-men { background: #e8f0f8; color: var(--blue); border-color: #b9d0e6; }
 .sc-tee-btn.is-ladies { background: #fbeceb; color: #a3352f; border-color: #e9b9b5; }
+.sc-steps { margin: 1rem 0 0; padding-left: 1.4rem; display: grid; gap: 0.7rem; text-align: left; }
+.sc-steps li::marker { color: var(--green); font-weight: 700; }
+.sc-steps .sc-tee-btn { display: inline-block; margin: 0 0.1rem; font-size: 0.78rem; cursor: default; vertical-align: baseline; }
 .sc-entry .tee-line { display: block; line-height: 1.25; font-weight: 600; }
 .sc-entry .tee-men { color: var(--blue); }
 .sc-entry .tee-ladies { color: #a3352f; }
