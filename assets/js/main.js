@@ -75,12 +75,15 @@
 
   // Looping background video. The poster is the first frame, so the video fades in over it without a jump.
   function addVideo(section, layer) {
-    var connection = navigator.connection || {};
-    if (connection.saveData) return;
     var base = section.dataset.video;
     var video = document.createElement("video");
     video.className = "parallax-video";
+    // iOS only autoplays when muted/playsinline exist as attributes, not just properties.
+    video.defaultMuted = true;
     video.muted = true;
+    video.setAttribute("muted", "");
+    video.setAttribute("playsinline", "");
+    video.setAttribute("webkit-playsinline", "");
     video.loop = true;
     video.autoplay = true;
     video.playsInline = true;
@@ -95,12 +98,26 @@
     });
     video.addEventListener("playing", function () { video.classList.add("is-playing"); });
     layer.appendChild(video);
+    var visible = true;
+    function play() {
+      if (!visible || !video.paused) return;
+      var attempt = video.play();
+      if (attempt && attempt.catch) attempt.catch(function () {});
+    }
     if ("IntersectionObserver" in window) {
       new IntersectionObserver(function (entries) {
-        var visible = entries[0].isIntersecting;
-        if (visible) { var attempt = video.play(); if (attempt && attempt.catch) attempt.catch(function () {}); } else video.pause();
+        visible = entries[0].isIntersecting;
+        if (visible) play(); else video.pause();
       }).observe(section);
+    } else {
+      play();
     }
+    // Phones in Low Power Mode refuse autoplay until the visitor touches the page, so retry on the first gesture.
+    ["touchstart", "pointerdown", "scroll", "click", "keydown"].forEach(function (name) {
+      window.addEventListener(name, play, { passive: true });
+    });
+    document.addEventListener("visibilitychange", function () { if (!document.hidden) play(); });
+    video.addEventListener("canplay", play);
   }
 
   if (fineHover && !calm) {
