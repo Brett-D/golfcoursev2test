@@ -3,6 +3,7 @@
 window.HoleViewer = (function () {
   "use strict";
 
+  var ASSET_VERSION = "20261002-2"; // set by tools/bump-version.ps1; changes the picture URLs so caches fetch new files
   var PATH = "assets/images/holes/vector/hole-";
   var dialog;
   var image;
@@ -73,7 +74,7 @@ window.HoleViewer = (function () {
 
   function show(index) {
     current = index;
-    image.src = PATH + ((index % 9) + 1) + ".svg";
+    image.src = PATH + ((index % 9) + 1) + ".svg?v=" + ASSET_VERSION;
     image.alt = "Layout of hole " + (index + 1) + ", with the tees at the bottom and the green at the top";
     title.textContent = "Hole " + (index + 1);
     meta.textContent = options.describe(index);

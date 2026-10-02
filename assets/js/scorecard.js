@@ -82,6 +82,7 @@
 
   // ---------- Hole layout pictures ----------
   // Small picture beside each hole. Mouse hover shows a larger preview; click or tap opens a full viewer.
+  var ASSET_VERSION = "20261002-2"; // set by tools/bump-version.ps1; changes the picture URLs so caches fetch new files
   var HOLE_PATH = "assets/images/holes/vector/hole-";
   var peek;
   var peekImage;
@@ -93,7 +94,7 @@
     button.type = "button";
     button.setAttribute("aria-label", "Hole " + (index + 1) + " layout");
     var img = el("img");
-    img.src = HOLE_PATH + holeNumber(index) + ".svg";
+    img.src = HOLE_PATH + holeNumber(index) + ".svg?v=" + ASSET_VERSION;
     img.alt = "";
     img.width = 38;
     img.height = 64;
@@ -128,7 +129,7 @@
     ensurePeek();
     var height = Math.min(window.innerHeight * 0.6, 440);
     peekImage.style.height = height + "px";
-    peekImage.src = HOLE_PATH + holeNumber(index) + ".svg";
+    peekImage.src = HOLE_PATH + holeNumber(index) + ".svg?v=" + ASSET_VERSION;
     var rect = button.getBoundingClientRect();
     var top = Math.max(8, Math.min(rect.top + rect.height / 2 - height / 2, window.innerHeight - height - 8));
     var left = Math.min(rect.right + 14, window.innerWidth - 360);

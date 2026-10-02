@@ -72,3 +72,11 @@ python -m http.server 8000
 ```
 
 Then open <http://localhost:8000>. The site can be hosted as-is on GitHub Pages or any web host. On PHP hosting such as Bluehost, add [notices.php](notices.php) so the course notices stay current.
+
+## Publishing changes (Bluehost)
+
+Cloudflare and browsers keep copies of the CSS and scripts for up to 24 hours and of the pages for 2 hours. To make a change show up straight away:
+
+1. Run `powershell -ExecutionPolicy Bypass -File tools\bump-version.ps1`. It gives the CSS, scripts and card pictures a new `?v=` number, so they count as new files.
+2. Upload every changed file. The version bump changes every `.html` page and `assets/js/*.js`, so upload those too.
+3. If a page itself still looks old, clear the cache in Bluehost (Websites, Settings, Performance, Clear Cache) and hard refresh.
