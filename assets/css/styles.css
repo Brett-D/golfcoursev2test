@@ -105,6 +105,8 @@ ul { padding-left: 1.2em; }
 .nav-menu.is-open li:nth-child(7) { transition-delay: 0.45s; }
 .nav-menu.is-open li:nth-child(8) { transition-delay: 0.50s; }
 .nav-menu.is-open li:nth-child(9) { transition-delay: 0.55s; }
+.nav-menu.is-open li:nth-child(10) { transition-delay: 0.60s; }
+.nav-menu.is-open li:nth-child(11) { transition-delay: 0.65s; }
 @media (prefers-reduced-motion: reduce) {
   .nav-menu, .nav-menu li { transition: none !important; }
 }
@@ -112,8 +114,19 @@ ul { padding-left: 1.2em; }
 .nav-menu a:hover, .nav-menu a[aria-current="page"] { color: var(--accent-soft); }
 .nav-menu .nav-cta { margin-top: 0.9rem; text-align: center; border: 0; color: var(--navy-deep); }
 .nav-menu .nav-cta:hover { color: var(--navy-deep); }
-/* Shortcut shown only in the mobile menu. */
+/* Items shown only in the mobile menu: Book Tee Time on top, then call / Facebook / directions buttons at the bottom. */
 .nav-mobile-only { display: list-item; }
+.nav-menu .nav-desktop-only { display: none; }
+.nav-menu .nav-book { padding: 0.4rem 0 0.3rem; }
+.nav-menu .nav-book .nav-cta { margin-top: 0; border-bottom: 0; }
+.nav-menu .nav-actions { display: flex; gap: 0.7rem; padding-top: 1.1rem; }
+.nav-menu .nav-actions a {
+  flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.35rem; padding: 0.8rem 0.3rem;
+  border: 1px solid rgba(255, 255, 255, 0.18); border-radius: 14px; background: rgba(255, 255, 255, 0.07);
+  font-size: 0.8rem; font-weight: 600; letter-spacing: 0.02em;
+}
+.nav-menu .nav-actions a:hover { background: rgba(255, 255, 255, 0.16); color: var(--white); }
+.nav-menu .nav-actions svg { width: 1.6rem; height: 1.6rem; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
 
 @media (min-width: 1100px) {
   .nav-toggle { display: none; }
@@ -123,7 +136,8 @@ ul { padding-left: 1.2em; }
   .nav-menu a[aria-current="page"] { background: rgba(255, 255, 255, 0.14); }
   .nav-menu .nav-cta { margin: 0 0 0 0.6rem; }
 
-  .nav-mobile-only { display: none; }
+  .nav-menu .nav-mobile-only { display: none; }
+  .nav-menu .nav-desktop-only { display: list-item; }
 }
 
 /* ---------- Buttons ---------- */
@@ -143,6 +157,13 @@ ul { padding-left: 1.2em; }
 .btn-outline-dark { border-color: var(--navy); color: var(--navy); }
 .btn-outline-dark:hover { background: var(--navy); color: var(--white); }
 .btn-row { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+.btn-sm { padding: 0.6rem 1.15rem; font-size: 0.9rem; border-width: 1.5px; }
+.jump-nav { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 2.4rem; }
+.hole-panel { background: var(--sand); border-radius: calc(var(--radius) + 8px); padding: 2.2rem 1rem 1.6rem; margin: 2.4rem 0 3.2rem; }
+.hole-panel-head { max-width: 40rem; margin: 0 auto 0.6rem; text-align: center; }
+.hole-panel-head .eyebrow { justify-content: center; }
+.hole-panel-head h3 { font-size: clamp(1.6rem, 3vw, 2.1rem); }
+.hole-panel-head p:last-child { margin-bottom: 0; color: var(--muted); }
 
 /* ---------- Hero ---------- */
 .hero {

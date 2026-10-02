@@ -11,7 +11,7 @@
 <link rel="icon" href="assets/images/logo.png" type="image/png">
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/playfair-display-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/styles.css?v=20261002-3">
+<link rel="stylesheet" href="assets/css/styles.css?v=20261002-4">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -29,6 +29,7 @@
       <span></span><span></span><span></span>
     </button>
     <ul class="nav-menu" id="nav-menu">
+      <li class="nav-mobile-only nav-book"><a class="btn btn-accent nav-cta" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a></li>
       <li><a href="index.html">Home</a></li>
       <li><a href="rates.html">Golf Rates</a></li>
       <li><a href="course.html">Course Layout</a></li>
@@ -37,8 +38,12 @@
       <li><a href="cafe.html">Cafe</a></li>
       <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a class="btn btn-accent nav-cta" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a></li>
-    </ul>
+      <li class="nav-desktop-only"><a class="btn btn-accent nav-cta" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a></li>
+      <li class="nav-mobile-only nav-actions">
+        <a href="tel:+15412657331" aria-label="Call the pro shop, (541) 265-7331"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg><span>Call</span></a>
+        <a href="https://www.facebook.com/Agatebeachgolf" target="_blank" rel="noopener" aria-label="Agate Beach Golf on Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg><span>Facebook</span></a>
+        <a href="https://www.google.com/maps/search/?api=1&amp;query=Agate+Beach+Golf+Course%2C+4100+N+Coast+Hwy%2C+Newport%2C+OR+97365" target="_blank" rel="noopener" aria-label="Directions in Google Maps"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg><span>Directions</span></a>
+      </li>    </ul>
   </div>
 </header>
 
@@ -52,46 +57,58 @@
   </section>
 
 
-  <section class="section">
-    <div class="container split">
-      <div class="reveal">
+  <section class="section" id="layout">
+    <div class="container">
+      <nav class="jump-nav reveal" aria-label="On this page">
+        <a class="btn btn-sm btn-outline-dark" href="#holes">Hole by Hole</a>
+        <a class="btn btn-sm btn-outline-dark" href="#yardage">Yardage &amp; Handicap</a>
+        <a class="btn btn-sm btn-outline-dark" href="scorecard.html">Digital Scorecard</a>
+        <a class="btn btn-sm btn-outline-dark" href="assets/images/scorecard.jpg" target="_blank" rel="noopener">Printable Scorecard</a>
+        <a class="btn btn-sm btn-outline-dark" href="#rules">Rules &amp; Etiquette</a>
+      </nav>
+
+      <div class="section-head reveal">
         <p class="eyebrow">Course Layout</p>
         <h2>Nine Holes, Par 36</h2>
         <p class="lead">A fairly level nine with gently rolling terrain, surrounded by lush woods and well maintained all year.</p>
-        <p>The original course was designed by Frank Stenzel, Sr. It is a nine-hole, par 36 layout, and you can play it once for nine holes or twice for eighteen. The scorecard below lists the nine holes; for eighteen, you play the same nine a second time.</p>
-        <p>Please check in at the pro shop before you play. If you are playing eighteen, check in again after the ninth hole.</p>
-        <div class="btn-row"><a class="btn btn-accent" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a><a class="btn btn-outline-dark" href="assets/images/scorecard.jpg" target="_blank" rel="noopener">Printable Scorecard</a><a class="btn btn-outline-dark" href="scorecard.html">Digital Scorecard</a></div>
+        <p>The original course was designed by Frank Stenzel, Sr. It is a nine-hole, par 36 layout, and you can play it once for nine holes or twice for eighteen. The yardage table below lists the nine holes; for eighteen, you play the same nine a second time.</p>
       </div>
-      <figure class="frame reveal">
-        <a href="assets/images/course-map.jpg" target="_blank" rel="noopener"><img src="assets/images/course-map.jpg" alt="Course map and rules: nine holes with the driving range, practice area and clubhouse pro shop" width="1024" height="768" loading="lazy"></a>
-        <figcaption>Course map and rules &mdash; tap to enlarge</figcaption>
-      </figure>
-    </div>
-  </section>
 
-  <section class="section section-sand" id="holes">
-    <div class="container">
-      <div class="section-head reveal">
-        <p class="eyebrow">Hole by Hole</p>
-        <h2>Walk the Course</h2>
-        <p class="lead">Point at a card, or swipe across the stack, to bring a hole to the top. Tap the top card for a closer look.</p>
+      <div class="hole-panel" id="holes">
+        <div class="hole-panel-head">
+          <p class="eyebrow">Hole by Hole</p>
+          <h3>Walk the Course</h3>
+          <p>Point at a card, or swipe across the stack, to bring a hole to the top. Tap the top card for a closer look.</p>
+        </div>
+          <div class="hc reveal" data-hole-carousel>
+            <ol class="hc-track" aria-label="Hole layouts, 1 through 9">
+              <li><button class="hc-card" type="button" aria-label="Hole 1 layout"><img src="assets/images/holes/vector/hole-1-card.svg?v=20261002-4" alt="Layout of hole 1" decoding="async"><span class="hc-num">Hole 1</span><span class="hc-meta"></span></button></li>
+              <li><button class="hc-card" type="button" aria-label="Hole 2 layout"><img src="assets/images/holes/vector/hole-2-card.svg?v=20261002-4" alt="Layout of hole 2" decoding="async"><span class="hc-num">Hole 2</span><span class="hc-meta"></span></button></li>
+              <li><button class="hc-card" type="button" aria-label="Hole 3 layout"><img src="assets/images/holes/vector/hole-3-card.svg?v=20261002-4" alt="Layout of hole 3" decoding="async"><span class="hc-num">Hole 3</span><span class="hc-meta"></span></button></li>
+              <li><button class="hc-card" type="button" aria-label="Hole 4 layout"><img src="assets/images/holes/vector/hole-4-card.svg?v=20261002-4" alt="Layout of hole 4" decoding="async"><span class="hc-num">Hole 4</span><span class="hc-meta"></span></button></li>
+              <li><button class="hc-card" type="button" aria-label="Hole 5 layout"><img src="assets/images/holes/vector/hole-5-card.svg?v=20261002-4" alt="Layout of hole 5" decoding="async"><span class="hc-num">Hole 5</span><span class="hc-meta"></span></button></li>
+              <li><button class="hc-card" type="button" aria-label="Hole 6 layout"><img src="assets/images/holes/vector/hole-6-card.svg?v=20261002-4" alt="Layout of hole 6" decoding="async"><span class="hc-num">Hole 6</span><span class="hc-meta"></span></button></li>
+              <li><button class="hc-card" type="button" aria-label="Hole 7 layout"><img src="assets/images/holes/vector/hole-7-card.svg?v=20261002-4" alt="Layout of hole 7" decoding="async"><span class="hc-num">Hole 7</span><span class="hc-meta"></span></button></li>
+              <li><button class="hc-card" type="button" aria-label="Hole 8 layout"><img src="assets/images/holes/vector/hole-8-card.svg?v=20261002-4" alt="Layout of hole 8" decoding="async"><span class="hc-num">Hole 8</span><span class="hc-meta"></span></button></li>
+              <li><button class="hc-card" type="button" aria-label="Hole 9 layout"><img src="assets/images/holes/vector/hole-9-card.svg?v=20261002-4" alt="Layout of hole 9" decoding="async"><span class="hc-num">Hole 9</span><span class="hc-meta"></span></button></li>
+            </ol>
+          </div>
       </div>
-      <div class="hc reveal" data-hole-carousel>
-        <ol class="hc-track" aria-label="Hole layouts, 1 through 9">
-          <li><button class="hc-card" type="button" aria-label="Hole 1 layout"><img src="assets/images/holes/vector/hole-1-card.svg?v=20261002-3" alt="Layout of hole 1" decoding="async"><span class="hc-num">Hole 1</span><span class="hc-meta"></span></button></li>
-          <li><button class="hc-card" type="button" aria-label="Hole 2 layout"><img src="assets/images/holes/vector/hole-2-card.svg?v=20261002-3" alt="Layout of hole 2" decoding="async"><span class="hc-num">Hole 2</span><span class="hc-meta"></span></button></li>
-          <li><button class="hc-card" type="button" aria-label="Hole 3 layout"><img src="assets/images/holes/vector/hole-3-card.svg?v=20261002-3" alt="Layout of hole 3" decoding="async"><span class="hc-num">Hole 3</span><span class="hc-meta"></span></button></li>
-          <li><button class="hc-card" type="button" aria-label="Hole 4 layout"><img src="assets/images/holes/vector/hole-4-card.svg?v=20261002-3" alt="Layout of hole 4" decoding="async"><span class="hc-num">Hole 4</span><span class="hc-meta"></span></button></li>
-          <li><button class="hc-card" type="button" aria-label="Hole 5 layout"><img src="assets/images/holes/vector/hole-5-card.svg?v=20261002-3" alt="Layout of hole 5" decoding="async"><span class="hc-num">Hole 5</span><span class="hc-meta"></span></button></li>
-          <li><button class="hc-card" type="button" aria-label="Hole 6 layout"><img src="assets/images/holes/vector/hole-6-card.svg?v=20261002-3" alt="Layout of hole 6" decoding="async"><span class="hc-num">Hole 6</span><span class="hc-meta"></span></button></li>
-          <li><button class="hc-card" type="button" aria-label="Hole 7 layout"><img src="assets/images/holes/vector/hole-7-card.svg?v=20261002-3" alt="Layout of hole 7" decoding="async"><span class="hc-num">Hole 7</span><span class="hc-meta"></span></button></li>
-          <li><button class="hc-card" type="button" aria-label="Hole 8 layout"><img src="assets/images/holes/vector/hole-8-card.svg?v=20261002-3" alt="Layout of hole 8" decoding="async"><span class="hc-num">Hole 8</span><span class="hc-meta"></span></button></li>
-          <li><button class="hc-card" type="button" aria-label="Hole 9 layout"><img src="assets/images/holes/vector/hole-9-card.svg?v=20261002-3" alt="Layout of hole 9" decoding="async"><span class="hc-num">Hole 9</span><span class="hc-meta"></span></button></li>
-        </ol>
+
+      <div class="split">
+        <div class="reveal">
+          <h3>Before you play</h3>
+          <p>Please check in at the pro shop before you play. If you are playing eighteen, check in again after the ninth hole.</p>
+          <div class="btn-row"><a class="btn btn-accent" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a></div>
+        </div>
+        <figure class="frame reveal">
+          <a href="assets/images/course-map.jpg" target="_blank" rel="noopener"><img src="assets/images/course-map.jpg" alt="Course map and rules: nine holes with the driving range, practice area and clubhouse pro shop" width="1024" height="768" loading="lazy"></a>
+          <figcaption>Course map and rules &mdash; tap to enlarge</figcaption>
+        </figure>
       </div>
     </div>
   </section>
-  <section class="section">
+  <section class="section section-sand" id="yardage">
     <div class="container">
       <div class="section-head reveal">
         <p class="eyebrow">Scorecard</p>
@@ -114,7 +131,7 @@
     </div>
   </section>
 
-  <section class="section section-sand" id="rules">
+  <section class="section" id="rules">
     <div class="container split" style="align-items:start">
       <div class="reveal">
         <p class="eyebrow">Rules &amp; Etiquette</p>
@@ -197,8 +214,8 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=20261002-3"></script>
-<script src="assets/js/hole-viewer.js?v=20261002-3"></script>
-<script src="assets/js/hole-carousel.js?v=20261002-3"></script>
+<script src="assets/js/main.js?v=20261002-4"></script>
+<script src="assets/js/hole-viewer.js?v=20261002-4"></script>
+<script src="assets/js/hole-carousel.js?v=20261002-4"></script>
 </body>
 </html>

@@ -82,7 +82,7 @@
 
   // ---------- Hole layout pictures ----------
   // Small picture beside each hole. Mouse hover shows a larger preview; click or tap opens a full viewer.
-  var ASSET_VERSION = "20261002-3"; // set by tools/bump-version.ps1; changes the picture URLs so caches fetch new files
+  var ASSET_VERSION = "20261002-4"; // set by tools/bump-version.ps1; changes the picture URLs so caches fetch new files
   var HOLE_PATH = "assets/images/holes/vector/hole-";
   var peek;
   var peekImage;
