@@ -229,6 +229,7 @@ ul { padding-left: 1.2em; }
 @media (min-width: 900px) {
   .split { grid-template-columns: 1fr 1fr; gap: 4.5rem; }
   .split.reverse > :first-child { order: 2; }
+  .split.split-top { align-items: start; }
   .split.wide-img { grid-template-columns: 1.15fr 1fr; }
 }
 .frame { position: relative; }
