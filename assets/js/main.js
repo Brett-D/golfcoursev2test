@@ -315,7 +315,21 @@
       if (status) { status.className = "form-status"; status.textContent = "Sending…"; }
       if (sendButton) sendButton.disabled = true;
 
-      fetch("contact.php", { method: "POST", body: data })
+      // Some hosts (Bluehost) first want a small "humans" cookie, which they normally set by running a script in the page they
+      // return. A fetch does not run that script, so read the cookie from it, set it here and try once more.
+      function post(retried) {
+        return fetch("contact.php", { method: "POST", body: data, credentials: "same-origin" }).then(function (response) {
+          if (response.status !== 409 || retried) return response;
+          return response.text().then(function (text) {
+            var match = /document\.cookie\s*=\s*"([A-Za-z0-9_]+=[A-Za-z0-9_]+)/.exec(text);
+            if (!match) return response;
+            document.cookie = match[1] + "; path=/; max-age=86400; SameSite=Lax";
+            return post(true);
+          });
+        });
+      }
+
+      post(false)
         .then(function (response) {
           return response.json().then(
             function (result) { return { status: response.status, result: result }; },
