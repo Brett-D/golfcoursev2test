@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" role="img" aria-label="62 inch windproof umbrella">
-  <rect width="480" height="360" fill="#efe8d8"/>
-  <circle cx="240" cy="200" r="150" fill="#e2d8c0"/>
-  
-    <path d="M100 220a140 140 0 01280 0c-40-26-60 12-70 12s-30-38-70-38-60 38-70 38-30-38-70-12z" fill="#256b4a"/>
-    <path d="M240 232v110a26 26 0 01-52 0" fill="none" stroke="#3a3a3a" stroke-width="10"/>
-</svg>

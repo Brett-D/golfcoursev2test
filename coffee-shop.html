@@ -3,9 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>The Café | Agate Beach Golf Course</title>
-<meta name="description" content="Breakfast, lunch, espresso and grab-and-go snacks at the Agate Beach Golf Course café in Newport, Oregon. Open daily from 7 AM.">
-<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<title>Coffee Shop & Menu | Agate Beach Golf Course</title>
+<meta name="description" content="The Clubhouse coffee shop at Agate Beach Golf Course: breakfast, burgers, sandwiches and the Good Dog hot dog menu in Newport, Oregon.">
+<meta property="og:title" content="Coffee Shop & Menu | Agate Beach Golf Course">
+<meta property="og:description" content="The Clubhouse coffee shop at Agate Beach Golf Course: breakfast, burgers, sandwiches and the Good Dog hot dog menu in Newport, Oregon.">
+<meta property="og:image" content="assets/images/aerial.jpg">
+<link rel="icon" href="assets/images/logo.jpg" type="image/jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -14,116 +20,136 @@
 <header class="site-header">
   <div class="container nav">
     <a class="brand" href="index.html">
-      <img src="assets/img/logo.svg" alt="" width="42" height="42">
-      <span class="brand-text">
-        <span class="brand-name">Agate Beach Golf</span>
+      <img src="assets/images/logo.jpg" alt="" width="50" height="50">
+      <span>
+        <span class="brand-name">Agate Beach Golf Course</span>
         <span class="brand-tag">Newport, Oregon &middot; Est. 1931</span>
       </span>
     </a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
     <ul class="nav-menu" id="nav-menu">
       <li><a href="index.html">Home</a></li>
-      <li><a href="course.html">The Course</a></li>
-      <li><a href="rates.html">Rates &amp; Tee Times</a></li>
+      <li><a href="course.html">Course Layout</a></li>
       <li><a href="pro-shop.html">Pro Shop</a></li>
-      <li><a href="coffee-shop.html">Café</a></li>
+      <li><a href="rates.html">Golf Rates</a></li>
+      <li><a href="coffee-shop.html">Coffee Shop</a></li>
+      <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a class="nav-cta" href="rates.html#book">Book a Tee Time</a></li>
+      <li><a class="btn btn-gold nav-cta" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a></li>
     </ul>
   </div>
 </header>
 
 <main id="main">
-  <section class="hero hero-page">
-    <div class="container hero-inner">
+  <section class="hero hero-page" style="background-image:url('assets/images/cafe.jpg');background-position:center 60%">
+    <div class="container">
       <p class="eyebrow">Coffee Shop</p>
-      <h1>The Café at Agate Beach</h1>
-      <p>Espresso poured at sunrise, breakfast off the griddle and lunch to take on the course — no tee time required.</p>
+      <h1>The Clubhouse</h1>
+      <p class="lead">Breakfast &amp; lunch before or after your round.</p>
+    </div>
+  </section>
+
+
+  <section class="section">
+    <div class="container split">
+      <div class="reveal">
+        <p class="eyebrow">Coffee Shop</p>
+        <h2>The Clubhouse at Agate Beach GC</h2>
+        <p class="lead">Come enjoy a delicious burger before or after your game!</p>
+        <p>Breakfast and lunch served at the clubhouse &mdash; smash burgers, house-roasted turkey, griddled hot cakes, soup of the moment and more. You don&rsquo;t need a tee time to stop in.</p>
+        <p class="note">Alcoholic beverages consumed on the course must be purchased through our restaurant according to Oregon law.</p>
+        <div class="btn-row"><a class="btn btn-green" href="#menu">View the Menu</a><a class="btn btn-outline-dark" href="tel:+15412657331">Call (541) 265-7331</a></div>
+      </div>
+      <figure class="frame reveal">
+        <img src="assets/images/cafe.jpg" alt="Dining area of The Clubhouse with teal chairs, wood paneling and a service counter" width="1600" height="1200" loading="lazy">
+      </figure>
+    </div>
+  </section>
+
+  <section class="section section-sand" id="menu">
+    <div class="container">
+      <div class="section-head center reveal">
+        <p class="eyebrow">Menu</p>
+        <h2>Breakfast &amp; Lunch</h2>
+        <p class="lead">Menu and prices as printed; items and prices may change.</p>
+      </div>
+      <div class="menu-grid">
+        <div class="menu-group reveal">
+          <h3>Breakfast</h3>
+        <div class="menu-item"><h4>Sandwedge<span>$8</span></h4><p>Breakfast sandwich with choice of bacon or ham with a fried egg*, cheese and thin layer of Dijon spread on a toasted croissant muffin.</p></div>
+        <div class="menu-item"><h4>Golfer Skillet<span>Half $10 &middot; Full $15</span></h4><p>Homestyle potatoes, bacon, grilled onion, bell peppers and spinach mixed with cheese and topped with egg(s).</p></div>
+        <div class="menu-item"><h4>Sweet Stack<span>$10 &middot; $14</span></h4><p>Griddled hot cakes topped with pecan granola, drizzled with warm maple cream (house-made with real maple syrup). Served with bacon. 1 hot cake + 1 piece bacon $10; 2 hot cakes + 2 bacon slices $14.</p></div>
+          <h3 style="margin-top:2.2rem">Sides &amp; Snacks</h3>
+        <div class="menu-item"><h4>Fries, sweet potato fries or fresh fried potato chips<span>$6</span></h4><p></p></div>
+        <div class="menu-item"><h4>Add bacon (2 slices), chicken sausage or ham<span>$4.50</span></h4><p></p></div>
+        <div class="menu-item"><h4>Homestyle breakfast potatoes<span>$5</span></h4><p>With onions and peppers.</p></div>
+        <div class="menu-item"><h4>Add egg, avocado or cheese (2 slices)<span>$3</span></h4><p></p></div>
+        <div class="menu-item"><h4>Side salad or lemon-dill slaw<span>$4</span></h4><p></p></div>
+        <div class="menu-item"><h4>Soup of the Moment<span>Cup $6 &middot; Bowl $9</span></h4><p>Always homemade.</p></div>
+        <div class="menu-item"><h4>Wedge Salad<span>$10</span></h4><p>Iceberg lettuce wedge, bacon, blue cheese crumbles, diced tomato, pickled onion and toast.</p></div>
+        </div>
+        <div class="menu-group reveal">
+          <h3>Lunch</h3>
+          <p class="menu-note">Served with choice of side: french fries, sweet potato fries, house chips, green salad or lemon-dill slaw. No side &minus;$3. Gluten-free buns available.</p>
+        <div class="menu-item"><h4>Hazard Burger<span>$16</span></h4><p>1/3 pound smash burger patty*, American cheese, grilled onions, tomato, shredded lettuce, house pickles and Dijon spread. Add bacon +$2.50.</p></div>
+        <div class="menu-item"><h4>Caddy Melt<span>$16</span></h4><p>Patty melt with Reuben vibes: our smash burger patty*, Swiss cheese, grilled onion, kraut &amp; 10K island sauce grilled on marble rye.</p></div>
+        <div class="menu-item"><h4>Bogey BLT<span>Half $12 &middot; Full $17</span></h4><p>Thick cut bacon, shredded lettuce &amp; heirloom tomato on toasted wheat bread with mayo and balsamic glaze drizzle.</p></div>
+        <div class="menu-item"><h4>The Standby Deli<span>Half $11 &middot; Full $16</span></h4><p>House roasted turkey or deli ham, layered with Tillamook white cheddar, lettuce, tomato, onion, mild pepper rings and Dijon spread on wheat bread.</p></div>
+        <div class="menu-item"><h4>The Clubhouse<span>$17</span></h4><p>House roasted turkey, ham, thick cut bacon, Tillamook white cheddar, lettuce, tomato, mayo, on a toasted burger bun.</p></div>
+        <div class="menu-item"><h4>Grilled Cheesy Par Threesy<span>Half $9 &middot; Full $11</span></h4><p>White cheddar, Swiss &amp; American cheeses grilled on seasoned wheat bread. Add ham or turkey +$4.</p></div>
+        <div class="menu-item"><h4>Fairway Veggie Sandwich<span>$15</span></h4><p>House-made vegan patty (oat and lentil based) grilled with cheese, lettuce, tomato, pickled onion, on toasted wheat bread. Add avocado +$3.</p></div>
+          <h3 style="margin-top:2.2rem">Baskets &amp; Bowls</h3>
+        <div class="menu-item"><h4>Birdie Basket<span>Small $12 &middot; Large $16</span></h4><p>Gluten-free chicken strips served with fries and slaw.</p></div>
+        <div class="menu-item"><h4>Putter Together Combo<span>$11</span></h4><p>Cup of soup, green salad and toasted bread.</p></div>
+        <div class="menu-item"><h4>Out of Bounds Bowl<span>Small $13 &middot; Large $18</span></h4><p>Ask about our weekly changing salad &amp; grain bowl with flavors that know no bounds! Gluten-free. Available weekdays.</p></div>
+        </div>
+      </div>
+      <p class="note" style="margin-top:1.5rem">*Consuming raw or undercooked meats, poultry, seafood, shellfish, or eggs may increase your risk of foodborne illness.</p>
+    </div>
+  </section>
+
+  <section class="section section-navy" id="good-dogs">
+    <div class="container">
+      <div class="section-head center reveal">
+        <p class="eyebrow">The Good Dog Menu</p>
+        <h2>Hot Dogs Named for Golf Course Dogs</h2>
+        <p class="lead">Inspired by past and current golf course dogs &mdash; or pick your own combination of toppings.</p>
+        <p><span class="price-badge">$7 each</span> &nbsp; <span class="price-badge">+$3 with a side</span></p>
+      </div>
+      <div class="dog-grid reveal">
+        <div class="dog"><h4>The Sam</h4><p>Classic: ketchup, mustard &amp; relish</p></div>
+        <div class="dog"><h4>The Brodie</h4><p>Blue cheese, onion &amp; fresh tomato</p></div>
+        <div class="dog"><h4>The Rex</h4><p>Melted cheese, onion &amp; mustard</p></div>
+        <div class="dog"><h4>The Ru</h4><p>Chopped housemade dill pickles, raw onion &amp; mustard</p></div>
+        <div class="dog"><h4>The Mindy</h4><p>Bacon bits &amp; melted cheese</p></div>
+        <div class="dog"><h4>The Kleet</h4><p>Mild pepper rings, raw onion, mustard &amp; ketchup</p></div>
+        <div class="dog"><h4>The Dash</h4><p>Grilled onion &amp; jalape&ntilde;o, cream cheese &amp; mustard</p></div>
+        <div class="dog"><h4>The Blaze</h4><p>Kimchi &amp; melted cheese</p></div>
+        <div class="dog"><h4>The Gunther</h4><p>Lemon-dill slaw &amp; mustard</p></div>
+        <div class="dog"><h4>The Hank</h4><p>Grilled onion, sauerkraut &amp; BBQ sauce</p></div>
+        <div class="dog"><h4>The Lola</h4><p>Grilled onion &amp; bell peppers, mild pepper rings &amp; mayo</p></div>
+        <div class="dog"><h4>The Kelsey</h4><p>Bacon bits, lettuce, tomato &amp; mayo</p></div>
+      </div>
+      <p class="reveal" style="text-align:center;margin:2.5rem auto 0;max-width:46rem;color:rgba(255,255,255,.8)"><strong style="color:var(--gold-soft)">Build your own:</strong> mustard, ketchup, sweet relish, dill pickles, onion, kraut, mild pepper rings, mayo, jalape&ntilde;o, kimchi, fresh tomato.</p>
     </div>
   </section>
 
   <section class="section">
-    <div class="container media-split">
-      <img src="assets/img/coffee-shop.svg" alt="Café counter with espresso machine and pastries" width="800" height="560">
-      <div>
-        <h2>Coffee first, golf second</h2>
-        <p>Our café sits just inside the clubhouse doors, looking out over the first tee. Golfers grab a coffee before the round and a sandwich after; neighbours and beach walkers stop in simply because the espresso is good and the seat by the window is warm.</p>
-        <ul class="tick-list">
-          <li>Open daily, 7:00 AM – 2:00 PM</li>
-          <li>Breakfast served until 11:00 AM, lunch from 11:00 AM</li>
-          <li>Grab-and-go snacks and cold drinks all day</li>
-          <li>Call ahead on <a href="tel:+15412657331">(541) 265-7331</a> and we will have it ready at the turn</li>
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <section class="section section-alt">
     <div class="container">
-      <div class="section-head center">
-        <h2>Menu</h2>
-        <p class="lead">Made to order with local roasters and Oregon coast staples. Prices include tax.</p>
+      <div class="section-head center reveal">
+        <p class="eyebrow">Printed Menus</p>
+        <h2>Take a Look</h2>
+        <p class="lead">Tap a menu to view it full size.</p>
       </div>
-      <div class="grid grid-2">
-        <div class="card"><div class="card-body">
-          <h3>Espresso &amp; coffee</h3>
-          <ul class="menu-list">
-            <li class="menu-item"><div><h4>Drip coffee</h4><p>Locally roasted, bottomless refills for players</p></div><span class="menu-price">$2.75</span></li>
-            <li class="menu-item"><div><h4>Americano</h4><p>Double shot, hot or over ice</p></div><span class="menu-price">$3.50</span></li>
-            <li class="menu-item"><div><h4>Latte or cappuccino</h4><p>Whole, oat or almond milk</p></div><span class="menu-price">$4.75</span></li>
-            <li class="menu-item"><div><h4>Mocha</h4><p>Dark chocolate, whipped cream optional</p></div><span class="menu-price">$5.25</span></li>
-            <li class="menu-item"><div><h4>Hot tea or cocoa</h4><p>A coastal-morning essential</p></div><span class="menu-price">$3.00</span></li>
-          </ul>
-        </div></div>
-
-        <div class="card"><div class="card-body">
-          <h3>Breakfast</h3>
-          <ul class="menu-list">
-            <li class="menu-item"><div><h4>Breakfast sandwich</h4><p>Egg, cheddar and sausage or bacon on a toasted bun</p></div><span class="menu-price">$7.50</span></li>
-            <li class="menu-item"><div><h4>Two-egg plate</h4><p>Eggs any style, hash browns and toast</p></div><span class="menu-price">$9.50</span></li>
-            <li class="menu-item"><div><h4>Buttermilk pancakes</h4><p>Short stack with butter and syrup</p></div><span class="menu-price">$8.00</span></li>
-            <li class="menu-item"><div><h4>Oatmeal &amp; berries</h4><p>Steel cut, brown sugar on the side</p></div><span class="menu-price">$5.50</span></li>
-            <li class="menu-item"><div><h4>Pastry of the day</h4><p>Baked fresh, ask what came out this morning</p></div><span class="menu-price">$3.75</span></li>
-          </ul>
-        </div></div>
-
-        <div class="card"><div class="card-body">
-          <h3>Lunch</h3>
-          <ul class="menu-list">
-            <li class="menu-item"><div><h4>Clubhouse burger</h4><p>Quarter pound, lettuce, tomato and fries</p></div><span class="menu-price">$11.50</span></li>
-            <li class="menu-item"><div><h4>Turkey &amp; swiss</h4><p>On sourdough with chips and a pickle</p></div><span class="menu-price">$9.75</span></li>
-            <li class="menu-item"><div><h4>Clam chowder</h4><p>Cup or bowl, served with oyster crackers</p></div><span class="menu-price">$6.50</span></li>
-            <li class="menu-item"><div><h4>Garden salad</h4><p>Greens, cucumber, tomato, house vinaigrette</p></div><span class="menu-price">$7.00</span></li>
-            <li class="menu-item"><div><h4>Hot dog at the turn</h4><p>All beef, ready when you make the loop</p></div><span class="menu-price">$5.00</span></li>
-          </ul>
-        </div></div>
-
-        <div class="card"><div class="card-body">
-          <h3>Grab &amp; go</h3>
-          <ul class="menu-list">
-            <li class="menu-item"><div><h4>Bottled water or sports drink</h4><p>Chilled at the counter</p></div><span class="menu-price">$2.50</span></li>
-            <li class="menu-item"><div><h4>Soda or iced tea</h4><p>Fountain or can</p></div><span class="menu-price">$2.25</span></li>
-            <li class="menu-item"><div><h4>Candy bars &amp; trail mix</h4><p>Fuel for the back nine</p></div><span class="menu-price">$2.00</span></li>
-            <li class="menu-item"><div><h4>Domestic beer</h4><p>Must be 21+, ID required</p></div><span class="menu-price">$5.00</span></li>
-            <li class="menu-item"><div><h4>Boxed lunch (groups)</h4><p>Sandwich, chips, cookie and a drink — order 24 hours ahead</p></div><span class="menu-price">$13.00</span></li>
-          </ul>
-        </div></div>
+      <div class="menu-images reveal">
+        <a href="assets/images/menu-clubhouse.jpg" target="_blank" rel="noopener"><img src="assets/images/menu-clubhouse.jpg" alt="The Clubhouse at Agate Beach GC printed breakfast and lunch menu" width="1421" height="1845" loading="lazy"></a>
+        <a href="assets/images/menu-good-dog.jpg" target="_blank" rel="noopener"><img src="assets/images/menu-good-dog.jpg" alt="The Good Dog Menu printed hot dog menu" width="1384" height="1810" loading="lazy"></a>
       </div>
     </div>
   </section>
 
-  <section class="section section-dark">
-    <div class="container">
-      <div class="section-head center">
-        <h2>Catering &amp; group orders</h2>
-        <p class="lead">Tournaments, league nights and family gatherings — tell us how many and when, and the café will handle the rest.</p>
-      </div>
-      <div class="btn-row" style="justify-content:center">
-        <a class="btn btn-primary" href="contact.html">Plan a group order</a>
-        <a class="btn btn-outline" href="tel:+15412657331">Call (541) 265-7331</a>
-      </div>
-    </div>
-  </section>
 </main>
 
 <footer class="site-footer">
@@ -131,36 +157,44 @@
     <div class="footer-grid">
       <div>
         <h4>Agate Beach Golf Course</h4>
-        <p>4100 N Coast Hwy<br>Newport, OR 97365</p>
-        <p><a href="tel:+15412657331">(541) 265-7331</a><br><a href="mailto:teeoff@agatebeachgolf.net">teeoff@agatebeachgolf.net</a></p>
+        <p>Located off of Hwy 101 in Newport, Oregon. A family tradition since 1931.</p>
+        <p><a href="https://www.facebook.com/Agatebeachgolf" target="_blank" rel="noopener">Follow us on Facebook</a></p>
       </div>
       <div>
-        <h4>Visit</h4>
+        <h4>Explore</h4>
         <ul>
-          <li><a href="course.html">The Course</a></li>
-          <li><a href="rates.html">Rates &amp; Tee Times</a></li>
-          <li><a class="cart-link" href="pro-shop.html">Pro Shop<span class="cart-count" aria-label="items in bag">0</span></a></li>
-          <li><a href="coffee-shop.html">Café</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="course.html">Course Layout</a></li>
+          <li><a href="rates.html">Golf Rates</a></li>
+          <li><a href="pro-shop.html">Pro Shop</a></li>
+          <li><a href="coffee-shop.html">Coffee Shop</a></li>
+          <li><a href="about.html">About</a></li>
         </ul>
       </div>
       <div>
-        <h4>Hours</h4>
+        <h4>Services</h4>
         <ul>
-          <li>Course: daily, 7:00 AM – sunset</li>
-          <li>Pro shop: daily, 7:00 AM – 6:00 PM</li>
-          <li>Café: daily, 7:00 AM – 2:00 PM</li>
+          <li><a href="pro-shop.html">Pro Shop</a></li>
+          <li><a href="pro-shop.html#lessons">Golf Lessons</a></li>
+          <li><a href="pro-shop.html#services">Club Service</a></li>
+          <li><a href="pro-shop.html#services">Equipment Sales</a></li>
+          <li><a href="rates.html#range">Driving Range</a></li>
         </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>Terry Martin<br>PGA Professional</p>
+        <p>4100 N Coast Hwy<br>Newport, OR 97365<br>
+        <a href="tel:+15412657331">(541) 265-7331</a><br>
+        <a href="mailto:teeoff@agatebeachgolf.net">teeoff@agatebeachgolf.net</a></p>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; <span id="year">2026</span> Agate Beach Golf Course. All rights reserved.</span>
-      <span>Open year round on the Oregon coast.</span>
+      <span>&copy; <span id="year">2026</span> Agate Beach Golf Course</span>
+      <a href="https://foreupsoftware.com/index.php/booking/21987#/login" target="_blank" rel="noopener">Customer Portal</a>
     </div>
   </div>
 </footer>
 
-<script src="assets/js/cart.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

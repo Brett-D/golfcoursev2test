@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" role="img" aria-label="Agate Beach gift card">
-  <rect width="480" height="360" fill="#efe8d8"/>
-  <circle cx="240" cy="200" r="150" fill="#e2d8c0"/>
-  
-    <rect x="110" y="150" width="260" height="160" rx="16" fill="#143a28"/>
-    <rect x="110" y="196" width="260" height="30" fill="#e8ddc7"/>
-    <text x="240" y="286" font-family="Georgia,serif" font-size="26" fill="#f6f1e6" text-anchor="middle">GIFT CARD</text>
-</svg>

@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" role="img" aria-label="Tri-fold caddie towel">
-  <rect width="480" height="360" fill="#efe8d8"/>
-  <circle cx="240" cy="200" r="150" fill="#e2d8c0"/>
-  
-    <rect x="130" y="110" width="220" height="220" rx="12" fill="#2b6c86"/>
-    <path d="M130 170h220M130 270h220" stroke="#e8ddc7" stroke-width="10"/>
-    <circle cx="240" cy="96" r="18" fill="none" stroke="#8b8577" stroke-width="8"/>
-</svg>

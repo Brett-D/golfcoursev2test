@@ -4,8 +4,14 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Agate Beach Golf Course | Newport, Oregon</title>
-<meta name="description" content="Agate Beach Golf Course is a friendly nine-hole public course on the central Oregon coast in Newport. Tee times, rates, pro shop and café.">
-<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<meta name="description" content="Agate Beach Golf Course in Newport, Oregon: a family-run nine-hole course since 1931 with a pro shop, lessons, driving range and coffee shop right off Highway 101.">
+<meta property="og:title" content="Agate Beach Golf Course | Newport, Oregon">
+<meta property="og:description" content="Agate Beach Golf Course in Newport, Oregon: a family-run nine-hole course since 1931 with a pro shop, lessons, driving range and coffee shop right off Highway 101.">
+<meta property="og:image" content="assets/images/aerial.jpg">
+<link rel="icon" href="assets/images/logo.jpg" type="image/jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -14,126 +20,183 @@
 <header class="site-header">
   <div class="container nav">
     <a class="brand" href="index.html">
-      <img src="assets/img/logo.svg" alt="" width="42" height="42">
-      <span class="brand-text">
-        <span class="brand-name">Agate Beach Golf</span>
+      <img src="assets/images/logo.jpg" alt="" width="50" height="50">
+      <span>
+        <span class="brand-name">Agate Beach Golf Course</span>
         <span class="brand-tag">Newport, Oregon &middot; Est. 1931</span>
       </span>
     </a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
     <ul class="nav-menu" id="nav-menu">
       <li><a href="index.html">Home</a></li>
-      <li><a href="course.html">The Course</a></li>
-      <li><a href="rates.html">Rates &amp; Tee Times</a></li>
-      <li><a class="cart-link" href="pro-shop.html">Pro Shop<span class="cart-count" aria-label="items in bag">0</span></a></li>
-      <li><a href="coffee-shop.html">Café</a></li>
+      <li><a href="course.html">Course Layout</a></li>
+      <li><a href="pro-shop.html">Pro Shop</a></li>
+      <li><a href="rates.html">Golf Rates</a></li>
+      <li><a href="coffee-shop.html">Coffee Shop</a></li>
+      <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a class="nav-cta" href="rates.html#book">Book a Tee Time</a></li>
+      <li><a class="btn btn-gold nav-cta" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a></li>
     </ul>
   </div>
 </header>
 
 <main id="main">
-  <section class="hero">
-    <div class="container hero-inner">
-      <p class="eyebrow">Central Oregon Coast</p>
-      <h1>Nine holes of coastal golf, open year round.</h1>
-      <p>Playing since 1931 just north of Newport, Agate Beach Golf Course pairs gently rolling fairways and ocean air with a welcoming clubhouse, full pro shop and a café that opens with the sunrise.</p>
-      <div class="btn-row">
-        <a class="btn btn-primary" href="rates.html#book">Book a Tee Time</a>
-        <a class="btn btn-outline" href="course.html">Explore the Course</a>
-      </div>
+  <section class="hero " style="background-image:url('assets/images/aerial.jpg');background-position:center 40%">
+    <div class="container">
+      <p class="eyebrow">Newport, Oregon &middot; Est. 1931</p>
+      <h1>A Family Tradition on the Oregon Coast</h1>
+      <p class="lead">Nine holes of classic coastal golf just off Highway 101 &mdash; open to the public, with a pro shop, lessons and a coffee shop on site.</p>
+      <div class="btn-row"><a class="btn btn-gold" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a><a class="btn btn-outline" href="course.html">Course Layout</a></div>
+    </div>
+  </section>
+  <div class="notice">The Driving Range is Open 7&ndash;5:30 pm &middot; <a href="rates.html#range">Range ball prices</a></div>
+
+  <section class="stats" aria-label="Course at a glance">
+    <div class="container">
+      <div class="stat"><span class="stat-num">9</span><span class="stat-label">Holes</span></div>
+      <div class="stat"><span class="stat-num">Par 36</span><span class="stat-label">2,905 yds from the men&rsquo;s tees</span></div>
+      <div class="stat"><span class="stat-num">1931</span><span class="stat-label">Year opened</span></div>
+      <div class="stat"><span class="stat-num">66.6 / 115</span><span class="stat-label">Course rating / slope</span></div>
+      <div class="stat"><span class="stat-num">7 days</span><span class="stat-label">Pro shop &amp; lessons</span></div>
     </div>
   </section>
 
-  <section class="section section-dark">
+  <section class="section" id="about">
+    <div class="container split">
+      <div class="reveal">
+        <p class="eyebrow">About Us</p>
+        <h2>A Family Tradition</h2>
+        <p class="lead">Welcome! The Agate Beach Golf Course opened for play in 1931 as the Agate Beach Golf Links.</p>
+        <p>The original course was designed by Frank Stenzel, Sr. and has been owned and operated by the Martin family since 1960. The layout is fairly level with slightly rolling terrain, surrounded by a lush wooded area. It is well maintained throughout the year and is especially suited for year-round play.</p>
+        <p>Through the years golfers have enjoyed the course with friends and family, making it a family tradition. It continues to be our commitment to provide an enjoyable round of golf.</p>
+        <div class="btn-row"><a class="btn btn-green" href="about.html">Our History</a><a class="btn btn-outline-dark" href="course.html">Course Layout</a></div>
+      </div>
+      <figure class="frame flip reveal">
+        <img src="assets/images/links-1931.jpg" alt="Framed historic photograph labelled Agate Beach Golf Links, 1931" width="960" height="720" loading="lazy">
+        <figcaption>Agate Beach Golf Links, 1931</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="band" style="background-image:url('assets/images/clubhouse-sign.jpg');background-position:center">
     <div class="container">
-      <div class="stat-row">
-        <div class="stat"><b>9</b><span>Holes</span></div>
-        <div class="stat"><b>Par 36</b><span>2,905 yards</span></div>
-        <div class="stat"><b>1931</b><span>Year opened</span></div>
-        <div class="stat"><b>7&nbsp;AM</b><span>Open daily</span></div>
+      <div class="glass reveal">
+        <p class="eyebrow">Open to the Public</p>
+        <h2>Enjoy the &ldquo;game of a lifetime&rdquo;</h2>
+        <p>Lessons and a full-service pro shop featuring sportswear, equipment and rentals are available seven days a week. Walk-ons are always welcome &mdash; and the caf&eacute; is open for breakfast and lunch.</p>
+        <div class="btn-row" style="justify-content:center"><a class="btn btn-gold" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a><a class="btn btn-outline-dark" href="rates.html">See Golf Rates</a></div>
       </div>
     </div>
   </section>
 
   <section class="section">
-    <div class="container media-split">
-      <img src="assets/img/fairway.svg" alt="Rolling fairway framed by coastal evergreens at Agate Beach Golf Course" width="800" height="560">
-      <div>
-        <h2>A classic layout that plays well for everyone</h2>
-        <p>Frank Stenzel's 1931 routing threads two par 3s, five par 4s and two par 5s through wooded terrain a short walk from the Pacific. It is short enough to walk comfortably and interesting enough to keep low handicaps honest.</p>
-        <ul class="tick-list">
-          <li>Play nine or loop twice for a full eighteen</li>
-          <li>Iron-only driving range and practice green</li>
-          <li>Right- and left-handed rental clubs, carts and pull carts</li>
-          <li>Mild coastal weather keeps us open all twelve months</li>
-        </ul>
-        <a class="btn btn-ghost" href="course.html">See the scorecard</a>
+    <div class="container split reverse">
+      <div class="reveal">
+        <p class="eyebrow">Signature Hole</p>
+        <h2>Number Eight</h2>
+        <p class="lead">A 115-yard par 3 beneath towering fir and hemlock trees.</p>
+        <p>Head golf professional Terry Martin says his favorite part of the course is the eighth hole, which his father Bill constructed in 1960. The challenging green is guarded by a large bunker.</p>
+        <p>The hole serves as a memorial to Bill Martin, who passed away in 1995.</p>
+        <a class="btn btn-green" href="course.html">View the Scorecard</a>
       </div>
+      <figure class="frame reveal">
+        <img src="assets/images/signature-hole-8.jpg" alt="Looking up through tall evergreens along the eighth fairway at Agate Beach Golf Course" width="1100" height="1292" loading="lazy">
+      </figure>
     </div>
   </section>
 
-  <section class="section section-alt">
+  <section class="section section-sand" id="services">
     <div class="container">
-      <div class="section-head center">
-        <h2>Everything you need on site</h2>
-        <p class="lead">Three places to spend your morning — the first tee, the pro shop counter and a café table by the window.</p>
+      <div class="section-head center reveal">
+        <p class="eyebrow">Services</p>
+        <h2>Everything You Need for Your Round</h2>
       </div>
-      <div class="grid grid-3">
-        <article class="card">
-          <img src="assets/img/practice.svg" alt="Practice green and driving range" width="800" height="560">
-          <div class="card-body">
-            <h3>Golf &amp; Practice</h3>
-            <p>Warm up on the iron-only range, roll a few on the practice green, then take on the nine. Lessons with our PGA professional are available by appointment.</p>
-            <a href="course.html">Course details &rarr;</a>
-          </div>
-        </article>
-        <article class="card">
-          <img src="assets/img/clubhouse.svg" alt="Clubhouse and pro shop exterior" width="800" height="560">
-          <div class="card-body">
-            <h3>Pro Shop</h3>
-            <p>Apparel, gloves, balls, bags and gift cards — plus club repair and regripping. Browse the shop online and pick up at the counter.</p>
-            <a href="pro-shop.html">Shop the store &rarr;</a>
-          </div>
-        </article>
-        <article class="card">
-          <img src="assets/img/coffee-shop.svg" alt="Café counter with espresso machine and pastries" width="800" height="560">
-          <div class="card-body">
-            <h3>The Café</h3>
-            <p>Espresso, drip coffee, breakfast sandwiches and lunch served daily. You do not need a tee time to stop in.</p>
-            <a href="coffee-shop.html">See the café menu &rarr;</a>
-          </div>
-        </article>
+      <div class="cards cols-3">
+        <article class="card reveal"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1"/></svg></div><h3>Driving Range</h3><p>Enjoy our iron-only driving range. Range balls are available at the pro shop.</p></article>
+        <article class="card reveal"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18 3 8 17"/><path d="M8 17c-2 0-5 1-5 3 0 1 2 1 4 1s3-1 3-3"/></svg></div><h3>Rental Clubs</h3><p>Enjoy both left- and right-handed rental sets, plus power golf cars and pull carts.</p></article>
+        <article class="card reveal"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 8h12l1 13H5z"/><path d="M9 8a3 3 0 0 1 6 0"/></svg></div><h3>Pro Shop</h3><p>Our logo on assorted sportswear and accessories. Equipment is available or can be ordered.</p></article>
+        <article class="card reveal"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 5a2 2 0 0 1 2-2h13v16H6a2 2 0 0 0-2 2z"/><path d="M4 21a2 2 0 0 1 2-2h13"/></svg></div><h3>Golf Lessons</h3><p>Reserve a lesson with one of our teaching staff, led by PGA professional Terry Martin.</p></article>
+        <article class="card reveal"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 9h13v5a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5z"/><path d="M17 11h2a2 2 0 0 1 0 4h-2"/><path d="M8 3v3M12 3v3"/></svg></div><h3>Coffee Shop</h3><p>Hungry or thirsty? Breakfast, burgers, sandwiches and Good Dogs before or after your game.</p></article>
+        <article class="card reveal"><div class="icon"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="9" width="18" height="4"/><path d="M5 13v8h14v-8M12 9v12"/><path d="M12 9c-2-5-6-5-5-2 .5 1.500 3 2 5 2zm0 0c2-5 6-5 5-2-.5 1.500-3 2-5 2z"/></svg></div><h3>Gift Certificates</h3><p>Give your favorite golfer the gift of a round at Agate Beach.</p></article>
       </div>
     </div>
   </section>
 
   <section class="section">
     <div class="container">
-      <div class="section-head center">
-        <h2>Plan your visit</h2>
+      <div class="section-head center reveal">
+        <p class="eyebrow">Gallery</p>
+        <h2>Life at Agate Beach</h2>
       </div>
-      <div class="grid grid-3">
-        <div class="card"><div class="card-body">
-          <h3>Hours</h3>
-          <p>Open daily, 7:00 AM until sunset. The café serves breakfast and lunch every day; the pro shop is staffed seven days a week.</p>
-        </div></div>
-        <div class="card"><div class="card-body">
-          <h3>Where we are</h3>
-          <p>4100 N Coast Hwy, Newport, OR 97365 — just off Highway 101 at the north end of town, minutes from Agate Beach State Recreation Site.</p>
-        </div></div>
-        <div class="card"><div class="card-body">
-          <h3>Reservations</h3>
-          <p>Walk-ons are welcome, but weekend mornings fill up. Call <a href="tel:+15412657331">(541) 265-7331</a> or send a tee time request online.</p>
-        </div></div>
-      </div>
-      <div class="btn-row">
-        <a class="btn btn-dark" href="rates.html#book">Request a tee time</a>
-        <a class="btn btn-ghost" href="contact.html">Get directions</a>
+      <div class="gallery reveal">
+        <a class="wide" href="assets/images/putting-green.jpg"><img src="assets/images/putting-green.jpg" alt="A green framed by tall evergreens" loading="lazy"></a>
+        <a class="tall" href="assets/images/sunset-snag.jpg"><img src="assets/images/sunset-snag.jpg" alt="Weathered snag at sunset on the fairway" loading="lazy"></a>
+        <a href="assets/images/fairway-snag.jpg"><img src="assets/images/fairway-snag.jpg" alt="Sunny fairway with a weathered snag and blue sky" loading="lazy"></a>
+        <a href="assets/images/pro-shop.jpg"><img src="assets/images/pro-shop.jpg" alt="Inside the pro shop" loading="lazy"></a>
+        <a href="assets/images/cafe.jpg"><img src="assets/images/cafe.jpg" alt="Inside the clubhouse coffee shop" loading="lazy"></a>
+        <a href="assets/images/clubhouse-sign.jpg"><img src="assets/images/clubhouse-sign.jpg" alt="Open to the public sign and the clubhouse" loading="lazy"></a>
       </div>
     </div>
   </section>
+
+  <section class="section section-navy">
+    <div class="container split">
+      <figure class="frame flip reveal">
+        <img src="assets/images/cafe.jpg" alt="Dining area of The Clubhouse coffee shop with teal chairs and a service counter" width="1600" height="1200" loading="lazy">
+      </figure>
+      <div class="reveal">
+        <p class="eyebrow">Coffee Shop</p>
+        <h2>The Clubhouse</h2>
+        <p class="lead">Come enjoy a delicious burger before or after your game!</p>
+        <p>Breakfast and lunch, a house-roasted turkey Clubhouse sandwich, smash burgers, soup of the moment &mdash; and the Good Dog menu, a dozen hot dogs named for past and present golf course dogs.</p>
+        <div class="btn-row"><a class="btn btn-gold" href="coffee-shop.html">See the Menu</a></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head center reveal">
+        <p class="eyebrow">Golf Rates</p>
+        <h2>Simple, Friendly Pricing</h2>
+        <p class="lead">Updated 6/8/2026</p>
+      </div>
+      <div class="rate-grid reveal">
+        <div class="rate-card"><header><h3>Greens Fees</h3><p>7:00 am &ndash; 2:52 pm</p></header>
+          <div class="rate-row"><span>9 holes</span><span class="price">$24</span></div>
+          <div class="rate-row"><span>18 holes</span><span class="price">$42</span></div></div>
+        <div class="rate-card"><header><h3>Twilight</h3><p>3:00 pm &ndash; Dusk</p></header>
+          <div class="rate-row"><span>9 holes</span><span class="price">$20</span></div>
+          <div class="rate-row"><span>18 holes</span><span class="price">$32</span></div></div>
+      </div>
+      <p class="center" style="text-align:center;margin-top:2rem"><a class="btn btn-outline-dark" href="rates.html">All Rates &amp; Rentals</a></p>
+    </div>
+  </section>
+
+  <section class="section section-sand" id="visit">
+  <div class="container">
+    <div class="section-head center reveal">
+      <p class="eyebrow">Visit</p>
+      <h2>Find Us &amp; Follow Along</h2>
+      <p class="lead">4100 N Coast Hwy, Newport, OR 97365 &mdash; right off Highway 101.</p>
+    </div>
+    <div class="visit">
+      <div class="embed-card reveal">
+        <div class="embed-title"><span>Agate Beach Golf Course</span> <a href="https://www.google.com/maps/dir/?api=1&destination=Agate+Beach+Golf+Course,+4100+N+Coast+Hwy,+Newport,+OR+97365" target="_blank" rel="noopener">Get directions &rarr;</a></div>
+        <iframe class="map-frame" title="Map showing Agate Beach Golf Course, 4100 N Coast Hwy, Newport, Oregon" src="https://maps.google.com/maps?q=Agate+Beach+Golf+Course,+4100+N+Coast+Hwy,+Newport,+OR+97365&t=m&z=15&output=embed&iwloc=near" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe>
+      </div>
+      <div class="embed-card reveal">
+        <div class="embed-title"><span>Latest on Facebook</span> <a href="https://www.facebook.com/Agatebeachgolf" target="_blank" rel="noopener">Open page &rarr;</a></div>
+        <div class="fb-wrap">
+          <iframe title="Agate Beach Golf Course on Facebook" data-fb-page="https://www.facebook.com/Agatebeachgolf" height="600" scrolling="no" frameborder="0" allow="encrypted-media" loading="lazy"></iframe>
+        </div>
+      </div>
+    </div>
+  </div>
+  </section>
+
 </main>
 
 <footer class="site-footer">
@@ -141,36 +204,44 @@
     <div class="footer-grid">
       <div>
         <h4>Agate Beach Golf Course</h4>
-        <p>4100 N Coast Hwy<br>Newport, OR 97365</p>
-        <p><a href="tel:+15412657331">(541) 265-7331</a><br><a href="mailto:teeoff@agatebeachgolf.net">teeoff@agatebeachgolf.net</a></p>
+        <p>Located off of Hwy 101 in Newport, Oregon. A family tradition since 1931.</p>
+        <p><a href="https://www.facebook.com/Agatebeachgolf" target="_blank" rel="noopener">Follow us on Facebook</a></p>
       </div>
       <div>
-        <h4>Visit</h4>
+        <h4>Explore</h4>
         <ul>
-          <li><a href="course.html">The Course</a></li>
-          <li><a href="rates.html">Rates &amp; Tee Times</a></li>
-          <li><a class="cart-link" href="pro-shop.html">Pro Shop<span class="cart-count" aria-label="items in bag">0</span></a></li>
-          <li><a href="coffee-shop.html">Café</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="course.html">Course Layout</a></li>
+          <li><a href="rates.html">Golf Rates</a></li>
+          <li><a href="pro-shop.html">Pro Shop</a></li>
+          <li><a href="coffee-shop.html">Coffee Shop</a></li>
+          <li><a href="about.html">About</a></li>
         </ul>
       </div>
       <div>
-        <h4>Hours</h4>
+        <h4>Services</h4>
         <ul>
-          <li>Course: daily, 7:00 AM – sunset</li>
-          <li>Pro shop: daily, 7:00 AM – 6:00 PM</li>
-          <li>Café: daily, 7:00 AM – 2:00 PM</li>
+          <li><a href="pro-shop.html">Pro Shop</a></li>
+          <li><a href="pro-shop.html#lessons">Golf Lessons</a></li>
+          <li><a href="pro-shop.html#services">Club Service</a></li>
+          <li><a href="pro-shop.html#services">Equipment Sales</a></li>
+          <li><a href="rates.html#range">Driving Range</a></li>
         </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>Terry Martin<br>PGA Professional</p>
+        <p>4100 N Coast Hwy<br>Newport, OR 97365<br>
+        <a href="tel:+15412657331">(541) 265-7331</a><br>
+        <a href="mailto:teeoff@agatebeachgolf.net">teeoff@agatebeachgolf.net</a></p>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; <span id="year">2026</span> Agate Beach Golf Course. All rights reserved.</span>
-      <span>Open year round on the Oregon coast.</span>
+      <span>&copy; <span id="year">2026</span> Agate Beach Golf Course</span>
+      <a href="https://foreupsoftware.com/index.php/booking/21987#/login" target="_blank" rel="noopener">Customer Portal</a>
     </div>
   </div>
 </footer>
 
-<script src="assets/js/cart.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

@@ -1,9 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" role="img" aria-label="Logo golf ball sleeve">
-  <rect width="480" height="360" fill="#efe8d8"/>
-  <circle cx="240" cy="200" r="150" fill="#e2d8c0"/>
-  
-    <rect x="150" y="130" width="120" height="190" rx="10" fill="#1c5138"/>
-    <text x="210" y="235" font-family="Georgia,serif" font-size="28" fill="#f6f1e6" text-anchor="middle">ABGC</text>
-    <circle cx="320" cy="285" r="42" fill="#ffffff" stroke="#d8d3c6" stroke-width="3"/>
-    <g fill="#d8d3c6"><circle cx="308" cy="272" r="4"/><circle cx="330" cy="278" r="4"/><circle cx="316" cy="296" r="4"/><circle cx="338" cy="300" r="4"/></g>
-</svg>

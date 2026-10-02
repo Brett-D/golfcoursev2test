@@ -3,9 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Rates &amp; Tee Times | Agate Beach Golf Course</title>
-<meta name="description" content="Green fees, cart and rental rates, punch cards and tee time requests for Agate Beach Golf Course in Newport, Oregon.">
-<link rel="icon" href="assets/img/logo.svg" type="image/svg+xml">
+<title>Golf Rates | Agate Beach Golf Course</title>
+<meta name="description" content="Greens fees, twilight rates, cart, pull cart, club rental and range ball prices at Agate Beach Golf Course in Newport, Oregon.">
+<meta property="og:title" content="Golf Rates | Agate Beach Golf Course">
+<meta property="og:description" content="Greens fees, twilight rates, cart, pull cart, club rental and range ball prices at Agate Beach Golf Course in Newport, Oregon.">
+<meta property="og:image" content="assets/images/aerial.jpg">
+<link rel="icon" href="assets/images/logo.jpg" type="image/jpeg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/styles.css">
 </head>
 <body>
@@ -14,136 +20,107 @@
 <header class="site-header">
   <div class="container nav">
     <a class="brand" href="index.html">
-      <img src="assets/img/logo.svg" alt="" width="42" height="42">
-      <span class="brand-text">
-        <span class="brand-name">Agate Beach Golf</span>
+      <img src="assets/images/logo.jpg" alt="" width="50" height="50">
+      <span>
+        <span class="brand-name">Agate Beach Golf Course</span>
         <span class="brand-tag">Newport, Oregon &middot; Est. 1931</span>
       </span>
     </a>
-    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu">Menu</button>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
     <ul class="nav-menu" id="nav-menu">
       <li><a href="index.html">Home</a></li>
-      <li><a href="course.html">The Course</a></li>
-      <li><a href="rates.html">Rates &amp; Tee Times</a></li>
+      <li><a href="course.html">Course Layout</a></li>
       <li><a href="pro-shop.html">Pro Shop</a></li>
-      <li><a href="coffee-shop.html">Café</a></li>
+      <li><a href="rates.html">Golf Rates</a></li>
+      <li><a href="coffee-shop.html">Coffee Shop</a></li>
+      <li><a href="about.html">About</a></li>
       <li><a href="contact.html">Contact</a></li>
-      <li><a class="nav-cta" href="rates.html#book">Book a Tee Time</a></li>
+      <li><a class="btn btn-gold nav-cta" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a></li>
     </ul>
   </div>
 </header>
 
 <main id="main">
-  <section class="hero hero-page">
-    <div class="container hero-inner">
-      <p class="eyebrow">Play Today</p>
-      <h1>Rates &amp; Tee Times</h1>
-      <p>Straightforward pricing, walk-ons welcome, and a short form if you would rather reserve ahead.</p>
+  <section class="hero hero-page" style="background-image:url('assets/images/sunset-snag.jpg');background-position:center 55%">
+    <div class="container">
+      <p class="eyebrow">Pricing</p>
+      <h1>Golf Rates</h1>
+      <p class="lead">Friendly pricing for a round on the Oregon coast.</p>
+      <div class="btn-row"><a class="btn btn-gold" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a></div>
     </div>
   </section>
+
 
   <section class="section">
     <div class="container">
-      <div class="section-head">
-        <h2>Green fees</h2>
-        <p class="lead">Rates are per player and include use of the practice green. Please confirm current pricing with the pro shop at <a href="tel:+15412657331">(541) 265-7331</a>.</p>
+      <div class="section-head center reveal">
+        <p class="eyebrow">Golf Rates</p>
+        <h2>Greens Fees &amp; Rentals</h2>
+        <p class="lead">Updated 6/8/2026</p>
       </div>
-      <div class="table-wrap">
-        <table>
-          <caption class="visually-hidden">Green fees by round length and player type</caption>
-          <thead><tr><th scope="col">Round</th><th scope="col">Weekday</th><th scope="col">Weekend &amp; holiday</th></tr></thead>
-          <tbody>
-            <tr><td>9 holes</td><td>$22</td><td>$25</td></tr>
-            <tr><td>18 holes</td><td>$36</td><td>$40</td></tr>
-            <tr><td>Junior (17 &amp; under), 9 holes</td><td>$14</td><td>$16</td></tr>
-            <tr><td>Senior (62+), 9 holes</td><td>$18</td><td>$22</td></tr>
-            <tr><td>Twilight (after 4 PM)</td><td>$18</td><td>$20</td></tr>
-            <tr><td>Replay nine</td><td>$14</td><td>$16</td></tr>
-          </tbody>
-        </table>
+      <div class="rate-grid cols-3">
+        <div class="rate-card reveal"><header><h3>Greens Fees</h3><p>7:00 am &ndash; 2:52 pm</p></header>
+          <div class="rate-row"><span>9 holes</span><span class="price">$24</span></div>
+          <div class="rate-row"><span>18 holes</span><span class="price">$42</span></div>
+        </div>
+        <div class="rate-card reveal"><header><h3>Twilight</h3><p>3:00 pm &ndash; Dusk</p></header>
+          <div class="rate-row"><span>9 holes</span><span class="price">$20</span></div>
+          <div class="rate-row"><span>18 holes</span><span class="price">$32</span></div>
+        </div>
+        <div class="rate-card reveal"><header><h3>Golf Cart Rental</h3><p>Power golf cars</p></header>
+          <div class="rate-row"><span>9 holes</span><span class="price">$14</span></div>
+          <div class="rate-row"><span>18 holes</span><span class="price">$28</span></div>
+        </div>
+        <div class="rate-card reveal"><header><h3>Pull Cart</h3><p>Rental pull carts</p></header>
+          <div class="rate-row"><span>9 holes</span><span class="price">$3</span></div>
+          <div class="rate-row"><span>18 holes</span><span class="price">$5</span></div>
+        </div>
+        <div class="rate-card reveal"><header><h3>Golf Club Rental</h3><p>Left- &amp; right-handed sets</p></header>
+          <div class="rate-row"><span>9 holes</span><span class="price">$8</span></div>
+          <div class="rate-row"><span>18 holes</span><span class="price">$12</span></div>
+        </div>
+        <div id="range">
+        <div class="rate-card reveal"><header><h3>Range Balls</h3><p>Iron-only driving range</p></header>
+          <div class="rate-row"><span>30 balls</span><span class="price">$4</span></div>
+          <div class="rate-row"><span>75 balls</span><span class="price">$8</span></div>
+        </div>
+        </div>
+      </div>
+      <p class="note" style="text-align:center;margin-top:2rem">The Driving Range is open 7&ndash;5:30 pm. Range is restricted to irons only.</p>
+    </div>
+  </section>
+
+  <section class="section section-navy">
+    <div class="container cta">
+      <div class="reveal">
+        <p class="eyebrow" style="justify-content:center">Tee Times</p>
+        <h2>Reserve Your Round</h2>
+        <p class="lead" style="max-width:40rem;margin-inline:auto">Book online through our tee sheet, sign in to the customer portal, or phone the pro shop. Walk-ons are always welcome.</p>
+        <div class="btn-row"><a class="btn btn-gold" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a><a class="btn btn-outline" href="https://foreupsoftware.com/index.php/booking/21987#/login" target="_blank" rel="noopener">Customer Portal</a><a class="btn btn-outline" href="tel:+15412657331">(541) 265-7331</a></div>
       </div>
     </div>
   </section>
 
-  <section class="section section-alt">
-    <div class="container">
-      <div class="grid grid-2">
-        <div>
-          <h2>Carts, rentals &amp; range</h2>
-          <div class="table-wrap">
-            <table>
-              <caption class="visually-hidden">Rental and practice pricing</caption>
-              <thead><tr><th scope="col">Item</th><th scope="col">Price</th></tr></thead>
-              <tbody>
-                <tr><td>Riding cart, 9 holes</td><td>$18</td></tr>
-                <tr><td>Pull cart</td><td>$5</td></tr>
-                <tr><td>Rental clubs (right or left handed)</td><td>$15</td></tr>
-                <tr><td>Small range bucket</td><td>$6</td></tr>
-                <tr><td>Large range bucket</td><td>$10</td></tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-        <div>
-          <h2>Passes &amp; punch cards</h2>
-          <p>Regulars save with a punch card, and annual passes are available for players who call Agate Beach home.</p>
-          <ul class="tick-list">
-            <li>10-round punch card — one round free</li>
-            <li>Monthly unlimited play for local residents</li>
-            <li>Annual pass with pro shop discount</li>
-            <li>Group and tournament pricing for 12 or more</li>
-          </ul>
-          <p>Ask at the counter or send us a note and we will walk you through the options.</p>
-          <a class="btn btn-ghost" href="contact.html">Ask about passes</a>
-        </div>
+  <section class="section section-sand">
+    <div class="container split">
+      <div class="reveal">
+        <p class="eyebrow">Before You Play</p>
+        <h2>Good to Know</h2>
+        <ul class="checks">
+          <li>Check with the pro shop prior to playing.</li>
+          <li>Maximum of 4 players per group.</li>
+          <li>The driving range is irons only.</li>
+          <li>Gift certificates are available for your favorite golfer.</li>
+          <li>Lessons can be reserved with one of our teaching staff.</li>
+        </ul>
+        <a class="btn btn-green" href="course.html#rules">Rules &amp; Etiquette</a>
       </div>
+      <figure class="frame reveal"><img src="assets/images/sunset-snag.jpg" alt="Weathered snag on the fairway at sunset" width="1400" height="1050" loading="lazy"></figure>
     </div>
   </section>
 
-  <section class="section" id="book">
-    <div class="container">
-      <div class="section-head">
-        <h2>Request a tee time</h2>
-        <p class="lead">Send your details and we will confirm by phone or email. For same-day play, calling the shop is fastest.</p>
-      </div>
-      <form class="form-grid" action="mailto:teeoff@agatebeachgolf.net" method="post" enctype="text/plain">
-        <div>
-          <label for="name">Name</label>
-          <input id="name" name="name" type="text" autocomplete="name" required>
-        </div>
-        <div>
-          <label for="email">Email</label>
-          <input id="email" name="email" type="email" autocomplete="email" required>
-        </div>
-        <div>
-          <label for="phone">Phone</label>
-          <input id="phone" name="phone" type="tel" autocomplete="tel">
-        </div>
-        <div>
-          <label for="players">Players</label>
-          <select id="players" name="players">
-            <option>1</option><option selected>2</option><option>3</option><option>4</option><option>5+</option>
-          </select>
-        </div>
-        <div>
-          <label for="date">Preferred date</label>
-          <input id="date" name="date" type="date">
-        </div>
-        <div>
-          <label for="time">Preferred time</label>
-          <input id="time" name="time" type="time">
-        </div>
-        <div class="span-2">
-          <label for="notes">Notes (rentals, carts, lessons)</label>
-          <textarea id="notes" name="notes" rows="4"></textarea>
-        </div>
-        <div class="span-2">
-          <button class="btn btn-primary" type="submit">Send request</button>
-        </div>
-      </form>
-      <p class="notice">Prefer to talk it through? Call <a href="tel:+15412657331">(541) 265-7331</a> — the shop is staffed from 7 AM daily.</p>
-    </div>
-  </section>
 </main>
 
 <footer class="site-footer">
@@ -151,36 +128,44 @@
     <div class="footer-grid">
       <div>
         <h4>Agate Beach Golf Course</h4>
-        <p>4100 N Coast Hwy<br>Newport, OR 97365</p>
-        <p><a href="tel:+15412657331">(541) 265-7331</a><br><a href="mailto:teeoff@agatebeachgolf.net">teeoff@agatebeachgolf.net</a></p>
+        <p>Located off of Hwy 101 in Newport, Oregon. A family tradition since 1931.</p>
+        <p><a href="https://www.facebook.com/Agatebeachgolf" target="_blank" rel="noopener">Follow us on Facebook</a></p>
       </div>
       <div>
-        <h4>Visit</h4>
+        <h4>Explore</h4>
         <ul>
-          <li><a href="course.html">The Course</a></li>
-          <li><a href="rates.html">Rates &amp; Tee Times</a></li>
-          <li><a class="cart-link" href="pro-shop.html">Pro Shop<span class="cart-count" aria-label="items in bag">0</span></a></li>
-          <li><a href="coffee-shop.html">Café</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="course.html">Course Layout</a></li>
+          <li><a href="rates.html">Golf Rates</a></li>
+          <li><a href="pro-shop.html">Pro Shop</a></li>
+          <li><a href="coffee-shop.html">Coffee Shop</a></li>
+          <li><a href="about.html">About</a></li>
         </ul>
       </div>
       <div>
-        <h4>Hours</h4>
+        <h4>Services</h4>
         <ul>
-          <li>Course: daily, 7:00 AM – sunset</li>
-          <li>Pro shop: daily, 7:00 AM – 6:00 PM</li>
-          <li>Café: daily, 7:00 AM – 2:00 PM</li>
+          <li><a href="pro-shop.html">Pro Shop</a></li>
+          <li><a href="pro-shop.html#lessons">Golf Lessons</a></li>
+          <li><a href="pro-shop.html#services">Club Service</a></li>
+          <li><a href="pro-shop.html#services">Equipment Sales</a></li>
+          <li><a href="rates.html#range">Driving Range</a></li>
         </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <p>Terry Martin<br>PGA Professional</p>
+        <p>4100 N Coast Hwy<br>Newport, OR 97365<br>
+        <a href="tel:+15412657331">(541) 265-7331</a><br>
+        <a href="mailto:teeoff@agatebeachgolf.net">teeoff@agatebeachgolf.net</a></p>
       </div>
     </div>
     <div class="footer-bottom">
-      <span>&copy; <span id="year">2026</span> Agate Beach Golf Course. All rights reserved.</span>
-      <span>Open year round on the Oregon coast.</span>
+      <span>&copy; <span id="year">2026</span> Agate Beach Golf Course</span>
+      <a href="https://foreupsoftware.com/index.php/booking/21987#/login" target="_blank" rel="noopener">Customer Portal</a>
     </div>
   </div>
 </footer>
 
-<script src="assets/js/cart.js"></script>
 <script src="assets/js/main.js"></script>
 </body>
 </html>

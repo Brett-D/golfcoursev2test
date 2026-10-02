@@ -1,8 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" role="img" aria-label="Brass divot tool and ball marker">
-  <rect width="480" height="360" fill="#efe8d8"/>
-  <circle cx="240" cy="200" r="150" fill="#e2d8c0"/>
-  
-    <path d="M200 140h80v60l-20 60v70h-40v-70l-20-60z" fill="#c9a227"/>
-    <circle cx="240" cy="120" r="30" fill="#8b5e34"/>
-    <circle cx="240" cy="120" r="14" fill="#f6f1e6"/>
-</svg>

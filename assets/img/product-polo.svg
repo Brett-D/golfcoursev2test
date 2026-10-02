@@ -1,7 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 480 360" role="img" aria-label="Agate Beach performance polo">
-  <rect width="480" height="360" fill="#efe8d8"/>
-  <circle cx="240" cy="200" r="150" fill="#e2d8c0"/>
-  
-    <path d="M120 120l70-34 30 22 30-22 70 34-22 60-28-10v150H170V190l-28 10z" fill="#1c5138"/>
-    <path d="M190 86l30 30 30-30" fill="none" stroke="#f6f1e6" stroke-width="8"/>
-</svg>
