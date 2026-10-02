@@ -80,3 +80,9 @@ Cloudflare and browsers keep copies of the CSS and scripts for up to 24 hours an
 1. Run `powershell -ExecutionPolicy Bypass -File tools\bump-version.ps1`. It gives the CSS, scripts and card pictures a new `?v=` number, so they count as new files.
 2. Upload every changed file. The version bump changes every `.html` page and `assets/js/*.js`, so upload those too.
 3. If a page itself still looks old, clear the cache in Bluehost (Websites, Settings, Performance, Clear Cache) and hard refresh.
+
+## Contact form
+
+The Contact page form posts to [contact.php](contact.php), which emails the message straight to teeoff@agatebeachgolf.net (no email app needed). It needs PHP hosting such as Bluehost: upload `contact.php` next to the pages. The messages arrive from teeoff@agatebeachgolf.net with the visitor's address in Reply-To, so hitting Reply answers them. If a message does not arrive, check the spam folder first.
+
+Where PHP is not available (for example GitHub Pages) the form falls back to opening the visitor's email app, as before. To change where messages go, edit `TO_ADDRESS` at the top of `contact.php`.

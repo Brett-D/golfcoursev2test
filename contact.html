@@ -11,7 +11,7 @@
 <link rel="icon" href="assets/images/logo.png" type="image/png">
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/playfair-display-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/styles.css?v=20261002-14">
+<link rel="stylesheet" href="assets/css/styles.css?v=20261002-15">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -72,7 +72,9 @@
       </div>
       <div class="reveal">
         <h3>Send us a message</h3>
-        <form id="contact-form" class="form-grid">
+        <form id="contact-form" class="form-grid" action="contact.php" method="post">
+          <div class="hp-field" aria-hidden="true"><label for="c-website">Leave this field empty</label><input id="c-website" name="website" type="text" tabindex="-1" autocomplete="off"></div>
+          <input type="hidden" name="started" id="c-started" value="">
           <div><label for="c-name">Your name *</label><input id="c-name" name="name" type="text" autocomplete="name" required></div>
           <div><label for="c-email">Email *</label><input id="c-email" name="email" type="email" autocomplete="email" required></div>
           <div class="span-2"><label for="c-subject">Subject *</label><input id="c-subject" name="subject" type="text" required></div>
@@ -145,6 +147,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=20261002-14"></script>
+<script src="assets/js/main.js?v=20261002-15"></script>
 </body>
 </html>

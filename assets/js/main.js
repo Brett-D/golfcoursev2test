@@ -270,20 +270,48 @@
     resizeTimer = setTimeout(loadFacebook, 300);
   });
 
-  // Static site: the contact form opens the visitor's email app with the message filled in.
+  // Contact form: sends straight to the pro shop through contact.php. If that file is not there (a host without PHP,
+  // such as GitHub Pages) or the request fails, it falls back to opening the visitor's email app with the message filled in.
   var form = document.getElementById("contact-form");
   if (form) {
-    form.addEventListener("submit", function (event) {
-      event.preventDefault();
-      var data = new FormData(form);
+    var started = document.getElementById("c-started");
+    if (started) started.value = String(Date.now());
+    var status = document.getElementById("form-status");
+    var sendButton = form.querySelector('button[type="submit"]');
+
+    function openEmailApp(data) {
       var body = data.get("message") + "\n\n— " + data.get("name") + " (" + data.get("email") + ")";
       window.location.href = "mailto:teeoff@agatebeachgolf.net?subject=" +
         encodeURIComponent(data.get("subject")) + "&body=" + encodeURIComponent(body);
-      var status = document.getElementById("form-status");
       if (status) status.textContent = "Opening your email app… if nothing happens, email teeoff@agatebeachgolf.net directly.";
+    }
+
+    form.addEventListener("submit", function (event) {
+      event.preventDefault();
+      var data = new FormData(form);
+      if (status) { status.className = "form-status"; status.textContent = "Sending…"; }
+      if (sendButton) sendButton.disabled = true;
+
+      fetch("contact.php", { method: "POST", body: data })
+        .then(function (response) {
+          return response.json().then(
+            function (result) { return { status: response.status, result: result }; },
+            function () { return { status: response.status, result: null }; }
+          );
+        })
+        .then(function (reply) {
+          // No JSON back means contact.php is not on this host, so use the email app instead.
+          if (!reply.result) { openEmailApp(data); return; }
+          if (status) { status.className = "form-status " + (reply.result.ok ? "is-ok" : "is-error"); status.textContent = reply.result.message; }
+          if (reply.result.ok) {
+            form.reset();
+            if (started) started.value = String(Date.now());
+          }
+        })
+        .catch(function () { openEmailApp(data); })
+        .then(function () { if (sendButton) sendButton.disabled = false; });
     });
   }
-
   var year = document.getElementById("year");
   if (year) year.textContent = String(new Date().getFullYear());
 })();
