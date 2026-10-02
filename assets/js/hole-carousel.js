@@ -18,12 +18,14 @@
     for (var i = 0; i < 9; i++) values.push(cells[i] ? parseInt(cells[i].textContent.replace(/,/g, ""), 10) || 0 : 0);
     return values;
   }
-  var yards = readRow("men-yards");
-  var par = readRow("men-par");
-  var hcp = readRow("men-hcp");
+  var men = { label: "Men\u2019s tees", yards: readRow("men-yards"), par: readRow("men-par"), hcp: readRow("men-hcp") };
+  var ladies = { label: "Ladies\u2019 tees", yards: readRow("ladies-yards"), par: readRow("ladies-par"), hcp: readRow("ladies-hcp") };
 
+  // The viewer shows both sets of tees.
   function describe(i) {
-    return "Par " + par[i] + " \u00b7 " + yards[i] + " yds \u00b7 Handicap " + hcp[i] + " \u00b7 Men\u2019s tees";
+    return [men, ladies].map(function (tee) {
+      return tee.label + ": Par " + tee.par[i] + " \u00b7 " + tee.yards[i] + " yds \u00b7 Handicap " + tee.hcp[i];
+    });
   }
 
   var active = 0;
@@ -91,7 +93,15 @@
     badge.textContent = String(i + 1);
     card.appendChild(badge);
     var info = card.querySelector(".hc-meta");
-    if (info && par[i]) info.textContent = "Par " + par[i] + " \u00b7 " + yards[i] + " yds";
+    if (info && men.par[i]) {
+      info.textContent = "";
+      [["Men", men], ["Ladies", ladies]].forEach(function (pair) {
+        var line = document.createElement("span");
+        line.className = "hc-meta-line";
+        line.textContent = pair[0] + " \u00b7 Par " + pair[1].par[i] + " \u00b7 " + pair[1].yards[i] + " yds";
+        info.appendChild(line);
+      });
+    }
     // The top card opens the viewer; tapping any other card brings it to the top.
     card.addEventListener("click", function () {
       if (suppressClick) return;

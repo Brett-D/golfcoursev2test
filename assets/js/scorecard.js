@@ -30,8 +30,8 @@
 
   function freshState() {
     var players = [];
-    for (var i = 0; i < MAX_PLAYERS; i++) players.push({ name: "", scores: blankScores() });
-    return { tee: "men", holes: 9, count: 1, players: players };
+    for (var i = 0; i < MAX_PLAYERS; i++) players.push({ name: "", tee: "men", scores: blankScores() });
+    return { holes: 9, count: 1, players: players };
   }
 
   function loadState() {
@@ -39,13 +39,15 @@
     try {
       var saved = JSON.parse(window.localStorage.getItem(STORAGE_KEY));
       if (!saved) return state;
-      if (tees[saved.tee]) state.tee = saved.tee;
       if (saved.holes === 18) state.holes = 18;
       state.count = Math.min(MAX_PLAYERS, Math.max(1, parseInt(saved.count, 10) || 1));
       state.players.forEach(function (player, index) {
         var source = saved.players && saved.players[index];
         if (!source) return;
         player.name = String(source.name || "").slice(0, 24);
+        // Older saved rounds had one set of tees for everybody.
+        var savedTee = source.tee || saved.tee;
+        if (tees[savedTee]) player.tee = savedTee;
         for (var i = 0; i < 18; i++) {
           var value = source.scores && source.scores[i];
           player.scores[i] = /^\d{1,2}$/.test(String(value)) ? String(value) : "";
@@ -82,7 +84,7 @@
 
   // ---------- Hole layout pictures ----------
   // Small picture beside each hole. Mouse hover shows a larger preview; click or tap opens a full viewer.
-  var ASSET_VERSION = "20261002-15"; // set by tools/bump-version.ps1; changes the picture URLs so caches fetch new files
+  var ASSET_VERSION = "20261002-20"; // set by tools/bump-version.ps1; changes the picture URLs so caches fetch new files
   var HOLE_PATH = "assets/images/holes/vector/hole-";
   var peek;
   var peekImage;
@@ -146,15 +148,44 @@
     HoleViewer.open(index, {
       count: state.holes,
       describe: function (i) {
-        var tee = tees[state.tee];
         var slot = i % 9;
-        return "Par " + tee.par[slot] + " \u00b7 " + tee.yards[slot] + " yds \u00b7 Handicap " + tee.hcp[slot] + " \u00b7 " + tee.label;
+        return usedTees().map(function (key) {
+          var tee = tees[key];
+          return tee.label + ": Par " + tee.par[slot] + " \u00b7 " + tee.yards[slot] + " yds \u00b7 Handicap " + tee.hcp[slot];
+        });
       }
     });
   }
   var table;
   var totalCells = [];
   var inputs = [];
+
+  // The sets of tees the players on this card are using (men's first), and a player's own tee set.
+  function usedTees() {
+    var keys = [];
+    for (var p = 0; p < state.count; p++) {
+      if (keys.indexOf(state.players[p].tee) < 0) keys.push(state.players[p].tee);
+    }
+    keys.sort(function (a, b) { return a === b ? 0 : (a === "men" ? -1 : 1); });
+    return keys;
+  }
+
+  function teeOf(playerIndex) { return tees[state.players[playerIndex].tee]; }
+
+  // A yardage/par cell. With one set of tees it is a plain number; with men and ladies in the group it shows both,
+  // in the printed card's colours (blue men, red ladies). Par is only doubled up where the two differ.
+  function teeCell(keys, valueFor, className, collapseEqual) {
+    var cell = el("td", className || "");
+    var values = keys.map(valueFor);
+    if (keys.length === 1 || (collapseEqual && values.every(function (v) { return v === values[0]; }))) {
+      cell.textContent = values[0];
+    } else {
+      keys.forEach(function (key, index) {
+        cell.appendChild(el("span", "tee-line tee-" + key, values[index]));
+      });
+    }
+    return cell;
+  }
 
   function selectField(id, label, options, current, onChange) {
     var wrap = el("div", "sc-field");
@@ -179,12 +210,8 @@
     totalCells = [];
     inputs = [];
 
-    var tee = tees[state.tee];
+    var keys = usedTees();
     var controls = el("div", "sc-controls");
-    controls.appendChild(selectField("sc-tee", "Tees", [
-      { value: "men", label: tees.men.label },
-      { value: "ladies", label: tees.ladies.label }
-    ], state.tee, function (value) { state.tee = value; save(); build(); }));
     controls.appendChild(selectField("sc-holes", "Round", [
       { value: 9, label: "9 holes" },
       { value: 18, label: "18 holes" }
@@ -221,6 +248,15 @@
           save();
         });
         th.appendChild(input);
+        var teeButton = el("button", "sc-tee-btn is-" + state.players[index].tee, state.players[index].tee === "men" ? "Men\u2019s" : "Ladies\u2019");
+        teeButton.type = "button";
+        teeButton.setAttribute("aria-label", "Player " + (index + 1) + " plays from the " + tees[state.players[index].tee].label.toLowerCase() + ". Press to switch.");
+        teeButton.addEventListener("click", function () {
+          state.players[index].tee = state.players[index].tee === "men" ? "ladies" : "men";
+          save();
+          build();
+        });
+        th.appendChild(teeButton);
         head.appendChild(th);
       })(p);
     }
@@ -233,8 +269,8 @@
     function summaryRow(label, from, to, className) {
       var row = el("tr", "sc-sum " + (className || ""));
       row.appendChild(el("th", "", label));
-      row.appendChild(el("td", "", sum(tee.yards.concat(tee.yards).slice(from, to)).toLocaleString("en-US")));
-      row.appendChild(el("td", "", String(sum(tee.par.concat(tee.par).slice(from, to)))));
+      row.appendChild(teeCell(keys, function (key) { return sum(tees[key].yards.concat(tees[key].yards).slice(from, to)).toLocaleString("en-US"); }));
+      row.appendChild(teeCell(keys, function (key) { return String(sum(tees[key].par.concat(tees[key].par).slice(from, to))); }, "", true));
       for (var p = 0; p < state.count; p++) {
         var cell = el("td", "", "\u2013");
         totalCells.push({ cell: cell, player: p, from: from, to: to, kind: "sum" });
@@ -248,8 +284,8 @@
       var holeHead = el("th", "sc-hole");
       holeHead.appendChild(holeButton(hole));
       row.appendChild(holeHead);
-      row.appendChild(el("td", "", String(tee.yards[hole % 9])));
-      row.appendChild(el("td", "sc-par", String(tee.par[hole % 9])));
+      row.appendChild(teeCell(keys, function (key) { return String(tees[key].yards[hole % 9]); }));
+      row.appendChild(teeCell(keys, function (key) { return String(tees[key].par[hole % 9]); }, "sc-par", true));
       for (var q = 0; q < state.count; q++) {
         (function (holeIndex, playerIndex) {
           var cell = el("td", "sc-score");
@@ -305,7 +341,9 @@
     });
     actions.appendChild(reset);
     root.appendChild(actions);
-    root.appendChild(el("p", "note", "Scores are saved on this device only, so you can close the page and pick up where you left off."));
+    root.appendChild(el("p", "note", "Tap the tee button under each name to choose men\u2019s or ladies\u2019 tees, so a mixed group gets the right yardage and par. " +
+      (keys.length > 1 ? "Blue is the men\u2019s tees and red is the ladies\u2019 tees. " : "") +
+      "Scores are saved on this device only, so you can close the page and pick up where you left off."));
 
     refresh();
   }
@@ -320,16 +358,15 @@
   }
 
   function refresh() {
-    var par = tees[state.tee].par;
-
     inputs.forEach(function (item) {
       var value = state.players[item.player].scores[item.hole];
-      var cls = value ? scoreClass(parseInt(value, 10), par[item.hole % 9]) : "";
+      var cls = value ? scoreClass(parseInt(value, 10), teeOf(item.player).par[item.hole % 9]) : "";
       item.input.className = cls;
     });
 
     totalCells.forEach(function (item) {
       var scores = state.players[item.player].scores;
+      var par = teeOf(item.player).par;
       var total = 0;
       var parPlayed = 0;
       var played = 0;
