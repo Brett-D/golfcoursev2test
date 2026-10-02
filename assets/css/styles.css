@@ -86,6 +86,8 @@ ul { padding-left: 1.2em; }
 .nav-menu a:hover, .nav-menu a[aria-current="page"] { color: var(--gold-soft); }
 .nav-menu .nav-cta { margin-top: 0.9rem; text-align: center; border: 0; color: var(--navy-deep); }
 .nav-menu .nav-cta:hover { color: var(--navy-deep); }
+/* Shortcut shown only in the mobile menu. */
+.nav-mobile-only { display: list-item; }
 
 @media (min-width: 1100px) {
   .nav-toggle { display: none; }
@@ -93,6 +95,8 @@ ul { padding-left: 1.2em; }
   .nav-menu a { padding: 0.5rem 0.8rem; border: 0; border-radius: 999px; font-size: 0.95rem; }
   .nav-menu a[aria-current="page"] { background: rgba(255, 255, 255, 0.14); }
   .nav-menu .nav-cta { margin: 0 0 0 0.6rem; }
+
+  .nav-mobile-only { display: none; }
 }
 
 /* ---------- Buttons ---------- */
