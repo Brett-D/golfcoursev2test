@@ -181,9 +181,16 @@ ul { padding-left: 1.2em; }
 .hero-page { min-height: 46vh; padding-bottom: 3.5rem; }
 /* Phones: the home banner keeps a short title, one line of text and the Book Tee Time button at the bottom, so the photo and the moving ocean stay in view. */
 @media (max-width: 600px) {
-  /* A shorter banner means the photo is scaled down to fit it, so far more of the scene (and the ocean) fits across the screen. */
-  .hero:not(.hero-page) { min-height: 56vh; padding-bottom: 1.4rem; }
-  .hero[data-video] > .parallax-bg:not(.is-still) { height: calc(56vh + 72px); }
+  /* The banner is 4/5 of the screen: the photo is scaled down so about half of its width shows, sits at the top with nothing over it,
+     and fades into the navy underneath, where the title and button go. The video lines up with the photo. */
+  .hero:not(.hero-page) { min-height: 80vh; padding-bottom: 1.4rem; }
+  .hero[data-video] > .parallax-bg:not(.is-still) { height: calc(80vh + 72px); }
+  .hero[data-video] > .parallax-bg { background-size: auto 66% !important; background-position: center top !important; }
+  .hero[data-video] > .parallax-bg .parallax-video { inset: 0 0 auto 0; height: 66%; }
+  .hero[data-video] > .parallax-bg::after {
+    content: ""; position: absolute; left: 0; right: 0; top: 52%; height: 14%;
+    background: linear-gradient(to bottom, rgba(12, 33, 57, 0), rgb(12, 33, 57));
+  }
   .hero:not(.hero-page) .eyebrow, .hero:not(.hero-page) .btn-outline { display: none; }
   .hero:not(.hero-page) .lead { font-size: 0.95rem; line-height: 1.45; margin-bottom: 1rem; }
   .hero:not(.hero-page) h1 { font-size: clamp(1.55rem, 6.6vw, 1.95rem); max-width: 15ch; margin-bottom: 0.8rem; }
