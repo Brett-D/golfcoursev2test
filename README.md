@@ -27,10 +27,8 @@ assets/
   images/          optimized photos, scorecard, map and logos
 data/
   rates.json       golf rates shown on the Home and Golf Rates pages
-  notices.json     course notices copied from ForeUp (updated automatically)
-scripts/
-  fetch-notices.mjs copies the ForeUp welcome message into data/notices.json
-.github/workflows/update-notices.yml  runs that script every 30 minutes
+  notices.json     saved copy of the ForeUp notices (kept up to date by notices.php)
+notices.php       reads the ForeUp notices on PHP hosting (Bluehost)
 ```
 
 ## Editing prices
@@ -45,7 +43,9 @@ All golf rates live in [`data/rates.json`](data/rates.json). Edit that file (or 
 
 ## Course notices
 
-The notices under the Driving Range banner on the home page are the welcome message from the ForeUp booking page. ForeUp does not allow other sites to read it directly, so a GitHub Action ([update-notices.yml](.github/workflows/update-notices.yml)) copies it into [data/notices.json](data/notices.json) every 30 minutes and commits the change. Edit the message in ForeUp as usual; it appears on the site within about an hour. To refresh immediately, open the repo's Actions tab, choose *Update course notices* and click *Run workflow*. The banner hides itself when the message is empty.
+The notices under the Driving Range banner on the home page are the welcome message from the ForeUp booking page. ForeUp does not let other sites read it from the browser, so [notices.php](notices.php) reads it on the server and answers with JSON. It saves the result to [data/notices.json](data/notices.json) and only asks ForeUp again once that copy is more than 20 minutes old (and, if ForeUp is down, keeps serving the last saved copy). Edit the message in ForeUp as usual; it shows up on the site within about 20 minutes. The banner hides itself when the message is empty.
+
+Upload `notices.php` next to `index.html` and make sure the `data/` folder is writable by PHP (the Bluehost default). Hosts without PHP, such as GitHub Pages, simply show the saved `data/notices.json` and never update it.
 
 ## Embeds
 
@@ -64,4 +64,4 @@ The notices under the Driving Range banner on the home page are the welcome mess
 python -m http.server 8000
 ```
 
-Then open <http://localhost:8000>. The site can be hosted as-is on GitHub Pages.
+Then open <http://localhost:8000>. The site can be hosted as-is on GitHub Pages or any web host. On PHP hosting such as Bluehost, add [notices.php](notices.php) so the course notices stay current.

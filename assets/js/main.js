@@ -208,14 +208,18 @@
       });
   }
 
-  // Course notices are synced from the ForeUp booking page into data/notices.json (see scripts/fetch-notices.mjs).
+  // Course notices come from the ForeUp booking page. notices.php reads it on PHP hosting (Bluehost);
+  // anywhere else the saved copy in data/notices.json is used.
   var noticeBox = document.querySelector("[data-notices]");
   if (noticeBox) {
-    fetch("data/notices.json", { cache: "no-cache" })
-      .then(function (response) {
+    var loadJson = function (url) {
+      return fetch(url, { cache: "no-cache" }).then(function (response) {
         if (!response.ok) throw new Error("HTTP " + response.status);
         return response.json();
-      })
+      });
+    };
+    loadJson("notices.php")
+      .catch(function () { return loadJson("data/notices.json"); })
       .then(function (data) {
         var messages = (data && data.messages) || [];
         messages.forEach(function (message) {
