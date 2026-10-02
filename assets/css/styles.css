@@ -12,8 +12,8 @@
   --blue: #1f5f93;
   --green: #2d6a4f;
   --green-dark: #1f4d39;
-  --accent: #8ec5ff;      /* main accent (buttons, strips, highlights) */
-  --accent-soft: #dbeeff; /* light version of the accent (text on navy, soft backgrounds) */
+  --accent: #dcc8a2;      /* main accent (buttons, strips, highlights) */
+  --accent-soft: #f3eadb; /* light version of the accent (text on navy, soft backgrounds) */
   --sand: #f5efe3;
   --cream: #fbf9f4;
   --ink: #1d2733;
@@ -442,7 +442,7 @@ input:focus, textarea:focus, select:focus { outline: 0; border-color: var(--blue
   border-radius: 10px; font-variant-numeric: lining-nums;
 }
 .sc-entry .sc-score input.is-birdie { border-color: var(--green); background: #e5f2ea; color: var(--green-dark); border-radius: 50%; }
-.sc-entry .sc-score input.is-eagle { border-color: var(--accent); background: #e6f2ff; color: var(--navy); border-radius: 50%; box-shadow: 0 0 0 3px var(--accent-soft); }
+.sc-entry .sc-score input.is-eagle { border-color: var(--accent); background: #f3eadb; color: var(--navy); border-radius: 50%; box-shadow: 0 0 0 3px var(--accent-soft); }
 .sc-entry .sc-score input.is-bogey { border-color: #c9bfa8; background: #f7f3ea; }
 .sc-entry .sc-score input.is-double { border-color: #a3352f; background: #fbeceb; color: #a3352f; }
 .sc-entry .sc-sum th, .sc-entry .sc-sum td { background: var(--sand); font-weight: 700; color: var(--navy); }
