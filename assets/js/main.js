@@ -56,22 +56,25 @@
   var fineHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
   var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-  if (!calm) {
-    Array.prototype.forEach.call(document.querySelectorAll(".hero, .band"), function (section) {
-      var image = section.style.backgroundImage;
-      if (!image) return;
-      var layer = document.createElement("div");
-      layer.className = "parallax-bg";
-      layer.setAttribute("aria-hidden", "true");
-      layer.style.backgroundImage = image;
-      layer.style.backgroundPosition = section.style.backgroundPosition || "center";
-      section.insertBefore(layer, section.firstChild);
-      section.style.backgroundImage = "none";
-    });
-  }
+  // Photos are pinned to the viewport so the page scrolls over them. The top banner on inner pages
+  // stays centred and still; everything else (and the home banner) also follows the mouse.
+  var isHome = here === "index.html";
+  Array.prototype.forEach.call(document.querySelectorAll(".hero, .band"), function (section) {
+    var image = section.style.backgroundImage;
+    if (!image) return;
+    var layer = document.createElement("div");
+    var topBanner = section.classList.contains("hero") && !isHome;
+    layer.className = "parallax-bg" + (calm ? " is-still" : topBanner ? " pin-top" : "");
+    layer.setAttribute("aria-hidden", "true");
+    layer.style.backgroundImage = image;
+    layer.style.backgroundPosition = section.style.backgroundPosition || "center";
+    section.insertBefore(layer, section.firstChild);
+    section.style.backgroundImage = "none";
+  });
 
   if (fineHover && !calm) {
-    var targets = document.querySelectorAll(".hero, .band, .frame, .photo-card, .gallery a");
+    var selector = ".band, .frame, .photo-card, .gallery a" + (isHome ? ", .hero" : "");
+    var targets = document.querySelectorAll(selector);
     Array.prototype.forEach.call(targets, function (el) {
       el.addEventListener("pointermove", function (event) {
         var box = el.getBoundingClientRect();
@@ -85,6 +88,66 @@
         el.classList.remove("is-hover");
       });
     });
+  }
+  // Rates come from data/rates.json so prices can be changed without touching the HTML.
+  function el(tag, className, text) {
+    var node = document.createElement(tag);
+    if (className) node.className = className;
+    if (text !== undefined) node.textContent = text;
+    return node;
+  }
+
+  function renderRates(data) {
+    Array.prototype.forEach.call(document.querySelectorAll("[data-rates]"), function (grid) {
+      var homeOnly = grid.getAttribute("data-rates") === "home";
+      grid.textContent = "";
+      data.cards.forEach(function (card) {
+        if (homeOnly && !card.home) return;
+        var box = el("div", "rate-card");
+        if (card.id) box.id = card.id;
+        var head = el("header");
+        head.appendChild(el("h3", "", card.title));
+        if (card.subtitle) head.appendChild(el("p", "", card.subtitle));
+        box.appendChild(head);
+        (card.items || []).forEach(function (item) {
+          var row = el("div", "rate-row");
+          row.appendChild(el("span", "", item.label));
+          row.appendChild(el("span", "price", item.price));
+          box.appendChild(row);
+        });
+        grid.appendChild(box);
+      });
+    });
+    Array.prototype.forEach.call(document.querySelectorAll("[data-rates-updated]"), function (node) {
+      node.textContent = data.updated || "";
+    });
+    if (data.range_note) {
+      Array.prototype.forEach.call(document.querySelectorAll("[data-rates-note]"), function (node) {
+        node.textContent = data.range_note;
+      });
+    }
+    if (window.location.hash) {
+      var target = document.getElementById(window.location.hash.slice(1));
+      if (target) target.scrollIntoView();
+    }
+  }
+
+  if (document.querySelector("[data-rates]")) {
+    fetch("data/rates.json", { cache: "no-cache" })
+      .then(function (response) {
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        return response.json();
+      })
+      .then(renderRates)
+      .catch(function () {
+        Array.prototype.forEach.call(document.querySelectorAll("[data-rates]"), function (grid) {
+          grid.textContent = "";
+          grid.appendChild(el("p", "note", "Rates are unavailable right now. Please call the pro shop at (541) 265-7331."));
+        });
+        Array.prototype.forEach.call(document.querySelectorAll("[data-rates-updated]"), function (node) {
+          node.parentElement.hidden = true;
+        });
+      });
   }
 
   // The Facebook Page plugin needs a pixel width between 180 and 500.

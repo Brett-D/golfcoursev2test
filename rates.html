@@ -8,7 +8,7 @@
 <meta property="og:title" content="Golf Rates | Agate Beach Golf Course">
 <meta property="og:description" content="Greens fees, twilight rates, cart, pull cart, club rental and range ball prices at Agate Beach Golf Course in Newport, Oregon.">
 <meta property="og:image" content="assets/images/aerial.jpg">
-<link rel="icon" href="assets/images/logo.jpg" type="image/jpeg">
+<link rel="icon" href="assets/images/logo.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
 <header class="site-header">
   <div class="container nav">
     <a class="brand" href="index.html">
-      <img src="assets/images/logo.jpg" alt="" width="50" height="50">
+      <img src="assets/images/logo.png" alt="" width="50" height="50">
       <span>
         <span class="brand-name">Agate Beach Golf Course</span>
         <span class="brand-tag">Newport, Oregon &middot; Est. 1931</span>
@@ -43,7 +43,7 @@
 </header>
 
 <main id="main">
-  <section class="hero hero-page" style="background-image:url('assets/images/sunset-snag.jpg');background-position:center 55%">
+  <section class="hero hero-page" style="background-image:url('assets/images/sunset-snag.jpg');background-position:center">
     <div class="container">
       <p class="eyebrow">Pricing</p>
       <h1>Golf Rates</h1>
@@ -58,37 +58,10 @@
       <div class="section-head center reveal">
         <p class="eyebrow">Golf Rates</p>
         <h2>Greens Fees &amp; Rentals</h2>
-        <p class="lead">Updated 6/8/2026</p>
+        <p class="lead">Updated <span data-rates-updated>&hellip;</span></p>
       </div>
-      <div class="rate-grid cols-3">
-        <div class="rate-card reveal"><header><h3>Greens Fees</h3><p>7:00 am &ndash; 2:52 pm</p></header>
-          <div class="rate-row"><span>9 holes</span><span class="price">$24</span></div>
-          <div class="rate-row"><span>18 holes</span><span class="price">$42</span></div>
-        </div>
-        <div class="rate-card reveal"><header><h3>Twilight</h3><p>3:00 pm &ndash; Dusk</p></header>
-          <div class="rate-row"><span>9 holes</span><span class="price">$20</span></div>
-          <div class="rate-row"><span>18 holes</span><span class="price">$32</span></div>
-        </div>
-        <div class="rate-card reveal"><header><h3>Golf Cart Rental</h3><p>Power golf cars</p></header>
-          <div class="rate-row"><span>9 holes</span><span class="price">$14</span></div>
-          <div class="rate-row"><span>18 holes</span><span class="price">$28</span></div>
-        </div>
-        <div class="rate-card reveal"><header><h3>Pull Cart</h3><p>Rental pull carts</p></header>
-          <div class="rate-row"><span>9 holes</span><span class="price">$3</span></div>
-          <div class="rate-row"><span>18 holes</span><span class="price">$5</span></div>
-        </div>
-        <div class="rate-card reveal"><header><h3>Golf Club Rental</h3><p>Left- &amp; right-handed sets</p></header>
-          <div class="rate-row"><span>9 holes</span><span class="price">$8</span></div>
-          <div class="rate-row"><span>18 holes</span><span class="price">$12</span></div>
-        </div>
-        <div id="range">
-        <div class="rate-card reveal"><header><h3>Range Balls</h3><p>Iron-only driving range</p></header>
-          <div class="rate-row"><span>30 balls</span><span class="price">$4</span></div>
-          <div class="rate-row"><span>75 balls</span><span class="price">$8</span></div>
-        </div>
-        </div>
-      </div>
-      <p class="note" style="text-align:center;margin-top:2rem">The Driving Range is open 7&ndash;5:30 pm. Range is restricted to irons only.</p>
+      <div class="rate-grid cols-3 reveal" data-rates="all"></div>
+      <p class="note" style="text-align:center;margin-top:2rem" data-rates-note>The Driving Range is open 7&ndash;5:30 pm. Range is restricted to irons only.</p>
     </div>
   </section>
 

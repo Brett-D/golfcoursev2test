@@ -301,13 +301,7 @@ figure { margin: 0; }
 .dog { padding-left: 1rem; border-left: 3px solid var(--gold); }
 .dog h4 { font-family: var(--font-body); font-size: 0.95rem; letter-spacing: 0.14em; text-transform: uppercase; margin: 0; color: var(--white); }
 .dog p { margin: 0; font-size: 0.95rem; color: rgba(255, 255, 255, 0.78); }
-.price-badge { display: inline-block; background: var(--gold); color: var(--navy-deep); font-weight: 700; padding: 0.35rem 1rem; border-radius: 999px; font-size: 0.95rem; }
 
-.menu-images { display: grid; gap: 1.5rem; }
-@media (min-width: 700px) { .menu-images { grid-template-columns: repeat(2, 1fr); } }
-.menu-images a { display: block; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); }
-.menu-images img { width: 100%; transition: transform 0.4s; }
-.menu-images a:hover img { transform: scale(1.02); }
 
 /* ---------- Visit: map + Facebook ---------- */
 .visit { display: grid; gap: 2rem; }
@@ -369,3 +363,24 @@ input:focus, textarea:focus, select:focus { outline: 0; border-color: var(--blue
   .js .reveal { opacity: 1; transform: none; transition: none; }
   .btn, .card, .photo-card img, .gallery img, .frame img, .frame::before, .parallax-bg { transition: none; }
 }
+
+/* ---------- Clubhouse logo overlays ---------- */
+.hero-split { display: flex; flex-direction: column-reverse; align-items: flex-start; gap: 1.5rem; }
+.hero-logo {
+  width: clamp(120px, 34vw, 160px); height: auto; border-radius: 50%; flex: none;
+  border: 4px solid rgba(255, 255, 255, 0.92); box-shadow: 0 18px 50px rgba(0, 0, 0, 0.45);
+}
+@media (min-width: 800px) {
+  .hero-split { flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 3rem; }
+  .hero-logo { width: clamp(190px, 20vw, 260px); }
+}
+.frame .logo-badge {
+  position: absolute; z-index: 2; left: -1.2rem; bottom: 2.2rem; width: clamp(96px, 20%, 150px); height: auto; border-radius: 50%;
+  border: 4px solid var(--white); box-shadow: var(--shadow); filter: none;
+}
+@media (max-width: 640px) { .frame .logo-badge { left: 0.6rem; } }
+
+/* Reduced motion: photo stays centred and still. */
+.parallax-bg.is-still { position: absolute; inset: 0; width: auto; height: auto; transform: none; transition: none; will-change: auto; }
+/* Inner-page top banner: pinned, with the photo's centre sitting in the middle of the banner. */
+.parallax-bg.pin-top { top: calc(-36px - 27vh); transform: none; transition: none; }

@@ -7,8 +7,8 @@
 <meta name="description" content="Agate Beach Golf Course in Newport, Oregon: a family-run nine-hole course since 1931 with a pro shop, lessons, driving range and coffee shop right off Highway 101.">
 <meta property="og:title" content="Agate Beach Golf Course | Newport, Oregon">
 <meta property="og:description" content="Agate Beach Golf Course in Newport, Oregon: a family-run nine-hole course since 1931 with a pro shop, lessons, driving range and coffee shop right off Highway 101.">
-<meta property="og:image" content="assets/images/aerial.jpg">
-<link rel="icon" href="assets/images/logo.jpg" type="image/jpeg">
+<meta property="og:image" content="assets/images/aerial-enhanced.jpg">
+<link rel="icon" href="assets/images/logo.png" type="image/png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=Playfair+Display:wght@600;700&amp;display=swap" rel="stylesheet">
@@ -20,7 +20,7 @@
 <header class="site-header">
   <div class="container nav">
     <a class="brand" href="index.html">
-      <img src="assets/images/logo.jpg" alt="" width="50" height="50">
+      <img src="assets/images/logo.png" alt="" width="50" height="50">
       <span>
         <span class="brand-name">Agate Beach Golf Course</span>
         <span class="brand-tag">Newport, Oregon &middot; Est. 1931</span>
@@ -43,7 +43,7 @@
 </header>
 
 <main id="main">
-  <section class="hero " style="background-image:url('assets/images/aerial.jpg');background-position:center 40%">
+  <section class="hero " style="background-image:url('assets/images/aerial-enhanced.jpg');background-position:center 40%">
     <div class="container">
       <p class="eyebrow">Newport, Oregon &middot; Est. 1931</p>
       <h1>A Family Tradition on the Oregon Coast</h1>
@@ -145,6 +145,7 @@
     <div class="container split">
       <figure class="frame flip reveal">
         <img src="assets/images/cafe.jpg" alt="Dining area of The Clubhouse coffee shop with teal chairs and a service counter" width="1600" height="1200" loading="lazy">
+        <img class="logo-badge" src="assets/images/clubhouse-logo.png" alt="The Clubhouse Cafe logo" width="420" height="420" loading="lazy">
       </figure>
       <div class="reveal">
         <p class="eyebrow">Coffee Shop</p>
@@ -161,16 +162,9 @@
       <div class="section-head center reveal">
         <p class="eyebrow">Golf Rates</p>
         <h2>Simple, Friendly Pricing</h2>
-        <p class="lead">Updated 6/8/2026</p>
+        <p class="lead">Updated <span data-rates-updated>&hellip;</span></p>
       </div>
-      <div class="rate-grid reveal">
-        <div class="rate-card"><header><h3>Greens Fees</h3><p>7:00 am &ndash; 2:52 pm</p></header>
-          <div class="rate-row"><span>9 holes</span><span class="price">$24</span></div>
-          <div class="rate-row"><span>18 holes</span><span class="price">$42</span></div></div>
-        <div class="rate-card"><header><h3>Twilight</h3><p>3:00 pm &ndash; Dusk</p></header>
-          <div class="rate-row"><span>9 holes</span><span class="price">$20</span></div>
-          <div class="rate-row"><span>18 holes</span><span class="price">$32</span></div></div>
-      </div>
+      <div class="rate-grid reveal" data-rates="home"></div>
       <p class="center" style="text-align:center;margin-top:2rem"><a class="btn btn-outline-dark" href="rates.html">All Rates &amp; Rentals</a></p>
     </div>
   </section>

@@ -1,0 +1,57 @@
+{
+  "updated": "6/8/2026",
+  "range_note": "The Driving Range is open 7 to 5:30 pm. Range is restricted to irons only.",
+  "cards": [
+    {
+      "title": "Greens Fees",
+      "subtitle": "7:00 am to 2:52 pm",
+      "home": true,
+      "items": [
+        { "label": "9 holes", "price": "$24" },
+        { "label": "18 holes", "price": "$42" }
+      ]
+    },
+    {
+      "title": "Twilight",
+      "subtitle": "3:00 pm to Dusk",
+      "home": true,
+      "items": [
+        { "label": "9 holes", "price": "$20" },
+        { "label": "18 holes", "price": "$32" }
+      ]
+    },
+    {
+      "title": "Golf Cart Rental",
+      "subtitle": "Power golf cars",
+      "items": [
+        { "label": "9 holes", "price": "$14" },
+        { "label": "18 holes", "price": "$28" }
+      ]
+    },
+    {
+      "title": "Pull Cart",
+      "subtitle": "Rental pull carts",
+      "items": [
+        { "label": "9 holes", "price": "$3" },
+        { "label": "18 holes", "price": "$5" }
+      ]
+    },
+    {
+      "title": "Golf Club Rental",
+      "subtitle": "Left & right handed sets",
+      "items": [
+        { "label": "9 holes", "price": "$8" },
+        { "label": "18 holes", "price": "$12" }
+      ]
+    },
+    {
+      "id": "range",
+      "title": "Range Balls",
+      "subtitle": "Iron-only driving range",
+      "items": [
+        { "label": "30 balls", "price": "$4" },
+        { "label": "75 balls", "price": "$8" }
+      ]
+    }
+  ]
+}
