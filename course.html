@@ -57,10 +57,10 @@
       <div class="reveal">
         <p class="eyebrow">Course Layout</p>
         <h2>Nine Holes, Par 36</h2>
-        <p class="lead">Fairly level with gently rolling terrain, surrounded by lush woods and well maintained all year.</p>
-        <p>The original course was designed by Frank Stenzel, Sr. Play it once for nine or loop it twice for eighteen &mdash; the card below is the same nine both times. The course is especially suited for year-round play.</p>
-        <p>Before you head out, check in at the pro shop. Players 18 holes should check in again after finishing the first nine.</p>
-        <div class="btn-row"><a class="btn btn-gold" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a><a class="btn btn-outline-dark" href="assets/images/scorecard.jpg" target="_blank" rel="noopener">Printable Scorecard</a></div>
+        <p class="lead">A fairly level nine with gently rolling terrain, surrounded by lush woods and well maintained all year.</p>
+        <p>The original course was designed by Frank Stenzel, Sr. It is a nine-hole, par 36 layout, and you can play it once for nine holes or twice for eighteen. The scorecard below lists the nine holes; for eighteen, you play the same nine a second time.</p>
+        <p>Please check in at the pro shop before you play. If you are playing eighteen, check in again after the ninth hole.</p>
+        <div class="btn-row"><a class="btn btn-gold" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a><a class="btn btn-outline-dark" href="assets/images/scorecard.jpg" target="_blank" rel="noopener">Printable Scorecard</a><a class="btn btn-outline-dark" href="#my-scorecard">Digital Scorecard</a></div>
       </div>
       <figure class="frame reveal">
         <a href="assets/images/course-map.jpg" target="_blank" rel="noopener"><img src="assets/images/course-map.jpg" alt="Course map and rules: nine holes with the driving range, practice area and clubhouse pro shop" width="1024" height="768" loading="lazy"></a>
@@ -79,12 +79,12 @@
         <table class="scorecard">
           <thead><tr><th scope="col">Hole</th><th scope="col">1</th><th scope="col">2</th><th scope="col">3</th><th scope="col">4</th><th scope="col">5</th><th scope="col">6</th><th scope="col">7</th><th scope="col">8</th><th scope="col">9</th><th scope="col">Out</th></tr></thead>
           <tbody>
-            <tr class="men"><th scope="row">Men&rsquo;s yardage</th><td>321</td><td>310</td><td>157</td><td>351</td><td>378</td><td>501</td><td>324</td><td>115</td><td>448</td><td class="tot">2,905</td></tr>
+            <tr class="men" data-row="men-yards"><th scope="row">Men&rsquo;s yardage</th><td>321</td><td>310</td><td>157</td><td>351</td><td>378</td><td>501</td><td>324</td><td>115</td><td>448</td><td class="tot">2,905</td></tr>
             <tr class="men"><th scope="row">Men&rsquo;s handicap</th><td>11</td><td>13</td><td>15</td><td>9</td><td>1</td><td>3</td><td>7</td><td>17</td><td>5</td><td class="tot"></td></tr>
-            <tr class="par"><th scope="row">Men&rsquo;s par</th><td>4</td><td>4</td><td>3</td><td>4</td><td>4</td><td>5</td><td>4</td><td>3</td><td>5</td><td class="tot">36</td></tr>
-            <tr class="ladies"><th scope="row">Ladies&rsquo; yardage</th><td>312</td><td>292</td><td>136</td><td>342</td><td>357</td><td>463</td><td>312</td><td>102</td><td>353</td><td class="tot">2,669</td></tr>
+            <tr class="par" data-row="men-par"><th scope="row">Men&rsquo;s par</th><td>4</td><td>4</td><td>3</td><td>4</td><td>4</td><td>5</td><td>4</td><td>3</td><td>5</td><td class="tot">36</td></tr>
+            <tr class="ladies" data-row="ladies-yards"><th scope="row">Ladies&rsquo; yardage</th><td>312</td><td>292</td><td>136</td><td>342</td><td>357</td><td>463</td><td>312</td><td>102</td><td>353</td><td class="tot">2,669</td></tr>
             <tr class="ladies"><th scope="row">Ladies&rsquo; handicap</th><td>11</td><td>13</td><td>15</td><td>9</td><td>5</td><td>1</td><td>7</td><td>17</td><td>3</td><td class="tot"></td></tr>
-            <tr class="par"><th scope="row">Ladies&rsquo; par</th><td>4</td><td>4</td><td>3</td><td>5</td><td>5</td><td>5</td><td>4</td><td>3</td><td>5</td><td class="tot">38</td></tr>
+            <tr class="par" data-row="ladies-par"><th scope="row">Ladies&rsquo; par</th><td>4</td><td>4</td><td>3</td><td>5</td><td>5</td><td>5</td><td>4</td><td>3</td><td>5</td><td class="tot">38</td></tr>
           </tbody>
         </table>
       </div>
@@ -92,7 +92,17 @@
     </div>
   </section>
 
-  <section class="section" id="rules">
+  <section class="section" id="my-scorecard">
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Digital Scorecard</p>
+        <h2>Keep Your Score</h2>
+        <p class="lead">Pick your tees, add your group and tap in your strokes after each hole.</p>
+      </div>
+      <div class="reveal" id="digital-scorecard"><noscript><p class="note">The digital scorecard needs JavaScript. Use the printable scorecard instead.</p></noscript></div>
+    </div>
+  </section>
+  <section class="section section-sand" id="rules">
     <div class="container split" style="align-items:start">
       <div class="reveal">
         <p class="eyebrow">Rules &amp; Etiquette</p>
@@ -177,5 +187,6 @@
 </footer>
 
 <script src="assets/js/main.js"></script>
+<script src="assets/js/scorecard.js"></script>
 </body>
 </html>

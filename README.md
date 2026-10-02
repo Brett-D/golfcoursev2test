@@ -9,7 +9,7 @@ small JavaScript file. No build step.
 | File | Purpose |
 | --- | --- |
 | `index.html` | Home: hero, about, signature hole 8, services, gallery, coffee shop, rates, map and Facebook |
-| `course.html` | Scorecard, rules and etiquette |
+| `course.html` | Scorecard, digital scorecard, rules and etiquette |
 | `rates.html` | Green fees, carts, rentals and driving range |
 | `pro-shop.html` | Pro shop information |
 | `coffee-shop.html` | The Clubhouse cafe and Good Dog menu |
@@ -22,6 +22,7 @@ small JavaScript file. No build step.
 assets/
   css/styles.css   design system and page styles
   js/main.js       mobile nav, parallax, rates loader, Facebook widget sizing, mailto form
+  js/scorecard.js  digital scorecard on the course page (reads yardage/par from the printed table)
   images/          optimized photos, scorecard, map and logos
 data/
   rates.json       golf rates shown on the Home and Golf Rates pages
