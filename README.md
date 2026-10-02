@@ -29,7 +29,8 @@ assets/
   js/scorecard.js  digital scorecard on scorecard.html (reads yardage/par/handicap from the table on that page)
   video/           home hero loop (hero.mp4 + hero.webm; poster is images/hero-poster.jpg)
   images/          optimized photos, scorecard, map and logos
-  images/holes/    hole-1..9.jpg (viewer), -md.jpg (carousel) and -thumb.jpg (scorecard icons), cut from the course map in the printed scorecard PDF
+  images/holes/vector/  hole-1..9.svg, the illustrated hole graphics used on the course page and the scorecard
+  tools/make-hole-svgs.py  rebuilds those graphics from the printed scorecard PDF (see the notes at the top of the file)
 data/
   rates.json       golf rates shown on the Home and Golf Rates pages
   notices.json     saved copy of the ForeUp notices (kept up to date by notices.php)

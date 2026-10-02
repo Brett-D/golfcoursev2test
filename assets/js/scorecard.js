@@ -82,7 +82,7 @@
 
   // ---------- Hole layout pictures ----------
   // Small picture beside each hole. Mouse hover shows a larger preview; click or tap opens a full viewer.
-  var HOLE_PATH = "assets/images/holes/hole-";
+  var HOLE_PATH = "assets/images/holes/vector/hole-";
   var peek;
   var peekImage;
 
@@ -93,7 +93,7 @@
     button.type = "button";
     button.setAttribute("aria-label", "Hole " + (index + 1) + " layout");
     var img = el("img");
-    img.src = HOLE_PATH + holeNumber(index) + "-thumb.jpg";
+    img.src = HOLE_PATH + holeNumber(index) + ".svg";
     img.alt = "";
     img.width = 38;
     img.height = 64;
@@ -128,7 +128,7 @@
     ensurePeek();
     var height = Math.min(window.innerHeight * 0.6, 440);
     peekImage.style.height = height + "px";
-    peekImage.src = HOLE_PATH + holeNumber(index) + ".jpg";
+    peekImage.src = HOLE_PATH + holeNumber(index) + ".svg";
     var rect = button.getBoundingClientRect();
     var top = Math.max(8, Math.min(rect.top + rect.height / 2 - height / 2, window.innerHeight - height - 8));
     var left = Math.min(rect.right + 14, window.innerWidth - 360);

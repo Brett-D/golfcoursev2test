@@ -3,7 +3,7 @@
 window.HoleViewer = (function () {
   "use strict";
 
-  var PATH = "assets/images/holes/hole-";
+  var PATH = "assets/images/holes/vector/hole-";
   var dialog;
   var image;
   var title;
@@ -73,7 +73,7 @@ window.HoleViewer = (function () {
 
   function show(index) {
     current = index;
-    image.src = PATH + ((index % 9) + 1) + ".jpg";
+    image.src = PATH + ((index % 9) + 1) + ".svg";
     image.alt = "Layout of hole " + (index + 1) + ", with the tees at the bottom and the green at the top";
     title.textContent = "Hole " + (index + 1);
     meta.textContent = options.describe(index);
