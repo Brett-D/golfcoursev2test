@@ -9,7 +9,7 @@ import pymupdf,os,math,random,sys
 PDF=sys.argv[1] if len(sys.argv)>1 else "Agate Beach 8.22.pdf"
 dr=pymupdf.open(PDF)[0].get_drawings()
 W,H=400,714
-OUT=os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","assets","images","holes","vector")
+OUT=os.path.normpath(os.path.join(os.path.dirname(os.path.abspath(__file__)),"..","assets","images","holes","vector"))
 os.makedirs(OUT,exist_ok=True)
 
 def path_d(s):
@@ -160,8 +160,20 @@ def build(n,c):
 <rect class="frame-line" x="3" y="3" width="394" height="708" rx="23" fill="none" stroke="#fff" stroke-width="6"/>
 </g>
 </svg>'''
-    open(OUT+rf"\hole-{n}.svg","w",encoding="utf-8").write(svg)
-    print(n,len(trees),"trees",os.path.getsize(OUT+rf"\hole-{n}.svg")//1024,"KB","S=",round(S,2),"rot",round(rot,1))
+    full=os.path.join(OUT,f"hole-{n}.svg")
+    open(full,"w",encoding="utf-8").write(svg)
+    # card version for the Walk the Course stack: no number badge, par, yardage or frame (the card shows those as text)
+    keep=[]
+    for line in svg.split("\n"):
+        if 'fill="#fff">' in line and " yds</text>" in line: continue
+        if 'circle cx="46" cy="52"' in line: continue
+        if 'class="frame-line"' in line: continue
+        if line.startswith('<g transform="translate({W-22} 40)">'.replace("{W-22}",str(W-22))):
+            line=(f'<g transform="translate({W-22} 44)">'+(note.replace('y="64"','y="0"') if c["note"] else "")+'</g>')
+        keep.append(line)
+    cardfile=os.path.join(OUT,f"hole-{n}-card.svg")
+    open(cardfile,"w",encoding="utf-8").write("\n".join(keep))
+    print(n,len(trees),"trees",os.path.getsize(full)//1024,"KB /",os.path.getsize(cardfile)//1024,"KB card","S=",round(S,2),"rot",round(rot,1))
 for n,c in HOLES.items(): build(n,c)
 
 
