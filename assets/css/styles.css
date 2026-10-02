@@ -179,10 +179,13 @@ ul { padding-left: 1.2em; }
 .hero h1 { font-size: clamp(1.8rem, 1.15rem + 3.7vw, 4.4rem); color: var(--white); text-shadow: 0 2px 24px rgba(0, 0, 0, 0.35); margin-bottom: 0.3em; max-width: 18ch; }
 .hero .lead { font-size: clamp(1.1rem, 2vw, 1.35rem); max-width: 40rem; color: rgba(255, 255, 255, 0.92); margin-bottom: 1.8rem; }
 .hero-page { min-height: 46vh; padding-bottom: 3.5rem; }
-/* Phones: the home banner keeps only the title and two compact buttons at the bottom, so the photo and the moving ocean stay in view. */
+/* Phones: the home banner keeps a short title, one line of text and the Book Tee Time button at the bottom, so the photo and the moving ocean stay in view. */
 @media (max-width: 600px) {
-  .hero:not(.hero-page) { padding-bottom: 1.4rem; }
-  .hero:not(.hero-page) .eyebrow, .hero:not(.hero-page) .lead { display: none; }
+  /* A shorter banner means the photo is scaled down to fit it, so far more of the scene (and the ocean) fits across the screen. */
+  .hero:not(.hero-page) { min-height: 56vh; padding-bottom: 1.4rem; }
+  .hero[data-video] > .parallax-bg:not(.is-still) { height: calc(56vh + 72px); }
+  .hero:not(.hero-page) .eyebrow, .hero:not(.hero-page) .btn-outline { display: none; }
+  .hero:not(.hero-page) .lead { font-size: 0.95rem; line-height: 1.45; margin-bottom: 1rem; }
   .hero:not(.hero-page) h1 { font-size: clamp(1.55rem, 6.6vw, 1.95rem); max-width: 15ch; margin-bottom: 0.8rem; }
   .hero:not(.hero-page) .btn-row { flex-wrap: nowrap; gap: 0.6rem; }
   .hero:not(.hero-page) .btn { padding: 0.7rem 1.15rem; font-size: 0.92rem; }
