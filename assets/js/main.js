@@ -70,7 +70,38 @@
     layer.style.backgroundPosition = section.style.backgroundPosition || "center";
     section.insertBefore(layer, section.firstChild);
     section.style.backgroundImage = "none";
+    if (section.dataset.video && !calm) addVideo(section, layer);
   });
+
+  // Looping background video. The poster is the first frame, so the video fades in over it without a jump.
+  function addVideo(section, layer) {
+    var connection = navigator.connection || {};
+    if (connection.saveData) return;
+    var base = section.dataset.video;
+    var video = document.createElement("video");
+    video.className = "parallax-video";
+    video.muted = true;
+    video.loop = true;
+    video.autoplay = true;
+    video.playsInline = true;
+    video.preload = "auto";
+    video.setAttribute("aria-hidden", "true");
+    video.style.objectPosition = layer.style.backgroundPosition;
+    ["webm", "mp4"].forEach(function (ext) {
+      var source = document.createElement("source");
+      source.src = base + "." + ext;
+      source.type = "video/" + ext;
+      video.appendChild(source);
+    });
+    video.addEventListener("playing", function () { video.classList.add("is-playing"); });
+    layer.appendChild(video);
+    if ("IntersectionObserver" in window) {
+      new IntersectionObserver(function (entries) {
+        var visible = entries[0].isIntersecting;
+        if (visible) { var attempt = video.play(); if (attempt && attempt.catch) attempt.catch(function () {}); } else video.pause();
+      }).observe(section);
+    }
+  }
 
   if (fineHover && !calm) {
     var selector = ".band, .frame, .photo-card, .gallery a" + (isHome ? ", .hero" : "");

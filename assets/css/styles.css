@@ -385,6 +385,12 @@ input:focus, textarea:focus, select:focus { outline: 0; border-color: var(--blue
 /* Inner-page top banner: pinned, with the photo's centre sitting in the middle of the banner. */
 .parallax-bg.pin-top { top: calc(-36px - 27vh); transform: none; transition: none; }
 
+/* Home hero on wide screens: size the pinned photo to the hero (88vh) instead of the whole viewport,
+   so it is cropped less and shows more of the course. */
+@media (min-width: 900px) {
+  .hero[data-video] > .parallax-bg:not(.is-still) { height: calc(88vh + 72px); }
+}
+
 .photo-card.card:hover { transform: none; }
 
 /* ---------- Digital scorecard ---------- */
@@ -412,3 +418,6 @@ input:focus, textarea:focus, select:focus { outline: 0; border-color: var(--blue
 .sc-entry tr:last-child th, .sc-entry tr:last-child td { border-bottom: 0; }
 .table-wrap + .btn-row { margin-top: 1.2rem; }
 @media (max-width: 480px) { .sc-entry th, .sc-entry td { padding-inline: 0.15rem; font-size: 0.9rem; } .sc-entry .sc-score input { width: 2.7rem; } .sc-entry .sc-name input { font-size: 0.78rem; padding-inline: 0.2rem; } }
+
+.parallax-bg .parallax-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.8s ease; }
+.parallax-bg .parallax-video.is-playing { opacity: 1; }

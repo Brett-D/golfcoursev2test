@@ -23,6 +23,7 @@ assets/
   css/styles.css   design system and page styles
   js/main.js       mobile nav, parallax, rates loader, Facebook widget sizing, mailto form
   js/scorecard.js  digital scorecard on the course page (reads yardage/par from the printed table)
+  video/           home hero loop (hero.mp4 + hero.webm; poster is images/hero-poster.jpg)
   images/          optimized photos, scorecard, map and logos
 data/
   rates.json       golf rates shown on the Home and Golf Rates pages
