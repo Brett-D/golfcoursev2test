@@ -146,6 +146,11 @@ ul { padding-left: 1.2em; }
   font-weight: 600; font-size: 0.95rem; padding: 0.75rem 1rem;
 }
 .notice a { color: inherit; }
+/* Messages copied from the ForeUp booking page (data/notices.json). */
+.notice-alerts { background: var(--gold-soft); border-top: 1px solid rgba(9, 30, 53, 0.15); font-weight: 500; }
+.notice-alerts[hidden] { display: none; }
+.notice-alerts p { margin: 0; }
+.notice-alerts p + p { margin-top: 0.2rem; }
 
 /* ---------- Stats ---------- */
 .stats { background: var(--navy); color: var(--white); }

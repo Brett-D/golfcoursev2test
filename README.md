@@ -27,6 +27,10 @@ assets/
   images/          optimized photos, scorecard, map and logos
 data/
   rates.json       golf rates shown on the Home and Golf Rates pages
+  notices.json     course notices copied from ForeUp (updated automatically)
+scripts/
+  fetch-notices.mjs copies the ForeUp welcome message into data/notices.json
+.github/workflows/update-notices.yml  runs that script every 30 minutes
 ```
 
 ## Editing prices
@@ -38,6 +42,10 @@ All golf rates live in [`data/rates.json`](data/rates.json). Edit that file (or 
 - `cards`: one entry per rate card, shown in order. Each has a `title`, a `subtitle` and a list of `items` (`label` and `price`). Prices are plain text, so `"$24"` or `"Free"` both work.
 - `"home": true` on a card also shows it on the home page. An `id` makes the card linkable (the range card uses `range`).
 - Keep the JSON valid (double quotes, commas between entries). If it can't be read, the site shows a message asking visitors to call the pro shop.
+
+## Course notices
+
+The notices under the Driving Range banner on the home page are the welcome message from the ForeUp booking page. ForeUp does not allow other sites to read it directly, so a GitHub Action ([update-notices.yml](.github/workflows/update-notices.yml)) copies it into [data/notices.json](data/notices.json) every 30 minutes and commits the change. Edit the message in ForeUp as usual; it appears on the site within about an hour. To refresh immediately, open the repo's Actions tab, choose *Update course notices* and click *Run workflow*. The banner hides itself when the message is empty.
 
 ## Embeds
 

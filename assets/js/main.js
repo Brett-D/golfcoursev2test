@@ -208,6 +208,24 @@
       });
   }
 
+  // Course notices are synced from the ForeUp booking page into data/notices.json (see scripts/fetch-notices.mjs).
+  var noticeBox = document.querySelector("[data-notices]");
+  if (noticeBox) {
+    fetch("data/notices.json", { cache: "no-cache" })
+      .then(function (response) {
+        if (!response.ok) throw new Error("HTTP " + response.status);
+        return response.json();
+      })
+      .then(function (data) {
+        var messages = (data && data.messages) || [];
+        messages.forEach(function (message) {
+          noticeBox.appendChild(el("p", "", message));
+        });
+        noticeBox.hidden = messages.length === 0;
+      })
+      .catch(function () { /* no notices to show */ });
+  }
+
   // The Facebook Page plugin needs a pixel width between 180 and 500.
   function loadFacebook() {
     Array.prototype.forEach.call(document.querySelectorAll("[data-fb-page]"), function (frame) {
