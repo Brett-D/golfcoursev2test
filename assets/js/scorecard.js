@@ -85,11 +85,6 @@
   var HOLE_PATH = "assets/images/holes/hole-";
   var peek;
   var peekImage;
-  var dialog;
-  var dialogImage;
-  var dialogTitle;
-  var dialogMeta;
-  var viewing = 0;
 
   function holeNumber(index) { return (index % 9) + 1; }
 
@@ -146,80 +141,15 @@
     if (peek) peek.classList.remove("is-on");
   }
 
-  function ensureDialog() {
-    if (dialog) return;
-    dialog = el("dialog", "hole-dialog");
-    dialog.setAttribute("aria-labelledby", "hole-dialog-title");
-
-    var close = el("button", "hole-close", "\u00d7");
-    close.type = "button";
-    close.setAttribute("aria-label", "Close");
-    close.addEventListener("click", function () { dialog.close(); });
-
-    var prev = el("button", "hole-step hole-prev", "\u2039");
-    prev.type = "button";
-    prev.setAttribute("aria-label", "Previous hole");
-    prev.addEventListener("click", function () { stepHole(-1); });
-
-    var next = el("button", "hole-step hole-next", "\u203a");
-    next.type = "button";
-    next.setAttribute("aria-label", "Next hole");
-    next.addEventListener("click", function () { stepHole(1); });
-
-    var figure = el("figure", "hole-figure");
-    dialogImage = el("img");
-    figure.appendChild(dialogImage);
-
-    var caption = el("figcaption", "hole-caption");
-    dialogTitle = el("h3", "", "");
-    dialogTitle.id = "hole-dialog-title";
-    dialogMeta = el("p", "hole-meta");
-    caption.appendChild(dialogTitle);
-    caption.appendChild(dialogMeta);
-    caption.appendChild(el("p", "hole-key", "Tees at the bottom, green at the top."));
-
-    var stage = el("div", "hole-stage");
-    stage.appendChild(prev);
-    stage.appendChild(figure);
-    stage.appendChild(next);
-
-    dialog.appendChild(close);
-    dialog.appendChild(stage);
-    dialog.appendChild(caption);
-    document.body.appendChild(dialog);
-
-    dialog.addEventListener("click", function (event) { if (event.target === dialog) dialog.close(); });
-    dialog.addEventListener("keydown", function (event) {
-      if (event.key === "ArrowLeft") stepHole(-1);
-      if (event.key === "ArrowRight") stepHole(1);
-    });
-    dialog.addEventListener("close", function () { document.documentElement.classList.remove("no-scroll"); });
-  }
-
-  function stepHole(direction) {
-    var count = state.holes;
-    showHole((viewing + direction + count) % count);
-  }
-
-  function showHole(index) {
-    viewing = index;
-    var tee = tees[state.tee];
-    var slot = index % 9;
-    dialogImage.src = HOLE_PATH + holeNumber(index) + ".jpg";
-    dialogImage.alt = "Layout of hole " + (index + 1) + ", with the tees at the bottom and the green at the top";
-    dialogTitle.textContent = "Hole " + (index + 1);
-    dialogMeta.textContent = "Par " + tee.par[slot] + " \u00b7 " + tee.yards[slot] + " yds \u00b7 Handicap " + tee.hcp[slot] + " \u00b7 " + tee.label;
-  }
-
   function openHole(index) {
-    ensureDialog();
-    showHole(index);
-    if (typeof dialog.showModal === "function") {
-      if (!dialog.open) dialog.showModal();
-    } else {
-      dialog.setAttribute("open", "");
-    }
-    document.documentElement.classList.add("no-scroll");
+    HoleViewer.open(index, {
+      count: state.holes,
+      describe: function (i) {
+        var tee = tees[state.tee];
+        var slot = i % 9;
+        return "Par " + tee.par[slot] + " \u00b7 " + tee.yards[slot] + " yds \u00b7 Handicap " + tee.hcp[slot] + " \u00b7 " + tee.label;
+      }
+    });
   }
   var table;
   var totalCells = [];
