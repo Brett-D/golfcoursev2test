@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accent color preview (throwaway)</title>
+<style>
+  :root { --navy-deep: #091e35; --navy: #0f2e4d; --blue: #1f5f93; --cream: #fbf9f4; }
+  * { box-sizing: border-box; }
+  body { margin: 0; padding: 2rem 1.2rem 4rem; font: 16px/1.5 system-ui, "Segoe UI", Roboto, sans-serif; background: #e9edf2; color: #1d2733; }
+  h1 { margin: 0 0 .3rem; font-size: 1.7rem; }
+  p.note { margin: 0 0 1.4rem; color: #5d6874; }
+  .wrap { max-width: 1300px; margin: 0 auto; }
+  .row { background: #fff; border-radius: 14px; box-shadow: 0 8px 22px -12px rgba(9,30,53,.4); margin-bottom: 1.4rem; overflow: hidden; }
+  .row > header { display: flex; justify-content: space-between; gap: 1rem; align-items: baseline; padding: .8rem 1.1rem; font-weight: 700; }
+  .row > header small { font-weight: 500; color: #5d6874; font-family: Consolas, monospace; }
+  .swatches { display: grid; grid-template-columns: repeat(5, 1fr); height: 96px; }
+  .swatches div { display: flex; align-items: flex-end; padding: .5rem .7rem; font: 600 .75rem/1.2 Consolas, monospace; color: #fff; }
+  .swatches .light { color: #091e35; }
+  .mock { display: grid; grid-template-columns: 1.4fr 1fr; }
+  @media (max-width: 800px) { .mock { grid-template-columns: 1fr; } }
+  .hero { position: relative; min-height: 230px; padding: 1.4rem 1.4rem 1.2rem; color: #fff; background: linear-gradient(180deg, rgba(9,30,53,.35), rgba(9,30,53,.6)), url("assets/images/hero-poster.jpg") center 60% / cover; }
+  .hero .eyebrow { font-size: .72rem; letter-spacing: .2em; text-transform: uppercase; font-weight: 700; color: var(--soft); }
+  .hero h2 { margin: .3rem 0 1rem; font: 700 1.9rem/1.15 Georgia, serif; max-width: 16ch; text-shadow: 0 2px 18px rgba(0,0,0,.4); }
+  .btn { display: inline-block; padding: .6rem 1.3rem; border-radius: 999px; font-weight: 700; font-size: .9rem; background: var(--accent); color: #091e35; }
+  .btn.outline { background: none; border: 2px solid #fff; color: #fff; margin-left: .4rem; padding: .5rem 1.2rem; }
+  .side { display: flex; flex-direction: column; }
+  .strip { background: var(--accent); color: #091e35; text-align: center; font-weight: 600; font-size: .9rem; padding: .7rem 1rem; }
+  .strip u { text-underline-offset: 3px; }
+  .notes { background: var(--soft); color: #091e35; text-align: center; font-size: .85rem; padding: .6rem 1rem; }
+  .stats { display: flex; background: var(--navy); color: #fff; text-align: center; flex: 1; }
+  .stats div { flex: 1; padding: .9rem .3rem; border-right: 1px solid rgba(255,255,255,.12); }
+  .stats div:last-child { border: 0; }
+  .stats b { display: block; font: 700 1.6rem/1.1 Georgia, serif; color: var(--soft); }
+  .stats span { font-size: .62rem; letter-spacing: .16em; text-transform: uppercase; opacity: .8; }
+  .menu { display: flex; gap: .5rem; padding: .7rem 1rem; background: var(--navy-deep); color: #fff; font-size: .85rem; font-weight: 600; align-items: center; flex-wrap: wrap; }
+  .menu .on { background: rgba(255,255,255,.14); border-radius: 999px; padding: .2rem .7rem; color: var(--soft); }
+  .menu .cta { margin-left: auto; background: var(--accent); color: #091e35; border-radius: 999px; padding: .25rem .8rem; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Accent color preview</h1>
+  <p class="note">Each row shows the blues we already have (navy deep, navy, blue) next to the candidate accent and its light version, then how it looks in the header, hero, strips and stats.</p>
+  <div id="rows"></div>
+</div>
+<script>
+  var palettes = [
+    ["Seafoam teal", "#3fb8a5", "#c4efe7"],
+    ["Sky aqua", "#4cc3ee", "#d3f1fd"],
+    ["Sunset amber", "#f2a03d", "#fde3b8"],
+    ["Champagne sand", "#dcc8a2", "#f3eadb"],
+    ["Fairway green", "#8fc93a", "#e2f1c3"],
+    ["Ice blue (all blue)", "#8ec5ff", "#dbeeff"],
+    ["Warm brick", "#d9573f", "#f7d2c9"],
+    ["Soft white", "#f4f1ea", "#ffffff"],
+    ["Coral (the one you saw)", "#f4845f", "#ffd3c0"],
+    ["Old gold (the original)", "#c8a14b", "#e6cf94"]
+  ];
+  var blues = [["Navy deep", "#091e35"], ["Navy", "#0f2e4d"], ["Blue", "#1f5f93"]];
+  var rows = document.getElementById("rows");
+  palettes.forEach(function (p) {
+    var row = document.createElement("div");
+    row.className = "row";
+    row.style.setProperty("--accent", p[1]);
+    row.style.setProperty("--soft", p[2]);
+    var sw = blues.map(function (b) { return '<div style="background:' + b[1] + '">' + b[0] + '<br>' + b[1] + '</div>'; }).join("") +
+      '<div class="light" style="background:' + p[1] + '">Accent<br>' + p[1] + '</div>' +
+      '<div class="light" style="background:' + p[2] + '">Accent light<br>' + p[2] + '</div>';
+    row.innerHTML =
+      '<header>' + p[0] + '<small>' + p[1] + ' + ' + p[2] + '</small></header>' +
+      '<div class="swatches">' + sw + '</div>' +
+      '<div class="menu"><span>Agate Beach Golf Course</span><span class="on">Home</span><span>Golf Rates</span><span>Course Layout</span><span>Pro Shop</span><span class="cta">Book Tee Time</span></div>' +
+      '<div class="mock"><div class="hero"><div class="eyebrow">Newport, Oregon · Est. 1931</div><h2>A Family Tradition on the Oregon Coast</h2><span class="btn">Book Tee Time</span><span class="btn outline">Course Layout</span></div>' +
+      '<div class="side"><div class="strip">The Driving Range is Open 7–5:30 pm · <u>Range ball prices</u></div><div class="notes">Fall aerification Monday + Tuesday, October 5-6</div>' +
+      '<div class="stats"><div><b>9</b><span>Holes</span></div><div><b>Par 36</b><span>Men’s tees</span></div><div><b>1931</b><span>Opened</span></div></div></div></div>';
+    rows.appendChild(row);
+  });
+</script>
+</body>
+</html>
