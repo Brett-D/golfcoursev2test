@@ -52,6 +52,41 @@
     Array.prototype.forEach.call(reveals, function (el) { el.classList.add("is-visible"); });
   }
 
+  // Mouse parallax: pointer position becomes --mx/--my (-1..1) on the element; CSS turns that into movement.
+  var fineHover = window.matchMedia("(hover: hover) and (pointer: fine)").matches;
+  var calm = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+  if (!calm) {
+    Array.prototype.forEach.call(document.querySelectorAll(".hero, .band"), function (section) {
+      var image = section.style.backgroundImage;
+      if (!image) return;
+      var layer = document.createElement("div");
+      layer.className = "parallax-bg";
+      layer.setAttribute("aria-hidden", "true");
+      layer.style.backgroundImage = image;
+      layer.style.backgroundPosition = section.style.backgroundPosition || "center";
+      section.insertBefore(layer, section.firstChild);
+      section.style.backgroundImage = "none";
+    });
+  }
+
+  if (fineHover && !calm) {
+    var targets = document.querySelectorAll(".hero, .band, .frame, .photo-card, .gallery a");
+    Array.prototype.forEach.call(targets, function (el) {
+      el.addEventListener("pointermove", function (event) {
+        var box = el.getBoundingClientRect();
+        el.style.setProperty("--mx", (((event.clientX - box.left) / box.width) * 2 - 1).toFixed(3));
+        el.style.setProperty("--my", (((event.clientY - box.top) / box.height) * 2 - 1).toFixed(3));
+        el.classList.add("is-hover");
+      });
+      el.addEventListener("pointerleave", function () {
+        el.style.setProperty("--mx", "0");
+        el.style.setProperty("--my", "0");
+        el.classList.remove("is-hover");
+      });
+    });
+  }
+
   // The Facebook Page plugin needs a pixel width between 180 and 500.
   function loadFacebook() {
     Array.prototype.forEach.call(document.querySelectorAll("[data-fb-page]"), function (frame) {
