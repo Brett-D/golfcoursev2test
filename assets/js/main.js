@@ -75,21 +75,48 @@
   if (fineHover && !calm) {
     var selector = ".band, .frame, .photo-card, .gallery a" + (isHome ? ", .hero" : "");
     var targets = document.querySelectorAll(selector);
+    var active = [];
+    var running = false;
+
+    // Eased every frame (not via CSS transitions) so movement follows the cursor smoothly without lag or snapping.
+    function tick() {
+      var moving = false;
+      active = active.filter(function (s) {
+        s.x += (s.tx - s.x) * 0.12;
+        s.y += (s.ty - s.y) * 0.12;
+        s.h += (s.th - s.h) * 0.12;
+        var settled = Math.abs(s.tx - s.x) + Math.abs(s.ty - s.y) + Math.abs(s.th - s.h) < 0.002;
+        if (settled) { s.x = s.tx; s.y = s.ty; s.h = s.th; }
+        s.el.style.setProperty("--mx", s.x.toFixed(4));
+        s.el.style.setProperty("--my", s.y.toFixed(4));
+        s.el.style.setProperty("--hv", s.h.toFixed(4));
+        if (settled) { s.queued = false; return false; }
+        moving = true;
+        return true;
+      });
+      if (moving) requestAnimationFrame(tick); else running = false;
+    }
+
+    function wake(s) {
+      if (!s.queued) { s.queued = true; active.push(s); }
+      if (!running) { running = true; requestAnimationFrame(tick); }
+    }
+
     Array.prototype.forEach.call(targets, function (el) {
+      var s = { el: el, x: 0, y: 0, h: 0, tx: 0, ty: 0, th: 0, queued: false };
       el.addEventListener("pointermove", function (event) {
         var box = el.getBoundingClientRect();
-        el.style.setProperty("--mx", (((event.clientX - box.left) / box.width) * 2 - 1).toFixed(3));
-        el.style.setProperty("--my", (((event.clientY - box.top) / box.height) * 2 - 1).toFixed(3));
-        el.classList.add("is-hover");
+        s.tx = Math.max(-1, Math.min(1, ((event.clientX - box.left) / box.width) * 2 - 1));
+        s.ty = Math.max(-1, Math.min(1, ((event.clientY - box.top) / box.height) * 2 - 1));
+        s.th = 1;
+        wake(s);
       });
       el.addEventListener("pointerleave", function () {
-        el.style.setProperty("--mx", "0");
-        el.style.setProperty("--my", "0");
-        el.classList.remove("is-hover");
+        s.tx = 0; s.ty = 0; s.th = 0;
+        wake(s);
       });
     });
-  }
-  // Rates come from data/rates.json so prices can be changed without touching the HTML.
+  }  // Rates come from data/rates.json so prices can be changed without touching the HTML.
   function el(tag, className, text) {
     var node = document.createElement(tag);
     if (className) node.className = className;
