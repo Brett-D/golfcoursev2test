@@ -304,7 +304,27 @@ figure { margin: 0; }
 .rate-row:first-of-type { border-top: 0; }
 .rate-row:nth-of-type(even) { background: var(--sand); }
 .rate-row .price { font-family: var(--font-body, Inter, sans-serif); font-variant-numeric: lining-nums tabular-nums; font-size: 2.2rem; line-height: 1; font-weight: 800; letter-spacing: -0.02em; color: var(--navy-deep); }
-.note { font-size: 0.9rem; color: var(--muted); }
+.rate-note { text-align: center; margin-top: 2rem; }
+
+/* Phones: each rate becomes one short row (name on the left, the two prices on the right) so every price fits on one screen. */
+@media (max-width: 600px) {
+  .hero-compact { min-height: 0; padding: calc(var(--header-h) + 1rem) 0 1.4rem; }
+  .hero-compact .eyebrow, .hero-compact .lead { display: none; }
+  .hero-compact h1 { margin-bottom: 0.5rem; }
+  .section-compact { padding: 1.5rem 0 2rem; }
+  .section-compact .section-head { margin-bottom: 1rem; }
+  .section-compact .section-head .eyebrow { display: none; }
+  .section-compact .section-head h2 { font-size: 1.6rem; margin-bottom: 0.2rem; }
+  .section-compact .section-head .lead { font-size: 0.9rem; margin: 0; }
+  .rate-grid { gap: 0.5rem; }
+  .rate-card { display: grid; grid-template-columns: 1fr 4.7rem 4.7rem; align-items: stretch; }
+  .rate-card header { display: flex; flex-direction: column; justify-content: center; padding: 0.55rem 0.8rem; }
+  .rate-card header h3 { font-size: 1.05rem; }
+  .rate-card header p { font-size: 0.74rem; line-height: 1.25; }
+  .rate-row, .rate-row:first-of-type { flex-direction: column; justify-content: center; gap: 0.15rem; padding: 0.4rem 0.2rem; border-top: 0; border-left: 1px solid var(--line); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-align: center; color: var(--muted); }
+  .rate-row .price { font-size: 1.6rem; color: var(--navy-deep); }
+  .rate-note { margin-top: 0.8rem; font-size: 0.85rem; }
+}.note { font-size: 0.9rem; color: var(--muted); }
 
 /* ---------- Scorecard ---------- */
 .table-wrap { overflow-x: auto; border-radius: var(--radius); box-shadow: var(--shadow-sm); border: 1px solid var(--line); background: var(--white); }
