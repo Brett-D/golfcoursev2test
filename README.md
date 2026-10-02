@@ -8,11 +8,11 @@ small JavaScript file. No build step.
 
 | File | Purpose |
 | --- | --- |
-| `index.html` | Home: hero, about, signature hole 8, services, gallery, coffee shop, rates, map and Facebook |
+| `index.html` | Home: hero, about, signature hole 8, services, gallery, cafe, rates, map and Facebook |
 | `course.html` | Scorecard, digital scorecard, rules and etiquette |
 | `rates.html` | Green fees, carts, rentals and driving range |
 | `pro-shop.html` | Pro shop information |
-| `coffee-shop.html` | The Clubhouse cafe and Good Dog menu |
+| `cafe.html` | The Clubhouse cafe and Good Dog menu |
 | `about.html` | History of the course and the Martin family |
 | `contact.html` | Contact details, message form, map and Facebook |
 
