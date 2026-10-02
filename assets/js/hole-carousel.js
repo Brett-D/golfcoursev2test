@@ -30,6 +30,7 @@
   var gap = 60; // how far apart the cards sit; they never move sideways, only their stacking order changes
   var chips = [];
   var suppressClick = false;
+  var SWIPE_STEP = 28; // pixels of swipe per card
 
   function clamp(value, low, high) { return Math.max(low, Math.min(high, value)); }
 
@@ -62,7 +63,7 @@
       var distance = Math.abs(i - active);
       // The further down the deck, the smaller the card. Each card shrinks towards the edge hidden under its neighbour,
       // so the strip you can see (and point at) stays put and the stack does not wobble under the pointer.
-      var scale = 1 - 0.055 * Math.min(distance, 5);
+      var scale = 1 - 0.05 * distance;
       item.style.transformOrigin = i < active ? "0% 50%" : i > active ? "100% 50%" : "50% 50%";
       item.style.transform = "translateX(" + (i * gap - total / 2).toFixed(1) + "px) scale(" + scale.toFixed(3) + ")";
       item.style.zIndex = String(i === active ? 100 : i < active ? i : 90 - i);
@@ -112,8 +113,8 @@
   });
   root.appendChild(nav);
 
-  // Whichever card is on top at the pointer comes to the top of the stack. Because the cards never slide sideways,
-  // the card you are pointing at is always the one you end up with, for a mouse hover or a finger sliding across the stack.
+  // Mouse: whichever card is on top under the pointer comes to the top of the stack. Because the cards never slide sideways,
+  // the card you point at is always the one you end up with. Touch: swiping moves the stack by how far the finger travels.
   function cardAt(x, y) {
     var node = document.elementFromPoint(x, y);
     var item = node && node.closest ? node.closest(".hc-track li") : null;
@@ -123,14 +124,17 @@
   var touch = null;
   track.addEventListener("pointerdown", function (event) {
     if (event.pointerType === "mouse") return;
-    touch = { x: event.clientX, moved: false };
+    touch = { x: event.clientX, from: active, moved: false };
     suppressClick = false;
   });
   track.addEventListener("pointermove", function (event) {
     if (event.pointerType !== "mouse") {
       if (!touch) return;
-      if (!touch.moved && Math.abs(event.clientX - touch.x) > 6) { touch.moved = true; suppressClick = true; }
+      if (!touch.moved && Math.abs(event.clientX - touch.x) > 3) { touch.moved = true; suppressClick = true; }
       if (!touch.moved) return;
+      // A swipe moves the stack by how far the finger travels, wherever on the stack it started.
+      go(touch.from - Math.round((event.clientX - touch.x) / SWIPE_STEP));
+      return;
     }
     var i = cardAt(event.clientX, event.clientY);
     if (i >= 0 && i !== active) go(i);
