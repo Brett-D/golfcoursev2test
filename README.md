@@ -9,7 +9,7 @@ small JavaScript file. No build step.
 | File | Purpose |
 | --- | --- |
 | `index.html` | Home: hero, about, signature hole 8, services, gallery, cafe, rates, map and Facebook |
-| `course.html` | Hole-by-hole carousel, course map, printed yardage/handicap table, rules and etiquette |
+| `course.html` | Hole-by-hole card stack, course map, printed yardage/handicap table, rules and etiquette |
 | `scorecard.html` | Digital scorecard with a layout picture of every hole (the yardage table at the bottom feeds it) |
 | `rates.html` | Green fees, carts, rentals and driving range |
 | `pro-shop.html` | Pro shop information |
@@ -25,7 +25,7 @@ assets/
   css/styles.css   design system and page styles
   js/main.js       mobile nav, parallax, rates loader, Facebook widget sizing, mailto form
   js/hole-viewer.js   shared full-size hole picture viewer (carousel and scorecard)
-  js/hole-carousel.js hole carousel on the course page (par/yards read from the table on that page)
+  js/hole-carousel.js hole card stack on the course page (par/yards read from the table on that page)
   js/scorecard.js  digital scorecard on scorecard.html (reads yardage/par/handicap from the table on that page)
   video/           home hero loop (hero.mp4 + hero.webm; poster is images/hero-poster.jpg)
   images/          optimized photos, scorecard, map and logos
