@@ -160,7 +160,7 @@ ul { padding-left: 1.2em; }
 .stat-num { display: block; font-family: var(--font-head); font-size: clamp(1.9rem, 4vw, 2.7rem); font-weight: 700; color: var(--gold-soft); line-height: 1.1; }
 .stat-label { display: block; font-size: 0.74rem; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255, 255, 255, 0.75); margin-top: 0.3rem; }
 @media (min-width: 800px) {
-  .stats .container { grid-template-columns: repeat(5, 1fr); }
+  .stats .container { grid-template-columns: repeat(4, 1fr); }
   .stat { border-bottom: 0; border-right: 1px solid rgba(255, 255, 255, 0.12); }
   .stat:last-child { border-right: 0; }
 }
