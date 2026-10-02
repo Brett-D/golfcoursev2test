@@ -95,8 +95,8 @@
     var img = el("img");
     img.src = HOLE_PATH + holeNumber(index) + "-thumb.jpg";
     img.alt = "";
-    img.width = 46;
-    img.height = 58;
+    img.width = 38;
+    img.height = 64;
     img.decoding = "async";
     button.appendChild(img);
     button.appendChild(el("span", "hole-num", String(index + 1)));
