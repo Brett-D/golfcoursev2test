@@ -28,6 +28,7 @@
   var VISIBLE = 4; // cards fanned out on each side before the rest tuck underneath
   var pos = 0; // fractional while a finger or mouse is dragging the stack
   var active = 0;
+  var peek = -1; // card under the mouse, lifted to the front without moving the stack
   var step = 60;
   var chips = [];
   var dragged = false;
@@ -61,9 +62,11 @@
       var distance = Math.abs(offset);
       var slot = Math.min(distance, VISIBLE);
       var shown = clamp(VISIBLE + 1 - distance, 0, 1);
-      item.style.transform = "translateX(" + ((offset < 0 ? -1 : 1) * slot * step).toFixed(1) + "px) scale(" + (1 - 0.075 * slot).toFixed(3) + ")";
+      var lifted = i === peek && shown > 0;
+      item.style.transform = "translateX(" + ((offset < 0 ? -1 : 1) * slot * step).toFixed(1) + "px) " + (lifted ? "translateY(-8px) scale(1)" : "scale(" + (1 - 0.075 * slot).toFixed(3) + ")");
       item.style.opacity = shown.toFixed(2);
-      item.style.zIndex = String(200 - Math.round(distance * 20));
+      item.style.zIndex = String(lifted ? 300 : 200 - Math.round(distance * 20));
+      cards[i].classList.toggle("is-peek", lifted);
       item.style.pointerEvents = shown > 0 ? "auto" : "none";
       cards[i].classList.toggle("is-active", i === active);
       cards[i].tabIndex = i === active ? 0 : -1;
@@ -105,16 +108,13 @@
   root.appendChild(nav);
 
   // Touch: the stack follows your finger and settles on the nearest hole when you let go.
-  // Mouse: moving the pointer across the stack flips through the holes.
   var drag = null;
   var lastX = 0;
   var lastTime = 0;
   var velocity = 0;
-  var touched = -1e9;
 
   track.addEventListener("pointerdown", function (event) {
     if (event.pointerType === "mouse") return;
-    touched = event.timeStamp;
     drag = { x: event.clientX, from: pos, moving: false };
     lastX = event.clientX;
     lastTime = event.timeStamp;
@@ -140,16 +140,24 @@
       }
       return;
     }
-    if (event.pointerType !== "mouse" || !track.contains(event.target) || event.timeStamp - touched < 1000) return;
-    var rect = track.getBoundingClientRect();
-    var reach = VISIBLE * step + cards[0].offsetWidth / 2;
-    var across = clamp((event.clientX - (rect.left + rect.width / 2 - reach)) / (2 * reach), 0, 1) * (cards.length - 1);
-    if (Math.abs(across - active) > 0.65) go(Math.round(across));
   });
 
-  function release(event) {
+  // Mouse: the card under the pointer lifts to the front where it is. Click it to bring it to the centre.
+  items.forEach(function (item, i) {
+    item.addEventListener("pointerenter", function (event) {
+      if (event.pointerType !== "mouse" || drag) return;
+      peek = i;
+      layout();
+    });
+  });
+  track.addEventListener("pointerleave", function (event) {
+    if (event.pointerType !== "mouse" || peek < 0) return;
+    peek = -1;
+    layout();
+  });
+
+  function release() {
     if (!drag) return;
-    touched = event.timeStamp;
     var moved = drag.moving;
     drag = null;
     track.classList.remove("is-dragging");
