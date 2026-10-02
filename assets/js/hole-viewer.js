@@ -3,7 +3,7 @@
 window.HoleViewer = (function () {
   "use strict";
 
-  var ASSET_VERSION = "20261002-2"; // set by tools/bump-version.ps1; changes the picture URLs so caches fetch new files
+  var ASSET_VERSION = "20261002-3"; // set by tools/bump-version.ps1; changes the picture URLs so caches fetch new files
   var PATH = "assets/images/holes/vector/hole-";
   var dialog;
   var image;
@@ -40,7 +40,23 @@ window.HoleViewer = (function () {
 
     var figure = el("figure", "hole-figure");
     image = el("img");
+    image.draggable = false;
     figure.appendChild(image);
+
+    // Swipe the picture to move to the next hole (swipe left) or the previous one (swipe right).
+    var start = null;
+    figure.addEventListener("pointerdown", function (event) {
+      if (event.pointerType === "mouse" && event.button !== 0) return;
+      start = { x: event.clientX, y: event.clientY };
+    });
+    figure.addEventListener("pointerup", function (event) {
+      if (!start) return;
+      var dx = event.clientX - start.x;
+      var dy = event.clientY - start.y;
+      start = null;
+      if (Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy) * 1.4) step(dx < 0 ? 1 : -1);
+    });
+    figure.addEventListener("pointercancel", function () { start = null; });
 
     var caption = el("figcaption", "hole-caption");
     title = el("h3");
@@ -48,7 +64,7 @@ window.HoleViewer = (function () {
     meta = el("p", "hole-meta");
     caption.appendChild(title);
     caption.appendChild(meta);
-    caption.appendChild(el("p", "hole-key", "Tees at the bottom, green at the top."));
+    caption.appendChild(el("p", "hole-key", "Tees at the bottom, green at the top. Swipe or use the arrows for other holes."));
 
     var stage = el("div", "hole-stage");
     stage.appendChild(prev);
@@ -70,6 +86,10 @@ window.HoleViewer = (function () {
 
   function step(direction) {
     show((current + direction + options.count) % options.count);
+    // Slide the new picture in from the side it was swiped from.
+    image.classList.remove("slide-next", "slide-prev");
+    void image.offsetWidth;
+    image.classList.add(direction > 0 ? "slide-next" : "slide-prev");
   }
 
   function show(index) {
