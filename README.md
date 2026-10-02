@@ -20,6 +20,7 @@ small JavaScript file. No build step.
 
 ```
 assets/
+  .htaccess        cache times for the site's own files (Apache/LiteSpeed hosting)
   css/styles.css   design system and page styles
   js/main.js       mobile nav, parallax, rates loader, Facebook widget sizing, mailto form
   js/scorecard.js  digital scorecard on the course page (reads yardage/par from the printed table)
@@ -29,6 +30,7 @@ data/
   rates.json       golf rates shown on the Home and Golf Rates pages
   notices.json     saved copy of the ForeUp notices (kept up to date by notices.php)
 notices.php       reads the ForeUp notices on PHP hosting (Bluehost)
+htaccess-additions.txt  snippet to paste into Bluehost's public_html/.htaccess (not uploaded as a file)
 ```
 
 ## Editing prices

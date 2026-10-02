@@ -1,0 +1,22 @@
+# Cache times for the new site's files only (this folder and below).
+# Newfold's global rules keep everything for 24 hours; these are more specific and win.
+<IfModule mod_expires.c>
+  ExpiresActive On
+
+  # Styles and scripts keep the same file names when they change, so check back every hour.
+  ExpiresByType text/css "access plus 1 hour"
+  ExpiresByType text/javascript "access plus 1 hour"
+  ExpiresByType application/javascript "access plus 1 hour"
+  ExpiresByType application/x-javascript "access plus 1 hour"
+
+  # Photos and the hero video rarely change.
+  ExpiresByType image/jpeg "access plus 1 week"
+  ExpiresByType image/png "access plus 1 week"
+  ExpiresByType image/webp "access plus 1 week"
+  ExpiresByType video/mp4 "access plus 1 week"
+  ExpiresByType video/webm "access plus 1 week"
+
+  # Fonts never change.
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType application/font-woff2 "access plus 1 year"
+</IfModule>
