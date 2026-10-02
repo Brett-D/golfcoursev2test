@@ -279,6 +279,29 @@
     var status = document.getElementById("form-status");
     var sendButton = form.querySelector('button[type="submit"]');
 
+    // After a few messages from the same visitor, contact.php asks a simple question first.
+    function showChallenge(question, token) {
+      var box = document.getElementById("human-check");
+      if (!box) {
+        box = document.createElement("div");
+        box.id = "human-check";
+        box.className = "span-2";
+        box.innerHTML = '<label for="c-answer"></label><input id="c-answer" name="answer" type="text" inputmode="numeric" autocomplete="off" required><input type="hidden" name="token" id="c-token">';
+        var last = form.lastElementChild;
+        form.insertBefore(box, last);
+      }
+      box.querySelector("label").textContent = question;
+      document.getElementById("c-token").value = token;
+      var answerField = document.getElementById("c-answer");
+      answerField.value = "";
+      answerField.focus();
+    }
+
+    function removeChallenge() {
+      var box = document.getElementById("human-check");
+      if (box) box.remove();
+    }
+
     function openEmailApp(data) {
       var body = data.get("message") + "\n\n— " + data.get("name") + " (" + data.get("email") + ")";
       window.location.href = "mailto:teeoff@agatebeachgolf.net?subject=" +
@@ -302,8 +325,10 @@
         .then(function (reply) {
           // No JSON back means contact.php is not on this host, so use the email app instead.
           if (!reply.result) { openEmailApp(data); return; }
+          if (reply.result.challenge) showChallenge(reply.result.question, reply.result.token);
           if (status) { status.className = "form-status " + (reply.result.ok ? "is-ok" : "is-error"); status.textContent = reply.result.message; }
           if (reply.result.ok) {
+            removeChallenge();
             form.reset();
             if (started) started.value = String(Date.now());
           }

@@ -3,7 +3,7 @@
 window.HoleViewer = (function () {
   "use strict";
 
-  var ASSET_VERSION = "20261002-20"; // set by tools/bump-version.ps1; changes the picture URLs so caches fetch new files
+  var ASSET_VERSION = "20261002-21"; // set by tools/bump-version.ps1; changes the picture URLs so caches fetch new files
   var PATH = "assets/images/holes/vector/hole-";
   var dialog;
   var image;
