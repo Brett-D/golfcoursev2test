@@ -15,8 +15,8 @@
   }
 
   var tees = {
-    men: { label: "Men\u2019s tees", yards: readRow("men-yards"), par: readRow("men-par") },
-    ladies: { label: "Ladies\u2019 tees", yards: readRow("ladies-yards"), par: readRow("ladies-par") }
+    men: { label: "Men\u2019s tees", yards: readRow("men-yards"), par: readRow("men-par"), hcp: readRow("men-hcp") },
+    ladies: { label: "Ladies\u2019 tees", yards: readRow("ladies-yards"), par: readRow("ladies-par"), hcp: readRow("ladies-hcp") }
   };
 
   var STORAGE_KEY = "agate-beach-scorecard";
@@ -80,6 +80,147 @@
     return value === 0 ? "E" : (value > 0 ? "+" : "\u2212") + Math.abs(value);
   }
 
+  // ---------- Hole layout pictures ----------
+  // Small picture beside each hole. Mouse hover shows a larger preview; click or tap opens a full viewer.
+  var HOLE_PATH = "assets/images/holes/hole-";
+  var peek;
+  var peekImage;
+  var dialog;
+  var dialogImage;
+  var dialogTitle;
+  var dialogMeta;
+  var viewing = 0;
+
+  function holeNumber(index) { return (index % 9) + 1; }
+
+  function holeButton(index) {
+    var button = el("button", "hole-icon");
+    button.type = "button";
+    button.setAttribute("aria-label", "Hole " + (index + 1) + " layout");
+    var img = el("img");
+    img.src = HOLE_PATH + holeNumber(index) + "-thumb.jpg";
+    img.alt = "";
+    img.width = 46;
+    img.height = 58;
+    img.decoding = "async";
+    button.appendChild(img);
+    button.appendChild(el("span", "hole-num", String(index + 1)));
+
+    button.addEventListener("pointerenter", function (event) {
+      if (event.pointerType === "mouse") showPeek(button, index);
+    });
+    button.addEventListener("pointerleave", hidePeek);
+    button.addEventListener("click", function () {
+      hidePeek();
+      openHole(index);
+    });
+    return button;
+  }
+
+  function ensurePeek() {
+    if (peek) return;
+    peek = el("div", "hole-peek");
+    peek.setAttribute("aria-hidden", "true");
+    peekImage = el("img");
+    peekImage.alt = "";
+    peek.appendChild(peekImage);
+    document.body.appendChild(peek);
+    window.addEventListener("scroll", hidePeek, { passive: true });
+    window.addEventListener("resize", hidePeek);
+  }
+
+  function showPeek(button, index) {
+    ensurePeek();
+    var height = Math.min(window.innerHeight * 0.6, 440);
+    peekImage.style.height = height + "px";
+    peekImage.src = HOLE_PATH + holeNumber(index) + ".jpg";
+    var rect = button.getBoundingClientRect();
+    var top = Math.max(8, Math.min(rect.top + rect.height / 2 - height / 2, window.innerHeight - height - 8));
+    var left = Math.min(rect.right + 14, window.innerWidth - 360);
+    peek.style.top = top + "px";
+    peek.style.left = Math.max(8, left) + "px";
+    peek.classList.add("is-on");
+  }
+
+  function hidePeek() {
+    if (peek) peek.classList.remove("is-on");
+  }
+
+  function ensureDialog() {
+    if (dialog) return;
+    dialog = el("dialog", "hole-dialog");
+    dialog.setAttribute("aria-labelledby", "hole-dialog-title");
+
+    var close = el("button", "hole-close", "\u00d7");
+    close.type = "button";
+    close.setAttribute("aria-label", "Close");
+    close.addEventListener("click", function () { dialog.close(); });
+
+    var prev = el("button", "hole-step hole-prev", "\u2039");
+    prev.type = "button";
+    prev.setAttribute("aria-label", "Previous hole");
+    prev.addEventListener("click", function () { stepHole(-1); });
+
+    var next = el("button", "hole-step hole-next", "\u203a");
+    next.type = "button";
+    next.setAttribute("aria-label", "Next hole");
+    next.addEventListener("click", function () { stepHole(1); });
+
+    var figure = el("figure", "hole-figure");
+    dialogImage = el("img");
+    figure.appendChild(dialogImage);
+
+    var caption = el("figcaption", "hole-caption");
+    dialogTitle = el("h3", "", "");
+    dialogTitle.id = "hole-dialog-title";
+    dialogMeta = el("p", "hole-meta");
+    caption.appendChild(dialogTitle);
+    caption.appendChild(dialogMeta);
+    caption.appendChild(el("p", "hole-key", "Tees at the bottom, green at the top."));
+
+    var stage = el("div", "hole-stage");
+    stage.appendChild(prev);
+    stage.appendChild(figure);
+    stage.appendChild(next);
+
+    dialog.appendChild(close);
+    dialog.appendChild(stage);
+    dialog.appendChild(caption);
+    document.body.appendChild(dialog);
+
+    dialog.addEventListener("click", function (event) { if (event.target === dialog) dialog.close(); });
+    dialog.addEventListener("keydown", function (event) {
+      if (event.key === "ArrowLeft") stepHole(-1);
+      if (event.key === "ArrowRight") stepHole(1);
+    });
+    dialog.addEventListener("close", function () { document.documentElement.classList.remove("no-scroll"); });
+  }
+
+  function stepHole(direction) {
+    var count = state.holes;
+    showHole((viewing + direction + count) % count);
+  }
+
+  function showHole(index) {
+    viewing = index;
+    var tee = tees[state.tee];
+    var slot = index % 9;
+    dialogImage.src = HOLE_PATH + holeNumber(index) + ".jpg";
+    dialogImage.alt = "Layout of hole " + (index + 1) + ", with the tees at the bottom and the green at the top";
+    dialogTitle.textContent = "Hole " + (index + 1);
+    dialogMeta.textContent = "Par " + tee.par[slot] + " \u00b7 " + tee.yards[slot] + " yds \u00b7 Handicap " + tee.hcp[slot] + " \u00b7 " + tee.label;
+  }
+
+  function openHole(index) {
+    ensureDialog();
+    showHole(index);
+    if (typeof dialog.showModal === "function") {
+      if (!dialog.open) dialog.showModal();
+    } else {
+      dialog.setAttribute("open", "");
+    }
+    document.documentElement.classList.add("no-scroll");
+  }
   var table;
   var totalCells = [];
   var inputs = [];
@@ -173,7 +314,9 @@
 
     for (var hole = 0; hole < state.holes; hole++) {
       var row = el("tr");
-      row.appendChild(el("th", "", String(hole + 1)));
+      var holeHead = el("th", "sc-hole");
+      holeHead.appendChild(holeButton(hole));
+      row.appendChild(holeHead);
       row.appendChild(el("td", "", String(tee.yards[hole % 9])));
       row.appendChild(el("td", "sc-par", String(tee.par[hole % 9])));
       for (var q = 0; q < state.count; q++) {

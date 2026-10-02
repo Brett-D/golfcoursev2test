@@ -9,7 +9,8 @@ small JavaScript file. No build step.
 | File | Purpose |
 | --- | --- |
 | `index.html` | Home: hero, about, signature hole 8, services, gallery, cafe, rates, map and Facebook |
-| `course.html` | Scorecard, digital scorecard, rules and etiquette |
+| `course.html` | Course map, printed yardage/handicap table, rules and etiquette |
+| `scorecard.html` | Digital scorecard with a layout picture of every hole (the yardage table at the bottom feeds it) |
 | `rates.html` | Green fees, carts, rentals and driving range |
 | `pro-shop.html` | Pro shop information |
 | `cafe.html` | The Clubhouse cafe and Good Dog menu |
@@ -23,9 +24,10 @@ assets/
   .htaccess        cache times for the site's own files (Apache/LiteSpeed hosting)
   css/styles.css   design system and page styles
   js/main.js       mobile nav, parallax, rates loader, Facebook widget sizing, mailto form
-  js/scorecard.js  digital scorecard on the course page (reads yardage/par from the printed table)
+  js/scorecard.js  digital scorecard on scorecard.html (reads yardage/par/handicap from the table on that page)
   video/           home hero loop (hero.mp4 + hero.webm; poster is images/hero-poster.jpg)
   images/          optimized photos, scorecard, map and logos
+  images/holes/    hole-1..9.jpg (viewer) and hole-1..9-thumb.jpg (icons), cut from the course map in the printed scorecard PDF
 data/
   rates.json       golf rates shown on the Home and Golf Rates pages
   notices.json     saved copy of the ForeUp notices (kept up to date by notices.php)

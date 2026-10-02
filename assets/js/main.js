@@ -33,6 +33,8 @@
   window.addEventListener("scroll", paintHeader, { passive: true });
 
   var here = window.location.pathname.split("/").pop() || "index.html";
+  // The digital scorecard used to live on the course page; keep old links working.
+  if (here === "course.html" && window.location.hash === "#my-scorecard") { window.location.replace("scorecard.html"); return; }
   Array.prototype.forEach.call(document.querySelectorAll(".nav-menu a"), function (link) {
     if (link.getAttribute("href") === here) link.setAttribute("aria-current", "page");
   });

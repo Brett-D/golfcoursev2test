@@ -3,10 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Golf Rates | Agate Beach Golf Course</title>
-<meta name="description" content="Greens fees, twilight rates, cart, pull cart, club rental and range ball prices at Agate Beach Golf Course in Newport, Oregon.">
-<meta property="og:title" content="Golf Rates | Agate Beach Golf Course">
-<meta property="og:description" content="Greens fees, twilight rates, cart, pull cart, club rental and range ball prices at Agate Beach Golf Course in Newport, Oregon.">
+<title>Digital Scorecard | Agate Beach Golf Course</title>
+<meta name="description" content="Keep score on your phone at Agate Beach Golf Course, with a layout picture of every hole, yardage and par.">
+<meta property="og:title" content="Digital Scorecard | Agate Beach Golf Course">
+<meta property="og:description" content="Keep score on your phone at Agate Beach Golf Course, with a layout picture of every hole, yardage and par.">
 <meta property="og:image" content="https://agatebeachgolf.net/assets/images/aerial.jpg">
 <link rel="icon" href="assets/images/logo.png" type="image/png">
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -43,54 +43,45 @@
 </header>
 
 <main id="main">
-  <section class="hero hero-page" style="background-image:url('assets/images/sunset-snag.jpg');background-position:center">
+  <section class="hero hero-page" style="background-image:url('assets/images/putting-green.jpg');background-position:center">
     <div class="container">
-      <p class="eyebrow">Pricing</p>
-      <h1>Golf Rates</h1>
-      <p class="lead">Friendly pricing for a round on the Oregon coast.</p>
-      <div class="btn-row"><a class="btn btn-accent" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a></div>
+      <p class="eyebrow">The Course</p>
+      <h1>Digital Scorecard</h1>
+      <p class="lead">Keep your score on your phone. Tap any hole picture to see its layout.</p>
     </div>
   </section>
 
-
-  <section class="section">
+  <section class="section" id="my-scorecard">
     <div class="container">
-      <div class="section-head center reveal">
-        <p class="eyebrow">Golf Rates</p>
-        <h2>Greens Fees &amp; Rentals</h2>
-        <p class="lead">Updated <span data-rates-updated>&hellip;</span></p>
+      <div class="section-head reveal">
+        <p class="eyebrow">Your Round</p>
+        <h2>Keep Your Score</h2>
+        <p class="lead">Pick your tees, add your group and tap in your strokes after each hole. Hover over or tap a hole picture for a closer look at the layout.</p>
       </div>
-      <div class="rate-grid cols-3 reveal" data-rates="all"></div>
-      <p class="note" style="text-align:center;margin-top:2rem" data-rates-note>The Driving Range is open 7&ndash;5:30 pm. Range is restricted to irons only.</p>
+      <div class="reveal" id="digital-scorecard"><noscript><p class="note">The digital scorecard needs JavaScript. Use the printable scorecard instead.</p></noscript></div>
+      <div class="btn-row"><a class="btn btn-outline-dark" href="course.html">Course Layout</a><a class="btn btn-outline-dark" href="assets/images/scorecard.jpg" target="_blank" rel="noopener">Printable Scorecard</a></div>
     </div>
   </section>
-
-  <section class="section section-navy">
-    <div class="container cta">
-      <div class="reveal">
-        <p class="eyebrow" style="justify-content:center">Tee Times</p>
-        <h2>Reserve Your Round</h2>
-        <p class="lead" style="max-width:40rem;margin-inline:auto">Book online through our tee sheet, sign in to the customer portal, or phone the pro shop. Walk-ons are always welcome.</p>
-        <div class="btn-row"><a class="btn btn-accent" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a><a class="btn btn-outline" href="https://foreupsoftware.com/index.php/booking/21987#/login" target="_blank" rel="noopener">Customer Portal</a><a class="btn btn-outline" href="tel:+15412657331">(541) 265-7331</a></div>
-      </div>
-    </div>
-  </section>
-
   <section class="section section-sand">
-    <div class="container split">
-      <div class="reveal">
-        <p class="eyebrow">Before You Play</p>
-        <h2>Good to Know</h2>
-        <ul class="checks">
-          <li>Check with the pro shop prior to playing.</li>
-          <li>Maximum of 4 players per group.</li>
-          <li>The driving range is irons only.</li>
-          <li>Gift certificates are available for your favorite golfer.</li>
-          <li>Lessons can be reserved with one of our teaching staff.</li>
-        </ul>
-        <a class="btn btn-green" href="course.html#rules">Rules &amp; Etiquette</a>
+    <div class="container">
+      <div class="section-head reveal">
+        <p class="eyebrow">Scorecard</p>
+        <h2>Yardage &amp; Handicap</h2>
       </div>
-      <figure class="frame reveal"><img src="assets/images/sunset-snag.jpg" alt="Weathered snag on the fairway at sunset" width="1400" height="1050" loading="lazy"></figure>
+      <div class="table-wrap reveal">
+        <table class="scorecard">
+          <thead><tr><th scope="col">Hole</th><th scope="col">1</th><th scope="col">2</th><th scope="col">3</th><th scope="col">4</th><th scope="col">5</th><th scope="col">6</th><th scope="col">7</th><th scope="col">8</th><th scope="col">9</th><th scope="col">Out</th></tr></thead>
+          <tbody>
+            <tr class="men" data-row="men-yards"><th scope="row">Men&rsquo;s yardage</th><td>321</td><td>310</td><td>157</td><td>351</td><td>378</td><td>501</td><td>324</td><td>115</td><td>448</td><td class="tot">2,905</td></tr>
+            <tr class="men" data-row="men-hcp"><th scope="row">Men&rsquo;s handicap</th><td>11</td><td>13</td><td>15</td><td>9</td><td>1</td><td>3</td><td>7</td><td>17</td><td>5</td><td class="tot"></td></tr>
+            <tr class="par" data-row="men-par"><th scope="row">Men&rsquo;s par</th><td>4</td><td>4</td><td>3</td><td>4</td><td>4</td><td>5</td><td>4</td><td>3</td><td>5</td><td class="tot">36</td></tr>
+            <tr class="ladies" data-row="ladies-yards"><th scope="row">Ladies&rsquo; yardage</th><td>312</td><td>292</td><td>136</td><td>342</td><td>357</td><td>463</td><td>312</td><td>102</td><td>353</td><td class="tot">2,669</td></tr>
+            <tr class="ladies" data-row="ladies-hcp"><th scope="row">Ladies&rsquo; handicap</th><td>11</td><td>13</td><td>15</td><td>9</td><td>5</td><td>1</td><td>7</td><td>17</td><td>3</td><td class="tot"></td></tr>
+            <tr class="par" data-row="ladies-par"><th scope="row">Ladies&rsquo; par</th><td>4</td><td>4</td><td>3</td><td>5</td><td>5</td><td>5</td><td>4</td><td>3</td><td>5</td><td class="tot">38</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <p class="note" style="margin-top:1rem">Eighteen holes: men&rsquo;s 5,810 yards, par 72, rating/slope 66.6/115 &middot; ladies&rsquo; 5,338 yards, par 76, rating/slope 69.8/115. The signature hole is the 115-yard par 3 number eight.</p>
     </div>
   </section>
 
@@ -139,5 +130,6 @@
 </footer>
 
 <script src="assets/js/main.js"></script>
+<script src="assets/js/scorecard.js"></script>
 </body>
 </html>
