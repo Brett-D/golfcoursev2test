@@ -1,4 +1,5 @@
-// Hole-by-hole card stack on the course page. Cards are plain HTML; this stacks them, adds arrows, number chips, swipe/drag and the viewer.
+// Hole-by-hole card stack on the course page. Cards are plain HTML; this fans them out, adds arrows, number chips,
+// hover/swipe to bring a hole to the top, and the full-size viewer.
 (function () {
   "use strict";
 
@@ -25,13 +26,10 @@
     return "Par " + par[i] + " \u00b7 " + yards[i] + " yds \u00b7 Handicap " + hcp[i] + " \u00b7 Men\u2019s tees";
   }
 
-  var VISIBLE = 4; // cards fanned out on each side before the rest tuck underneath
-  var pos = 0; // fractional while a finger or mouse is dragging the stack
   var active = 0;
-  var peek = -1; // card under the mouse, lifted to the front without moving the stack
-  var step = 60;
+  var gap = 60; // how far apart the cards sit; they never move sideways, only their stacking order changes
   var chips = [];
-  var dragged = false;
+  var suppressClick = false;
 
   function clamp(value, low, high) { return Math.max(low, Math.min(high, value)); }
 
@@ -49,28 +47,28 @@
     if (window.HoleViewer) window.HoleViewer.open(i, { count: 9, describe: describe });
   }
 
-  // How far each card is shifted so that the whole fan fits the width of the screen.
+  // Spread the cards so the whole fan fits the width of the screen.
   function measure() {
-    var half = track.clientWidth / 2 - cards[0].offsetWidth / 2 - 6;
-    step = Math.max(12, Math.min(cards[0].offsetWidth * 0.62, half / VISIBLE));
+    var width = cards[0].offsetWidth;
+    gap = clamp((track.clientWidth - width - 8) / (cards.length - 1), 12, width * 0.4);
+    root.classList.toggle("hc-tight", gap < 32);
   }
 
+  // Cards left of the chosen one stack up towards it (2 over 1); cards to its right stack down away from it (4 over 5 over 6 ...).
   function layout() {
-    active = clamp(Math.round(pos), 0, cards.length - 1);
+    var width = cards[0].offsetWidth;
+    var total = gap * (cards.length - 1) + width;
     items.forEach(function (item, i) {
-      var offset = i - pos;
-      var distance = Math.abs(offset);
-      var slot = Math.min(distance, VISIBLE);
-      var shown = clamp(VISIBLE + 1 - distance, 0, 1);
-      var lifted = i === peek && shown > 0;
-      item.style.transform = "translateX(" + ((offset < 0 ? -1 : 1) * slot * step).toFixed(1) + "px) " + (lifted ? "translateY(-8px) scale(1)" : "scale(" + (1 - 0.075 * slot).toFixed(3) + ")");
-      item.style.opacity = shown.toFixed(2);
-      item.style.zIndex = String(lifted ? 300 : 200 - Math.round(distance * 20));
-      cards[i].classList.toggle("is-peek", lifted);
-      item.style.pointerEvents = shown > 0 ? "auto" : "none";
+      var distance = Math.abs(i - active);
+      // The further down the deck, the smaller the card. Each card shrinks towards the edge hidden under its neighbour,
+      // so the strip you can see (and point at) stays put and the stack does not wobble under the pointer.
+      var scale = 1 - 0.055 * Math.min(distance, 5);
+      item.style.transformOrigin = i < active ? "0% 50%" : i > active ? "100% 50%" : "50% 50%";
+      item.style.transform = "translateX(" + (i * gap - total / 2).toFixed(1) + "px) scale(" + scale.toFixed(3) + ")";
+      item.style.zIndex = String(i === active ? 100 : i < active ? i : 90 - i);
       cards[i].classList.toggle("is-active", i === active);
+      cards[i].classList.toggle("is-right", i > active);
       cards[i].tabIndex = i === active ? 0 : -1;
-      cards[i].setAttribute("aria-hidden", shown > 0 ? "false" : "true");
       var chip = chips[i];
       if (chip) { if (i === active) chip.setAttribute("aria-current", "true"); else chip.removeAttribute("aria-current"); }
     });
@@ -79,16 +77,23 @@
   }
 
   function go(index) {
-    pos = clamp(index, 0, cards.length - 1);
+    active = clamp(index, 0, cards.length - 1);
     layout();
   }
+
   cards.forEach(function (card, i) {
     card.querySelector("img").draggable = false;
+    // A number tab shows on the visible edge of cards that are tucked under the top one.
+    var badge = document.createElement("span");
+    badge.className = "hc-badge";
+    badge.setAttribute("aria-hidden", "true");
+    badge.textContent = String(i + 1);
+    card.appendChild(badge);
     var info = card.querySelector(".hc-meta");
     if (info && par[i]) info.textContent = "Par " + par[i] + " \u00b7 " + yards[i] + " yds";
-    // The top card opens the viewer; any other card is brought to the front first.
+    // The top card opens the viewer; tapping any other card brings it to the top.
     card.addEventListener("click", function () {
-      if (dragged) return;
+      if (suppressClick) return;
       if (i === active) openViewer(i); else go(i);
     });
   });
@@ -107,65 +112,37 @@
   });
   root.appendChild(nav);
 
-  // Touch: the stack follows your finger and settles on the nearest hole when you let go.
-  var drag = null;
-  var lastX = 0;
-  var lastTime = 0;
-  var velocity = 0;
+  // Whichever card is on top at the pointer comes to the top of the stack. Because the cards never slide sideways,
+  // the card you are pointing at is always the one you end up with, for a mouse hover or a finger sliding across the stack.
+  function cardAt(x, y) {
+    var node = document.elementFromPoint(x, y);
+    var item = node && node.closest ? node.closest(".hc-track li") : null;
+    return item ? items.indexOf(item) : -1;
+  }
 
+  var touch = null;
   track.addEventListener("pointerdown", function (event) {
     if (event.pointerType === "mouse") return;
-    drag = { x: event.clientX, from: pos, moving: false };
-    lastX = event.clientX;
-    lastTime = event.timeStamp;
-    velocity = 0;
-    dragged = false;
+    touch = { x: event.clientX, moved: false };
+    suppressClick = false;
   });
-
-  window.addEventListener("pointermove", function (event) {
-    if (drag) {
-      var dx = event.clientX - drag.x;
-      if (!drag.moving && Math.abs(dx) > 8) {
-        drag.moving = true;
-        dragged = true;
-        track.classList.add("is-dragging");
-      }
-      if (drag.moving) {
-        var dt = Math.max(1, event.timeStamp - lastTime);
-        velocity = (event.clientX - lastX) / dt;
-        lastX = event.clientX;
-        lastTime = event.timeStamp;
-        pos = clamp(drag.from - dx / (step * 1.6), 0, cards.length - 1);
-        layout();
-      }
-      return;
+  track.addEventListener("pointermove", function (event) {
+    if (event.pointerType !== "mouse") {
+      if (!touch) return;
+      if (!touch.moved && Math.abs(event.clientX - touch.x) > 6) { touch.moved = true; suppressClick = true; }
+      if (!touch.moved) return;
     }
+    var i = cardAt(event.clientX, event.clientY);
+    if (i >= 0 && i !== active) go(i);
   });
-
-  // Mouse: the card under the pointer lifts to the front where it is. Click it to bring it to the centre.
-  items.forEach(function (item, i) {
-    item.addEventListener("pointerenter", function (event) {
-      if (event.pointerType !== "mouse" || drag) return;
-      peek = i;
-      layout();
-    });
-  });
-  track.addEventListener("pointerleave", function (event) {
-    if (event.pointerType !== "mouse" || peek < 0) return;
-    peek = -1;
-    layout();
-  });
-
   function release() {
-    if (!drag) return;
-    var moved = drag.moving;
-    drag = null;
-    track.classList.remove("is-dragging");
-    if (moved) go(Math.round(pos - velocity * 180 / (step * 1.6)));
-    window.setTimeout(function () { dragged = false; }, 0);
+    if (!touch) return;
+    touch = null;
+    window.setTimeout(function () { suppressClick = false; }, 0);
   }
   window.addEventListener("pointerup", release);
   window.addEventListener("pointercancel", release);
+
   track.addEventListener("keydown", function (event) {
     if (event.key === "ArrowRight") { event.preventDefault(); go(active + 1); }
     if (event.key === "ArrowLeft") { event.preventDefault(); go(active - 1); }
