@@ -210,7 +210,7 @@
   }
 
   if (document.querySelector("[data-rates]")) {
-    fetch("data/rates.json", { cache: "no-cache" })
+    fetch("data/rates.json?v=" + Date.now(), { cache: "no-store" })
       .then(function (response) {
         if (!response.ok) throw new Error("HTTP " + response.status);
         return response.json();
