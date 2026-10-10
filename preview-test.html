@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Preview: announcements and weather (throwaway)</title>
+<link rel="icon" href="assets/images/logo.png" type="image/png">
+<link rel="stylesheet" href="assets/css/styles.css?v=20261002-25">
+<style>
+  /* ---------- Announcements strip ---------- */
+  .announce-head { display: flex; align-items: center; justify-content: center; gap: 0.55rem; }
+  .announce-head h2 { margin: 0; font: 700 1.05rem/1.2 var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: var(--navy-deep); }
+  .announce-head svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .announce[hidden] { display: none; }
+
+  /* ---------- Weather band ---------- */
+  .wx { background: var(--cream); border-bottom: 1px solid var(--line); padding: 1.6rem 0; }
+  .wx-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+  @media (min-width: 900px) { .wx-grid { grid-template-columns: 1.05fr 1.6fr 1.05fr; } }
+  .wx-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1rem 1.2rem; }
+  .wx-label { margin: 0 0 0.5rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+  .wx-now { display: flex; align-items: center; gap: 1rem; }
+  .wx-now .wx-icon { width: 64px; height: 64px; flex: none; }
+  .wx-temp { font: 700 2.6rem/1 var(--font-head); color: var(--navy); }
+  .wx-desc { font-weight: 600; color: var(--navy); }
+  .wx-wind { font-size: 0.9rem; color: var(--muted); }
+  .wx-days { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.4rem; text-align: center; }
+  .wx-day { padding: 0.2rem 0.1rem; border-radius: 10px; }
+  .wx-day + .wx-day { border-left: 1px solid var(--line); border-radius: 0; }
+  .wx-day b { display: block; font-size: 0.8rem; line-height: 1.2; min-height: 2.4em; color: var(--navy); }
+  .wx-day .wx-icon { width: 38px; height: 38px; margin: 0.25rem auto; display: block; }
+  .wx-day .t { font: 700 1.25rem/1 var(--font-head); color: var(--navy); }
+  .wx-day .t.low { color: var(--blue); }
+  .wx-day .pop { display: block; font-size: 0.75rem; color: var(--blue); margin-top: 0.2rem; min-height: 1em; }
+  .wx-sun { display: grid; grid-template-columns: auto 1fr; gap: 0.2rem 1rem; align-items: center; }
+  .wx-sun svg.arc { grid-column: 1 / -1; width: 100%; height: 64px; }
+  .wx-sun .k { font-size: 0.85rem; color: var(--muted); }
+  .wx-sun .v { font-weight: 700; color: var(--navy); text-align: right; }
+  .wx-sun .left { grid-column: 1 / -1; text-align: center; font-size: 0.85rem; font-weight: 600; color: var(--green-dark); margin-top: 0.25rem; }
+  .wx-source { margin: 0.8rem 0 0; font-size: 0.75rem; color: var(--muted); text-align: center; }
+  .wx-source a { color: inherit; }
+  .wx-icon { fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+  .wx-icon .sun { stroke: #e0a10b; fill: #fbd46a; }
+  .wx-icon .moon { stroke: #7d8aa0; fill: #dfe5ee; }
+  .wx-icon .cloud { stroke: #6b7b8f; fill: #eef2f6; }
+  .wx-icon .drop { stroke: var(--blue); }
+  .wx-icon .bolt { stroke: #e0a10b; fill: #fbd46a; }
+  .wx-icon .fogline { stroke: #8a96a6; }
+
+  /* ---------- Preview chrome ---------- */
+  .preview-tag { position: fixed; left: 50%; bottom: 0.8rem; transform: translateX(-50%); z-index: 100; width: max-content; max-width: calc(100% - 1.6rem); background: #fff6d6; border: 1px solid #e7d48e; border-radius: 999px; box-shadow: var(--shadow-sm); color: #5a4a10; font-size: 0.8rem; text-align: center; padding: 0.35rem 0.9rem; }
+</style>
+</head>
+<body>
+<div class="preview-tag"><strong>Test page.</strong> Not linked from the site. Nothing on this page changes the real website.</div>
+
+<header class="site-header">
+  <div class="container nav">
+    <a class="brand" href="index.html">
+      <img src="assets/images/logo.png" alt="" width="50" height="50">
+      <span>
+        <span class="brand-name">Agate Beach Golf Course</span>
+        <span class="brand-tag">Newport, Oregon &middot; Est. 1931</span>
+      </span>
+    </a>
+    <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-menu" aria-label="Menu">
+      <span></span><span></span><span></span>
+    </button>
+    <ul class="nav-menu" id="nav-menu">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="rates.html">Golf Rates</a></li>
+      <li><a href="course.html">Course Layout</a></li>
+      <li><a href="pro-shop.html">Pro Shop</a></li>
+      <li><a href="cafe.html">Cafe</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+      <li class="nav-desktop-only"><a class="btn btn-accent nav-cta" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a></li>
+    </ul>
+  </div>
+</header>
+
+<main id="main">
+  <section class="hero " data-video="assets/video/hero" style="background-image:url('assets/images/hero-poster.jpg');background-position:center 88%">
+    <div class="container">
+      <p class="eyebrow">Newport, Oregon &middot; Est. 1931</p>
+      <h1>A Family Tradition <span class="h1-sub">on the Oregon Coast</span></h1>
+      <p class="lead">Nine holes of classic coastal golf just off Highway 101 &mdash; open to the public, with a pro shop, lessons and a cafe on site.</p>
+      <div class="btn-row"><a class="btn btn-accent" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a><a class="btn btn-outline" href="course.html">Course Layout</a></div>
+    </div>
+  </section>
+
+  <!-- 1. "Welcome! Click here for golf rates" becomes an Announcements heading over the ForeUp notices -->
+  <section class="announce" aria-labelledby="announce-title" data-announce hidden>
+    <div class="notice announce-head">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+      <h2 id="announce-title">Announcements</h2>
+    </div>
+    <div class="notice notice-alerts" data-notices hidden></div>
+  </section>
+
+  <!-- 2. Weather and sunrise / sunset -->
+  <section class="wx" aria-labelledby="wx-title">
+    <div class="container">
+      <h2 class="visually-hidden" id="wx-title" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Weather at the course</h2>
+      <div class="wx-grid">
+        <div class="wx-card">
+          <p class="wx-label">Now at the course</p>
+          <div class="wx-now" data-wx-now><span class="wx-desc">Loading weather&hellip;</span></div>
+        </div>
+        <div class="wx-card">
+          <p class="wx-label">Forecast</p>
+          <div class="wx-days" data-wx-days></div>
+        </div>
+        <div class="wx-card wx-sun" data-wx-sun></div>
+      </div>
+      <p class="wx-source">Weather from the <a href="https://forecast.weather.gov/MapClick.php?lat=44.6668&amp;lon=-124.053" target="_blank" rel="noopener">National Weather Service</a> (Newport airport) &middot; <span data-wx-updated></span></p>
+    </div>
+  </section>
+
+  <section class="stats" aria-label="Course at a glance">
+    <div class="container">
+      <div class="stat"><span class="stat-num">9</span><span class="stat-label">Holes</span></div>
+      <div class="stat"><span class="stat-num">Par 36</span><span class="stat-label">2,905 yds from the men&rsquo;s tees</span></div>
+      <div class="stat"><span class="stat-num">1931</span><span class="stat-label">Year opened</span></div>
+      <div class="stat"><span class="stat-num">66.6 / 115</span><span class="stat-label">Course rating / slope</span></div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-head center">
+        <p class="eyebrow">Golf Rates</p>
+        <h2>Simple, Friendly Pricing</h2>
+        <p class="lead">Updated <span data-rates-updated>&hellip;</span></p>
+      </div>
+      <div class="rate-grid" data-rates="home"></div>
+    </div>
+  </section>
+
+</main>
+
+<script src="assets/js/main.js?v=20261002-26"></script>
+<script>
+(function () {
+  "use strict";
+
+  // main.js only treats index.html as the home page; give this copy of the home hero the same photo placement.
+  Array.prototype.forEach.call(document.querySelectorAll(".hero > .parallax-bg.pin-top"), function (layer) {
+    layer.classList.remove("pin-top");
+  });
+
+  // ---------- Announcements: hide the heading too when there are no notices ----------
+  var announce = document.querySelector("[data-announce]");
+  var noticeBox = document.querySelector("[data-notices]");
+  new MutationObserver(function () { announce.hidden = noticeBox.hidden; })
+    .observe(noticeBox, { attributes: true, attributeFilter: ["hidden"] });
+
+  // ---------- Weather ----------
+  var LAT = 44.6668, LON = -124.053, TZ = "America/Los_Angeles";
+  var FORECAST = "https://api.weather.gov/gridpoints/PQR/60,74/forecast";
+  var HOURLY = "https://api.weather.gov/gridpoints/PQR/60,74/forecast/hourly";
+  var OBS = "https://api.weather.gov/stations/KONP/observations/latest";
+
+  function getJson(url, tries) {
+    return fetch(url, { headers: { Accept: "application/geo+json" } }).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.json();
+    }).catch(function (err) {
+      // api.weather.gov sometimes answers 500 once; one retry is usually enough.
+      if ((tries || 0) < 1) return getJson(url, 1);
+      throw err;
+    });
+  }
+
+  function timeText(date) {
+    return date.toLocaleTimeString("en-US", { hour: "numeric", minute: "2-digit", timeZone: TZ }).toLowerCase();
+  }
+
+  function compass(deg) {
+    if (deg === null || deg === undefined) return "";
+    return ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"][Math.round(deg / 22.5) % 16];
+  }
+
+  function kind(text) {
+    text = (text || "").toLowerCase();
+    if (/thunder/.test(text)) return "storm";
+    if (/snow|sleet|ice|flurr/.test(text)) return "snow";
+    if (/rain|shower|drizzle/.test(text)) return "rain";
+    if (/fog|mist|haze|smoke/.test(text)) return "fog";
+    if (/partly|mostly sunny|mostly clear|few|scattered/.test(text)) return "partly";
+    if (/cloud|overcast/.test(text)) return "cloud";
+    if (/sunny|clear|fair/.test(text)) return "clear";
+    return "cloud";
+  }
+
+  function icon(type, night) {
+    var sun = night
+      ? '<path class="moon" d="M20 14.5A8 8 0 1 1 11.5 6a6.3 6.3 0 0 0 8.5 8.5z"/>'
+      : '<circle class="sun" cx="12" cy="12" r="4.2"/><g class="sun"><path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6l1.4 1.4M17 17l1.4 1.4M5.6 18.4 7 17M17 7l1.4-1.4"/></g>';
+    var smallSun = night
+      ? '<path class="moon" d="M14 9.5A5 5 0 1 1 8.6 4a4 4 0 0 0 5.4 5.5z"/>'
+      : '<circle class="sun" cx="9" cy="8" r="3.4"/><g class="sun"><path d="M9 2.5v1.2M3.5 8h1.2M5 4l.9.9M13 4l-.9.9"/></g>';
+    var cloud = '<path class="cloud" d="M7 19h10.5a4 4 0 0 0 .4-8 5.5 5.5 0 0 0-10.6 1.2A3.4 3.4 0 0 0 7 19z"/>';
+    var highCloud = '<path class="cloud" d="M7 15h10.5a3.6 3.6 0 0 0 .4-7.2 5.2 5.2 0 0 0-10.1 1.1A3 3 0 0 0 7 15z"/>';
+    var inner = {
+      clear: sun,
+      partly: smallSun + cloud,
+      cloud: cloud,
+      rain: highCloud + '<path class="drop" d="M8.5 17.5l-1 2.5M12.5 17.5l-1 2.5M16.5 17.5l-1 2.5"/>',
+      snow: highCloud + '<path class="drop" d="M8 18.5h.01M12 20h.01M16 18.5h.01"/>',
+      storm: highCloud + '<path class="bolt" d="M12.5 14 10 18.5h3L11.5 22"/>',
+      fog: '<path class="fogline" d="M4 9h16M3 13h18M5 17h14"/>'
+    }[type];
+    return '<svg class="wx-icon" viewBox="0 0 24 24" aria-hidden="true">' + inner + "</svg>";
+  }
+
+  // Sunrise and sunset from the standard solar position formulas (accurate to about a minute).
+  function sunTimes(date) {
+    var rad = Math.PI / 180, day = 86400000, J1970 = 2440588, J2000 = 2451545, J0 = 0.0009, e = rad * 23.4397;
+    var lw = rad * -LON, phi = rad * LAT;
+    var d = date.valueOf() / day - 0.5 + J1970 - J2000;
+    var n = Math.round(d - J0 - lw / (2 * Math.PI));
+    var ds = J0 + lw / (2 * Math.PI) + n;
+    var M = rad * (357.5291 + 0.98560028 * ds);
+    var L = M + rad * (1.9148 * Math.sin(M) + 0.02 * Math.sin(2 * M) + 0.0003 * Math.sin(3 * M)) + rad * 102.9372 + Math.PI;
+    var dec = Math.asin(Math.sin(e) * Math.sin(L));
+    var transit = function (x) { return J2000 + x + 0.0053 * Math.sin(M) - 0.0069 * Math.sin(2 * L); };
+    var noon = transit(ds);
+    var w = Math.acos((Math.sin(rad * -0.833) - Math.sin(phi) * Math.sin(dec)) / (Math.cos(phi) * Math.cos(dec)));
+    var set = transit(J0 + (w + lw) / (2 * Math.PI) + n);
+    var toDate = function (j) { return new Date((j + 0.5 - J1970) * day); };
+    return { rise: toDate(noon - (set - noon)), set: toDate(set), noon: toDate(noon) };
+  }
+
+  function courseNoon(offsetDays) {
+    var parts = new Intl.DateTimeFormat("en-US", { timeZone: TZ, year: "numeric", month: "numeric", day: "numeric" }).formatToParts(new Date());
+    var get = function (t) { return Number(parts.filter(function (p) { return p.type === t; })[0].value); };
+    return new Date(Date.UTC(get("year"), get("month") - 1, get("day") + (offsetDays || 0), 20));
+  }
+
+  function duration(ms) {
+    var mins = Math.max(0, Math.round(ms / 60000));
+    var h = Math.floor(mins / 60), m = mins % 60;
+    return (h ? h + " hr " : "") + m + " min";
+  }
+
+  function renderSun() {
+    var box = document.querySelector("[data-wx-sun]");
+    var now = new Date();
+    var today = sunTimes(courseNoon(0));
+    var tomorrow = sunTimes(courseNoon(1));
+    var frac = (now - today.rise) / (today.set - today.rise);
+    var up = frac >= 0 && frac <= 1;
+    var x = 10 + 180 * Math.min(1, Math.max(0, frac));
+    var y = 58 - 48 * Math.sin(Math.PI * Math.min(1, Math.max(0, frac)));
+    var status;
+    if (now < today.rise) status = "Sunrise in " + duration(today.rise - now);
+    else if (up) status = duration(today.set - now) + " of daylight left";
+    else status = "Sun has set &middot; rises " + timeText(tomorrow.rise) + " tomorrow";
+    box.innerHTML =
+      '<p class="wx-label" style="grid-column:1/-1;margin:0">Sunrise &amp; sunset</p>' +
+      '<svg class="arc" viewBox="0 0 200 66" aria-hidden="true">' +
+        '<line x1="0" y1="58" x2="200" y2="58" stroke="#c9d1db" stroke-width="1.5"/>' +
+        '<path d="M10 58 A90 48 0 0 1 190 58" fill="none" stroke="#e0a10b" stroke-width="2" stroke-dasharray="4 4"/>' +
+        (up ? '<circle cx="' + x.toFixed(1) + '" cy="' + y.toFixed(1) + '" r="7" fill="#fbd46a" stroke="#e0a10b" stroke-width="2"/>' : "") +
+      "</svg>" +
+      '<span class="k">Sunrise</span><span class="v">' + timeText(today.rise) + "</span>" +
+      '<span class="k">Sunset</span><span class="v">' + timeText(today.set) + "</span>" +
+      '<span class="k">Daylight</span><span class="v">' + duration(today.set - today.rise) + "</span>" +
+      '<span class="left">' + status + "</span>";
+  }
+
+  function cToF(c) { return Math.round(c * 9 / 5 + 32); }
+  function kmhToMph(k) { return Math.round(k * 0.621371); }
+
+  function windText(speedMph, dir, gustMph) {
+    if (!speedMph) return "Calm";
+    return "Wind " + (dir ? dir + " " : "") + speedMph + " mph" + (gustMph ? ", gusts " + gustMph : "");
+  }
+
+  function renderNow(temp, text, wind, night) {
+    document.querySelector("[data-wx-now]").innerHTML =
+      icon(kind(text), night) +
+      '<div><div class="wx-temp">' + temp + "&deg;</div>" +
+      '<div class="wx-desc">' + text + '</div><div class="wx-wind">' + wind + "</div></div>";
+  }
+
+  function loadNow() {
+    var today = sunTimes(courseNoon(0));
+    var now = new Date();
+    var night = now < today.rise || now > today.set;
+    return getJson(OBS).then(function (data) {
+      var p = data.properties;
+      var age = now - new Date(p.timestamp);
+      if (p.temperature.value === null || age > 2 * 3600000) throw new Error("stale");
+      var gust = p.windGust && p.windGust.value ? kmhToMph(p.windGust.value) : 0;
+      renderNow(cToF(p.temperature.value), p.textDescription || "", windText(kmhToMph(p.windSpeed.value || 0), compass(p.windDirection.value), gust), night);
+    }).catch(function () {
+      // No recent reading from the airport: use the current hour of the forecast instead.
+      return getJson(HOURLY).then(function (data) {
+        var h = data.properties.periods[0];
+        var speed = parseInt(h.windSpeed, 10) || 0;
+        renderNow(h.temperature, h.shortForecast, windText(speed, h.windDirection), !h.isDaytime);
+      });
+    });
+  }
+
+  function loadForecast() {
+    return getJson(FORECAST).then(function (data) {
+      var html = data.properties.periods.slice(0, 4).map(function (p) {
+        var pop = p.probabilityOfPrecipitation && p.probabilityOfPrecipitation.value;
+        return '<div class="wx-day" title="' + p.detailedForecast.replace(/"/g, "&quot;") + '">' +
+          "<b>" + p.name.replace(/\b(Mon|Tues|Wednes|Thurs|Fri|Satur|Sun)day\b/, function (m) { return m.slice(0, 3); }).replace(" Night", " night") + "</b>" + icon(kind(p.shortForecast), !p.isDaytime) +
+          '<span class="t' + (p.isDaytime ? "" : " low") + '">' + p.temperature + "&deg;</span>" +
+          '<span class="pop">' + (pop ? pop + "% rain" : "") + "</span></div>";
+      }).join("");
+      document.querySelector("[data-wx-days]").innerHTML = html;
+    });
+  }
+
+  function loadWeather() {
+    renderSun();
+    Promise.all([
+      loadNow().catch(function () {
+        document.querySelector("[data-wx-now]").innerHTML = '<span class="wx-desc">Current conditions are unavailable right now.</span>';
+      }),
+      loadForecast().catch(function () {
+        document.querySelector("[data-wx-days]").innerHTML = '<span class="wx-desc" style="grid-column:1/-1">The forecast is unavailable right now.</span>';
+      })
+    ]).then(function () {
+      document.querySelector("[data-wx-updated]").textContent = "Updated " + timeText(new Date());
+    });
+  }
+
+  loadWeather();
+  setInterval(renderSun, 60000);
+  setInterval(loadWeather, 20 * 60000);
+})();
+</script>
+</body>
+</html>
