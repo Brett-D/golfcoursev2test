@@ -483,6 +483,14 @@ figure { margin: 0; }
 .strip-day.closed { background: #f1f2f4; border-style: dashed; }
 .strip-day.closed span { color: var(--muted); }
 .strip-day.today { border: 2px solid var(--green); box-shadow: 0 6px 14px -8px rgba(45, 106, 79, 0.6); }
+/* A day inside a closure set on the owner page ("Closed dates"). */
+.strip-day.holiday { background: repeating-linear-gradient(135deg, #fff4e5 0 6px, #fdebd3 6px 12px); border: 1px dashed #e3a857; }
+.strip-day.holiday span { color: #7a4b00; font-weight: 600; }
+.strip-day.holiday.today { border: 2px solid #e3a857; box-shadow: none; }
+.hours-status.away { background: #fff4e5; color: #7a4b00; }
+.strip-closures { display: grid; gap: 0.35rem; margin: 0 0 0.6rem; }
+.strip-closure { margin: 0; background: #fff4e5; border: 1px solid #f0c890; color: #7a4b00; border-radius: 10px; padding: 0.45rem 0.75rem; font-size: 0.88rem; font-weight: 600; }
+.strip-closure.later { background: #eef1f5; border-color: #d5dbe3; color: var(--navy); font-weight: 500; }
 .strip-note { margin: 0.5rem 0 0; font-size: 0.82rem; color: var(--muted); font-style: italic; }
 .strip-note:empty { display: none; }
 @media (max-width: 640px) { .strip-days { grid-template-columns: repeat(4, minmax(0, 1fr)); } }

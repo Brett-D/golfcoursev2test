@@ -39,7 +39,14 @@
         "to": "15:30"
       }
     ],
-    "note": "Hours can change with the seasons."
+    "note": "Hours can change with the seasons.",
+    "closures": [
+      {
+        "from": "2026-10-04",
+        "to": "2026-10-12",
+        "note": ""
+      }
+    ]
   },
   "specials": {
     "show": false,

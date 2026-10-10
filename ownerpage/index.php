@@ -226,6 +226,21 @@ function save_cafe(array $in): void
         }
         $hours['days'][] = ['open' => $open, 'from' => $from, 'to' => $to];
     }
+    // Closed dates (a holiday break, a private event...): whole days from "from" to "to".
+    $hours['closures'] = [];
+    foreach (list_of($h['closures'] ?? null, 30) as $closure) {
+        $from = $closure['from'] ?? '';
+        $to = $closure['to'] ?? '';
+        $note = clean($closure['note'] ?? '', 100);
+        if ($from === '' && $to === '' && $note === '') {
+            continue;
+        }
+        if (!valid_day($from) || !valid_day($to) || $to < $from) {
+            reply(422, 'Check the closed dates: each one needs a "From" date and a "To" date on or after it.');
+        }
+        $hours['closures'][] = ['from' => $from, 'to' => $to, 'note' => $note];
+    }
+    usort($hours['closures'], static fn($a, $b) => strcmp($a['from'], $b['from']));
     $s = is_array($in['specials'] ?? null) ? $in['specials'] : [];
     $when = in_array($s['when'] ?? '', ['always', 'week', 'range'], true) ? $s['when'] : 'week';
     $specials = [
@@ -385,7 +400,7 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
 <meta name="robots" content="noindex, nofollow">
 <title>Website settings | Agate Beach Golf Course</title>
 <link rel="icon" href="../assets/images/logo.png" type="image/png">
-<link rel="stylesheet" href="../assets/css/styles.css?v=20261010-3">
+<link rel="stylesheet" href="../assets/css/styles.css?v=20261010-4">
 <style>
   body { background: #eef1f5; min-height: 100vh; }
   [hidden] { display: none !important; }
@@ -554,6 +569,18 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
   .pv-hours .hours-strip[hidden] { display: none; }
   .pv-where { margin: 0 0 0.7rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
   .pv-hidden { margin-top: 1rem; padding: 0.8rem; border: 2px dashed #c9d1db; border-radius: 12px; text-align: center; color: var(--muted); font-size: 0.9rem; }
+  .closures-ed { display: grid; gap: 0.45rem; margin-bottom: 0.6rem; }
+  .closure-row { display: grid; grid-template-columns: auto auto auto minmax(0, 1fr) auto auto; align-items: center; gap: 0.5rem; padding: 0.45rem 0.6rem; border: 1px solid var(--line); border-radius: 10px; background: #fff; font-size: 0.9rem; color: var(--muted); }
+  .closure-row input[type="date"] { width: auto; padding: 0.35rem 0.5rem; border: 1px solid #c9d1db; border-radius: 8px; font: inherit; font-size: 0.9rem; }
+  .closure-row input[type="text"] { padding: 0.4rem 0.6rem; font-size: 0.9rem; }
+  .closure-row .tag { font-size: 0.75rem; font-weight: 700; border-radius: 999px; padding: 0.15rem 0.55rem; white-space: nowrap; }
+  .closure-row .tag.now { background: #fff4e5; color: #7a4b00; }
+  .closure-row .tag.later { background: #e8f0f8; color: var(--blue); }
+  .closure-row .tag.ended { background: #eef1f5; color: var(--muted); }
+  .closure-row .tag.bad { background: #fbeceb; color: #a3352f; }
+  .closure-row.ended { opacity: 0.6; }
+  .closures-empty { margin: 0 0 0.6rem; color: var(--muted); font-size: 0.9rem; }
+  @media (max-width: 700px) { .closure-row { grid-template-columns: auto 1fr; } .closure-row input[type="text"] { grid-column: 1 / -1; } }
   [data-add-card] { margin-top: 0.2rem; }
 </style>
 </head>
@@ -690,6 +717,11 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
             <p class="label">Each day</p>
             <div class="hours-ed" data-hr-days></div>
             <button class="link-btn" type="button" data-hr-copy>Give every open day the same hours as the first open day</button>
+
+            <p class="label" style="margin-top:1.4rem">Closed dates</p>
+            <p class="hint" style="margin:-0.3rem 0 0.6rem">For a break, a holiday or an event. The Cafe page shows them from 30 days before, marks those days &ldquo;Closed&rdquo; and says when the cafe reopens. Each one comes down by itself when it ends.</p>
+            <div class="closures-ed" data-hr-closures></div>
+            <button class="btn btn-sm btn-outline-dark" type="button" data-hr-add-closure>+ Add closed dates</button>
             <div class="ed-field" style="margin-top:1rem">
               <label for="hr-note">Note under the hours (optional)</label>
               <input id="hr-note" type="text" data-hr-note maxlength="200" placeholder="e.g. Hours can change with the seasons.">
@@ -1315,6 +1347,14 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
     var p = s.split(":"), h = +p[0];
     return (h % 12 || 12) + (p[1] === "00" ? "" : ":" + p[1]) + (withAmPm ? (h < 12 ? " am" : " pm") : "");
   }
+  function closureList() {
+    return (hours.closures || []).filter(function (c) { return validDay(c.from) && validDay(c.to) && c.to >= c.from; })
+      .slice().sort(function (a, b) { return a.from < b.from ? -1 : 1; });
+  }
+  function hoursRange(from, to) {
+    if (from === to) return dayOf(from).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "short", month: "short", day: "numeric" });
+    return shortDay(from) + " \u2013 " + (dayOf(from).getUTCMonth() === dayOf(to).getUTCMonth() ? String(dayOf(to).getUTCDate()) : shortDay(to));
+  }
   // Same layout and wording as main.js draws on the Cafe page.
   function renderHoursPreview() {
     var box = document.querySelector("[data-pv-hours]");
@@ -1328,20 +1368,34 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
       return;
     }
     box.hidden = false;
+    var closures = closureList();
+    var closureOn = function (iso) {
+      for (var i = 0; i < closures.length; i++) if (iso >= closures[i].from && iso <= closures[i].to) return closures[i];
+      return null;
+    };
     var parts = new Intl.DateTimeFormat("en-US", { timeZone: "America/Los_Angeles", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date());
     var get = function (type) { return parts.filter(function (p) { return p.type === type; })[0].value; };
     var today = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].indexOf(get("weekday"));
     var now = (+get("hour") % 24) * 60 + +get("minute");
+    var todayIso = courseToday();
+    var current = closureOn(todayIso);
     var t = hours.days[today], status;
-    if (dayIsOpen(t) && now >= minutesOf(t.from) && now < minutesOf(t.to)) {
+    if (!current && dayIsOpen(t) && now >= minutesOf(t.from) && now < minutesOf(t.to)) {
       status = { cls: "open", text: "Open now \u00b7 until " + timeText(t.to, true) };
     } else {
-      var next = "";
-      for (var k = 0; k < 8 && !next; k++) {
-        var i = (today + k) % 7, d = hours.days[i];
-        if (dayIsOpen(d) && (k > 0 || now < minutesOf(d.from))) next = (k === 0 ? "" : k === 1 ? "tomorrow " : HOUR_DAYS[i] + " ") + timeText(d.from, true);
+      var next = null;
+      for (var k = 0; k < 120 && !next; k++) {
+        var iso = plusDays(todayIso, k), i = (today + k) % 7, d = hours.days[i];
+        if (!closureOn(iso) && dayIsOpen(d) && (k > 0 || now < minutesOf(d.from))) next = { k: k, i: i, iso: iso, at: timeText(d.from, true) };
       }
-      status = { cls: "closed", text: "Closed now" + (next ? " \u00b7 opens " + next : "") };
+      var when = "";
+      if (next) {
+        if (current || next.k >= 7) when = dayOf(next.iso).toLocaleDateString("en-US", { timeZone: "UTC", weekday: "short", month: "short", day: "numeric" }) + " at " + next.at;
+        else when = (next.k === 0 ? "" : next.k === 1 ? "tomorrow " : HOUR_DAYS[next.i] + " ") + next.at;
+      }
+      status = current
+        ? { cls: "away", text: "Closed" + (when ? " \u00b7 reopens " + when : "") }
+        : { cls: "closed", text: "Closed now" + (when ? " \u00b7 opens " + when : "") };
     }
     var top = make("div", "strip-top");
     var title = make("h3", "hours-title");
@@ -1350,16 +1404,77 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
     top.appendChild(title);
     top.appendChild(make("span", "hours-status " + status.cls, status.text));
     box.appendChild(top);
+    var soon = plusDays(todayIso, 30);
+    var notices = closures.filter(function (c) { return c.to >= todayIso && c.from <= soon; }).slice(0, 3);
+    if (notices.length) {
+      var noticeBox = make("div", "strip-closures");
+      notices.forEach(function (c) {
+        var isNow = c === current;
+        noticeBox.appendChild(make("p", "strip-closure" + (isNow ? "" : " later"),
+          (isNow ? "Closed " : "Coming up: closed ") + hoursRange(c.from, c.to) + (c.note ? " \u00b7 " + c.note : "")));
+      });
+      box.appendChild(noticeBox);
+    }
+    var monday = plusDays(todayIso, -today);
     var list = make("ul", "strip-days");
     hours.days.forEach(function (d, i) {
-      var item = make("li", "strip-day" + (dayIsOpen(d) ? "" : " closed") + (i === today ? " today" : ""));
+      var closed = closureOn(plusDays(monday, i));
+      var item = make("li", "strip-day" + (closed ? " holiday" : dayIsOpen(d) ? "" : " closed") + (i === today ? " today" : ""));
       item.appendChild(make("b", "", HOUR_DAYS[i].slice(0, 3)));
-      item.appendChild(make("span", "", dayIsOpen(d) ? timeText(d.from) + "\u2013" + timeText(d.to) : "Closed"));
+      item.appendChild(make("span", "", closed || !dayIsOpen(d) ? "Closed" : timeText(d.from) + "\u2013" + timeText(d.to)));
       list.appendChild(item);
     });
     box.appendChild(list);
     box.appendChild(make("p", "strip-note", hours.note || ""));
   }
+
+  function drawClosures() {
+    var wrap = document.querySelector("[data-hr-closures]");
+    wrap.textContent = "";
+    if (!hours.closures.length) {
+      wrap.appendChild(make("p", "closures-empty", "No closed dates. The regular hours above apply."));
+      return;
+    }
+    var todayIso = courseToday();
+    hours.closures.forEach(function (c, i) {
+      var row = make("div", "closure-row");
+      var from = make("input"); from.type = "date"; from.value = c.from || ""; from.setAttribute("aria-label", "Closed from");
+      var to = make("input"); to.type = "date"; to.value = c.to || ""; to.setAttribute("aria-label", "Closed through");
+      var note = make("input"); note.type = "text"; note.maxLength = 100; note.value = c.note || "";
+      note.placeholder = "Reason (optional), e.g. Fall break"; note.setAttribute("aria-label", "Reason");
+      var tag = make("span", "tag");
+      var paint = function () {
+        var ok = validDay(c.from) && validDay(c.to) && c.to >= c.from;
+        var kind = !ok ? "bad" : c.to < todayIso ? "ended" : c.from <= todayIso ? "now" : "later";
+        tag.className = "tag " + kind;
+        tag.textContent = { bad: "Check dates", ended: "Ended", now: "Closed now", later: "Coming up" }[kind];
+        row.classList.toggle("ended", kind === "ended");
+      };
+      from.addEventListener("input", function () {
+        c.from = from.value;
+        if (!c.to || c.to < c.from) { c.to = c.from; to.value = c.to; }
+        paint(); hoursChanged();
+      });
+      to.addEventListener("input", function () { c.to = to.value; paint(); hoursChanged(); });
+      note.addEventListener("input", function () { c.note = note.value; hoursChanged(); });
+      row.appendChild(make("span", "", "From"));
+      row.appendChild(from);
+      row.appendChild(make("span", "", "through"));
+      row.appendChild(to);
+      row.appendChild(tag);
+      var tools = make("div", "tools");
+      tools.appendChild(iconButton("Remove these closed dates", "\u2715", function () {
+        hours.closures.splice(i, 1); drawClosures(); hoursChanged();
+      }, "del"));
+      row.appendChild(tools);
+      // The reason box takes the full row under the dates.
+      note.style.gridColumn = "1 / -1";
+      row.appendChild(note);
+      paint();
+      wrap.appendChild(row);
+    });
+  }
+
   function hoursChanged() { renderHoursPreview(); changed("cafe"); }
 
   function drawHours() {
@@ -1392,7 +1507,7 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
   }
 
   function setUpHours() {
-    hours = cafe.hours = cafe.hours || { show: true, title: "Cafe Hours", days: [], note: "" };
+    hours = cafe.hours = cafe.hours || { show: true, title: "Cafe Hours", days: [], note: "", closures: [] };
     for (var i = 0; i < 7; i++) {
       var d = hours.days[i] || {};
       hours.days[i] = { open: !!d.open, from: validTime(d.from) ? d.from : "09:00", to: validTime(d.to) ? d.to : "15:30" };
@@ -1413,7 +1528,16 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
       hours.days.forEach(function (d) { if (d.open) { d.from = first.from; d.to = first.to; } });
       drawHours(); hoursChanged();
     });
+    hours.closures = (hours.closures || []).map(function (c) { return { from: c.from || "", to: c.to || "", note: c.note || "" }; });
+    document.querySelector("[data-hr-add-closure]").addEventListener("click", function () {
+      var start = courseToday();
+      hours.closures.push({ from: start, to: start, note: "" });
+      drawClosures(); hoursChanged();
+      var rows = document.querySelectorAll("[data-hr-closures] .closure-row");
+      rows[rows.length - 1].querySelector("input").focus();
+    });
     drawHours();
+    drawClosures();
     renderHoursPreview();
     setInterval(renderHoursPreview, 60000);
   }

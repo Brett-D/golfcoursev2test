@@ -564,21 +564,43 @@
       var days = (hours && hours.days) || [];
       var isOpen = function (d) { return d && d.open && validTime(d.from) && validTime(d.to) && d.to > d.from; };
       if (!hours || !hours.show || days.length !== 7) { box.hidden = true; return; }
+      // Closed dates set on the owner page, e.g. a holiday break; each covers whole days from "from" to "to".
+      var closures = (hours.closures || []).filter(function (c) { return validDay(c.from) && validDay(c.to) && c.to >= c.from; })
+        .sort(function (a, b) { return a.from < b.from ? -1 : 1; });
+      var closureOn = function (iso) {
+        for (var i = 0; i < closures.length; i++) if (iso >= closures[i].from && iso <= closures[i].to) return closures[i];
+        return null;
+      };
+      var rangeText = function (from, to) {
+        if (from === to) return dayText(from, { weekday: "short", month: "short", day: "numeric" });
+        return dayText(from, { month: "short", day: "numeric" }) + " \u2013 " +
+          (dayOf(from).getUTCMonth() === dayOf(to).getUTCMonth() ? String(dayOf(to).getUTCDate()) : dayText(to, { month: "short", day: "numeric" }));
+      };
       var draw = function () {
         var parts = new Intl.DateTimeFormat("en-US", { timeZone: "America/Los_Angeles", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date());
         var get = function (type) { return parts.filter(function (p) { return p.type === type; })[0].value; };
         var today = DAY_SHORT.indexOf(get("weekday"));
         var now = (+get("hour") % 24) * 60 + +get("minute");
+        var todayIso = courseToday();
+        var current = closureOn(todayIso);
         var t = days[today], status;
-        if (isOpen(t) && now >= minutesOf(t.from) && now < minutesOf(t.to)) {
+        if (!current && isOpen(t) && now >= minutesOf(t.from) && now < minutesOf(t.to)) {
           status = { cls: "open", text: "Open now \u00b7 until " + timeText(t.to, true) };
         } else {
-          var next = "";
-          for (var k = 0; k < 8 && !next; k++) {
-            var i = (today + k) % 7, d = days[i];
-            if (isOpen(d) && (k > 0 || now < minutesOf(d.from))) next = (k === 0 ? "" : k === 1 ? "tomorrow " : DAY_LONG[i] + " ") + timeText(d.from, true);
+          // Next opening: skip regular days off and closed dates.
+          var next = null;
+          for (var k = 0; k < 120 && !next; k++) {
+            var iso = plusDays(todayIso, k), i = (today + k) % 7, d = days[i];
+            if (!closureOn(iso) && isOpen(d) && (k > 0 || now < minutesOf(d.from))) next = { k: k, i: i, iso: iso, at: timeText(d.from, true) };
           }
-          status = { cls: "closed", text: "Closed now" + (next ? " \u00b7 opens " + next : "") };
+          var when = "";
+          if (next) {
+            if (current || next.k >= 7) when = dayText(next.iso, { weekday: "short", month: "short", day: "numeric" }) + " at " + next.at;
+            else when = (next.k === 0 ? "" : next.k === 1 ? "tomorrow " : DAY_LONG[next.i] + " ") + next.at;
+          }
+          status = current
+            ? { cls: "away", text: "Closed" + (when ? " \u00b7 reopens " + when : "") }
+            : { cls: "closed", text: "Closed now" + (when ? " \u00b7 opens " + when : "") };
         }
         box.textContent = "";
         var top = el("div", "strip-top");
@@ -588,12 +610,26 @@
         top.appendChild(title);
         top.appendChild(el("span", "hours-status " + status.cls, status.text));
         box.appendChild(top);
+        // The closure going on now, plus any starting in the next 30 days.
+        var soon = plusDays(todayIso, 30);
+        var notices = closures.filter(function (c) { return c.to >= todayIso && c.from <= soon; }).slice(0, 3);
+        if (notices.length) {
+          var noticeBox = el("div", "strip-closures");
+          notices.forEach(function (c) {
+            var now = c === current;
+            noticeBox.appendChild(el("p", "strip-closure" + (now ? "" : " later"),
+              (now ? "Closed " : "Coming up: closed ") + rangeText(c.from, c.to) + (c.note ? " \u00b7 " + c.note : "")));
+          });
+          box.appendChild(noticeBox);
+        }
+        var monday = plusDays(todayIso, -today);
         var list = el("ul", "strip-days");
         days.forEach(function (d, i) {
-          var item = el("li", "strip-day" + (isOpen(d) ? "" : " closed") + (i === today ? " today" : ""));
-          item.title = DAY_LONG[i] + ": " + (isOpen(d) ? timeText(d.from, true) + " to " + timeText(d.to, true) : "closed");
+          var closed = closureOn(plusDays(monday, i));
+          var item = el("li", "strip-day" + (closed ? " holiday" : isOpen(d) ? "" : " closed") + (i === today ? " today" : ""));
+          item.title = DAY_LONG[i] + ": " + (closed ? "closed" + (closed.note ? " (" + closed.note + ")" : "") : isOpen(d) ? timeText(d.from, true) + " to " + timeText(d.to, true) : "closed");
           item.appendChild(el("b", "", DAY_SHORT[i]));
-          item.appendChild(el("span", "", isOpen(d) ? timeText(d.from) + "\u2013" + timeText(d.to) : "Closed"));
+          item.appendChild(el("span", "", closed || !isOpen(d) ? "Closed" : timeText(d.from) + "\u2013" + timeText(d.to)));
           list.appendChild(item);
         });
         box.appendChild(list);
