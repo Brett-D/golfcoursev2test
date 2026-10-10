@@ -135,6 +135,11 @@ function valid_day($value): bool
     return is_string($value) && preg_match('/^(\d{4})-(\d{2})-(\d{2})$/', $value, $m) === 1 && checkdate((int) $m[2], (int) $m[3], (int) $m[1]);
 }
 
+function valid_time($value): bool
+{
+    return is_string($value) && preg_match('/^([01]\d|2[0-3]):[0-5]\d$/', $value) === 1;
+}
+
 // Replaces a file in data/ in one step, after copying the old version to data/backups/.
 function save_file(string $name, string $content): void
 {
@@ -206,6 +211,21 @@ function save_rates(array $in): void
 
 function save_cafe(array $in): void
 {
+    // Hours: Monday to Sunday. Times are kept for closed days too, so switching a day back on keeps them.
+    $h = is_array($in['hours'] ?? null) ? $in['hours'] : [];
+    $hours = ['show' => !empty($h['show']), 'title' => clean($h['title'] ?? '', 40), 'days' => [], 'note' => clean($h['note'] ?? '', 200)];
+    $givenDays = is_array($h['days'] ?? null) ? array_values($h['days']) : [];
+    $dayNames = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+    foreach ($dayNames as $i => $dayName) {
+        $day = is_array($givenDays[$i] ?? null) ? $givenDays[$i] : [];
+        $from = valid_time($day['from'] ?? null) ? $day['from'] : '';
+        $to = valid_time($day['to'] ?? null) ? $day['to'] : '';
+        $open = !empty($day['open']);
+        if ($open && ($from === '' || $to === '' || $to <= $from)) {
+            reply(422, "Check the hours for $dayName: pick an opening time and a later closing time.");
+        }
+        $hours['days'][] = ['open' => $open, 'from' => $from, 'to' => $to];
+    }
     $s = is_array($in['specials'] ?? null) ? $in['specials'] : [];
     $when = in_array($s['when'] ?? '', ['always', 'week', 'range'], true) ? $s['when'] : 'week';
     $specials = [
@@ -264,7 +284,7 @@ function save_cafe(array $in): void
         }
     }
 
-    $cafe = ['specials' => $specials, 'menu' => $menu, 'dogs' => $dogs];
+    $cafe = ['hours' => $hours, 'specials' => $specials, 'menu' => $menu, 'dogs' => $dogs];
     save_file('cafe.json', to_json($cafe));
     reply(200, 'Cafe changes saved. They are on the website now.', ['data' => $cafe]);
 }
@@ -365,7 +385,7 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
 <meta name="robots" content="noindex, nofollow">
 <title>Website settings | Agate Beach Golf Course</title>
 <link rel="icon" href="../assets/images/logo.png" type="image/png">
-<link rel="stylesheet" href="../assets/css/styles.css?v=20261010-2">
+<link rel="stylesheet" href="../assets/css/styles.css?v=20261010-3">
 <style>
   body { background: #eef1f5; min-height: 100vh; }
   [hidden] { display: none !important; }
@@ -519,6 +539,21 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
   .save-msg.bad { color: #a3352f; }
   .link-btn { background: none; border: 0; padding: 0.3rem 0; font: 600 0.9rem var(--font-body); color: var(--blue); cursor: pointer; }
   .link-btn:hover { text-decoration: underline; }
+  .hours-ed { display: grid; gap: 0.45rem; margin-bottom: 0.4rem; }
+  .hours-row { display: grid; grid-template-columns: 6.5rem auto minmax(0, 1fr); align-items: center; gap: 0.6rem; padding: 0.45rem 0.6rem; border: 1px solid var(--line); border-radius: 10px; background: #fff; }
+  .hours-row.is-closed { background: #f6f7f9; }
+  .hours-row .day { font-weight: 700; color: var(--navy); }
+  .hours-row .open-check { display: flex; align-items: center; gap: 0.4rem; margin: 0; font-weight: 500; font-size: 0.9rem; color: var(--muted); cursor: pointer; }
+  .hours-row .times { display: flex; align-items: center; gap: 0.45rem; flex-wrap: wrap; font-size: 0.9rem; color: var(--muted); }
+  .hours-row input[type="time"] { width: auto; padding: 0.35rem 0.5rem; border: 1px solid #c9d1db; border-radius: 8px; font: inherit; font-size: 0.92rem; }
+  .hours-row.is-closed .times { opacity: 0.4; }
+  .hours-row.is-bad { border-color: #a3352f; }
+  @media (max-width: 560px) { .hours-row { grid-template-columns: 1fr auto; } .hours-row .times { grid-column: 1 / -1; } }
+  .pv-hours { padding: 1.4rem 1.3rem 1.6rem; background: var(--cream); border-bottom: 1px solid var(--line); }
+  .pv-hours .hours-strip { margin-top: 1.2rem; }
+  .pv-hours .hours-strip[hidden] { display: none; }
+  .pv-where { margin: 0 0 0.7rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+  .pv-hidden { margin-top: 1rem; padding: 0.8rem; border: 2px dashed #c9d1db; border-radius: 12px; text-align: center; color: var(--muted); font-size: 0.9rem; }
   [data-add-card] { margin-top: 0.2rem; }
 </style>
 </head>
@@ -606,6 +641,7 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
     <section class="cafe" data-pane="cafe" hidden>
       <div class="subtabs" role="group" aria-label="Cafe sections">
         <button type="button" aria-pressed="true" data-sub="specials">Specials</button>
+        <button type="button" aria-pressed="false" data-sub="hours">Hours</button>
         <button type="button" aria-pressed="false" data-sub="menu">Breakfast &amp; Lunch menu</button>
         <button type="button" aria-pressed="false" data-sub="dogs">Good Dog menu</button>
       </div>
@@ -645,6 +681,21 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
             <label class="switch"><input type="checkbox" data-sp-home> <span>Also show them in the Cafe section of the home page</span></label>
           </div>
 
+          <div data-subpane="hours" hidden>
+            <label class="switch"><input type="checkbox" data-hr-show> <span>Show the hours on the Cafe page</span></label>
+            <div class="ed-field">
+              <label for="hr-title">Heading</label>
+              <input id="hr-title" type="text" data-hr-title maxlength="40">
+            </div>
+            <p class="label">Each day</p>
+            <div class="hours-ed" data-hr-days></div>
+            <button class="link-btn" type="button" data-hr-copy>Give every open day the same hours as the first open day</button>
+            <div class="ed-field" style="margin-top:1rem">
+              <label for="hr-note">Note under the hours (optional)</label>
+              <input id="hr-note" type="text" data-hr-note maxlength="200" placeholder="e.g. Hours can change with the seasons.">
+            </div>
+          </div>
+
           <div data-subpane="menu" hidden>
             <div class="ed-field">
               <label for="mn-lead">Line under the menu heading</label>
@@ -676,6 +727,11 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
         <div class="cafe-preview">
           <p class="label">How it will look on the Cafe page</p>
           <div class="cafe-preview-scroll" data-cafe-preview>
+            <div class="pv-hours" data-pv-hours-wrap>
+              <p class="pv-where">Under the &ldquo;View the Menu&rdquo; and &ldquo;Call&rdquo; buttons</p>
+              <div class="btn-row"><span class="btn btn-sm btn-green">View the Menu</span><span class="btn btn-sm btn-outline-dark">Call (541) 265-7331</span></div>
+              <div class="hours-strip" data-pv-hours></div>
+            </div>
             <div data-pv-specials></div>
             <div class="section section-sand" data-pv-menu-wrap>
               <div class="section-head center"><p class="eyebrow">Menu</p><h2>Breakfast &amp; Lunch</h2><p class="lead" data-pv-menu-lead></p></div>
@@ -1249,8 +1305,122 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
     fitAll();
   }
 
+  // ---------- Cafe hours (week strip on the Cafe page) ----------
+  var HOUR_DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+  var hours = null;
+  function validTime(s) { return /^([01]\d|2[0-3]):[0-5]\d$/.test(s || ""); }
+  function dayIsOpen(d) { return d.open && validTime(d.from) && validTime(d.to) && d.to > d.from; }
+  function minutesOf(s) { var p = s.split(":"); return +p[0] * 60 + +p[1]; }
+  function timeText(s, withAmPm) {
+    var p = s.split(":"), h = +p[0];
+    return (h % 12 || 12) + (p[1] === "00" ? "" : ":" + p[1]) + (withAmPm ? (h < 12 ? " am" : " pm") : "");
+  }
+  // Same layout and wording as main.js draws on the Cafe page.
+  function renderHoursPreview() {
+    var box = document.querySelector("[data-pv-hours]");
+    var wrap = document.querySelector("[data-pv-hours-wrap]");
+    var old = wrap.querySelector(".pv-hidden");
+    if (old) old.remove();
+    box.textContent = "";
+    if (!hours.show) {
+      box.hidden = true;
+      wrap.appendChild(make("div", "pv-hidden", "Hours are hidden, so the Cafe page doesn\u2019t show them."));
+      return;
+    }
+    box.hidden = false;
+    var parts = new Intl.DateTimeFormat("en-US", { timeZone: "America/Los_Angeles", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date());
+    var get = function (type) { return parts.filter(function (p) { return p.type === type; })[0].value; };
+    var today = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].indexOf(get("weekday"));
+    var now = (+get("hour") % 24) * 60 + +get("minute");
+    var t = hours.days[today], status;
+    if (dayIsOpen(t) && now >= minutesOf(t.from) && now < minutesOf(t.to)) {
+      status = { cls: "open", text: "Open now \u00b7 until " + timeText(t.to, true) };
+    } else {
+      var next = "";
+      for (var k = 0; k < 8 && !next; k++) {
+        var i = (today + k) % 7, d = hours.days[i];
+        if (dayIsOpen(d) && (k > 0 || now < minutesOf(d.from))) next = (k === 0 ? "" : k === 1 ? "tomorrow " : HOUR_DAYS[i] + " ") + timeText(d.from, true);
+      }
+      status = { cls: "closed", text: "Closed now" + (next ? " \u00b7 opens " + next : "") };
+    }
+    var top = make("div", "strip-top");
+    var title = make("h3", "hours-title");
+    title.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+    title.appendChild(document.createTextNode(hours.title || "Cafe Hours"));
+    top.appendChild(title);
+    top.appendChild(make("span", "hours-status " + status.cls, status.text));
+    box.appendChild(top);
+    var list = make("ul", "strip-days");
+    hours.days.forEach(function (d, i) {
+      var item = make("li", "strip-day" + (dayIsOpen(d) ? "" : " closed") + (i === today ? " today" : ""));
+      item.appendChild(make("b", "", HOUR_DAYS[i].slice(0, 3)));
+      item.appendChild(make("span", "", dayIsOpen(d) ? timeText(d.from) + "\u2013" + timeText(d.to) : "Closed"));
+      list.appendChild(item);
+    });
+    box.appendChild(list);
+    box.appendChild(make("p", "strip-note", hours.note || ""));
+  }
+  function hoursChanged() { renderHoursPreview(); changed("cafe"); }
+
+  function drawHours() {
+    var wrap = document.querySelector("[data-hr-days]");
+    wrap.textContent = "";
+    hours.days.forEach(function (d, i) {
+      var row = make("div", "hours-row");
+      var paint = function () {
+        row.classList.toggle("is-closed", !d.open);
+        row.classList.toggle("is-bad", !!d.open && !dayIsOpen(d));
+      };
+      row.appendChild(make("span", "day", HOUR_DAYS[i]));
+      var check = make("label", "open-check");
+      var cb = make("input"); cb.type = "checkbox"; cb.checked = !!d.open;
+      check.appendChild(cb); check.appendChild(document.createTextNode("Open"));
+      row.appendChild(check);
+      var times = make("div", "times");
+      var from = make("input"); from.type = "time"; from.step = 300; from.value = d.from || "09:00"; from.setAttribute("aria-label", HOUR_DAYS[i] + " opening time");
+      var to = make("input"); to.type = "time"; to.step = 300; to.value = d.to || "15:30"; to.setAttribute("aria-label", HOUR_DAYS[i] + " closing time");
+      d.from = from.value; d.to = to.value;
+      times.appendChild(from); times.appendChild(document.createTextNode("to")); times.appendChild(to);
+      row.appendChild(times);
+      var sync = function () { from.disabled = to.disabled = !d.open; paint(); };
+      cb.addEventListener("change", function () { d.open = cb.checked; sync(); hoursChanged(); });
+      from.addEventListener("input", function () { d.from = from.value; paint(); hoursChanged(); });
+      to.addEventListener("input", function () { d.to = to.value; paint(); hoursChanged(); });
+      sync();
+      wrap.appendChild(row);
+    });
+  }
+
+  function setUpHours() {
+    hours = cafe.hours = cafe.hours || { show: true, title: "Cafe Hours", days: [], note: "" };
+    for (var i = 0; i < 7; i++) {
+      var d = hours.days[i] || {};
+      hours.days[i] = { open: !!d.open, from: validTime(d.from) ? d.from : "09:00", to: validTime(d.to) ? d.to : "15:30" };
+    }
+    hours.days.length = 7;
+    var show = document.querySelector("[data-hr-show]");
+    show.checked = !!hours.show;
+    show.addEventListener("change", function () { hours.show = show.checked; hoursChanged(); });
+    var title = document.querySelector("[data-hr-title]");
+    title.value = hours.title || "";
+    title.addEventListener("input", function () { hours.title = title.value; hoursChanged(); });
+    var note = document.querySelector("[data-hr-note]");
+    note.value = hours.note || "";
+    note.addEventListener("input", function () { hours.note = note.value; hoursChanged(); });
+    document.querySelector("[data-hr-copy]").addEventListener("click", function () {
+      var first = hours.days.filter(function (d) { return d.open; })[0];
+      if (!first) return;
+      hours.days.forEach(function (d) { if (d.open) { d.from = first.from; d.to = first.to; } });
+      drawHours(); hoursChanged();
+    });
+    drawHours();
+    renderHoursPreview();
+    setInterval(renderHoursPreview, 60000);
+  }
+
   function setUpCafe(data) {
     cafe = data;
+    setUpHours();
     specials = cafe.specials = cafe.specials || { show: false, heading: "Weekly Specials", when: "week", items: [], home: true };
     menu = cafe.menu = cafe.menu || { lead: "", foot: "", sections: [] };
     menu.sections = menu.sections || [];
@@ -1284,7 +1454,7 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
   }
 
   // Sub-tabs: show one editor and scroll the preview to the matching part of the Cafe page.
-  var previewTargets = { specials: "[data-pv-specials]", menu: "[data-pv-menu-wrap]", dogs: "[data-pv-dogs-wrap]" };
+  var previewTargets = { specials: "[data-pv-specials]", hours: "[data-pv-hours-wrap]", menu: "[data-pv-menu-wrap]", dogs: "[data-pv-dogs-wrap]" };
   each("[data-sub]", function (btn) {
     btn.addEventListener("click", function () {
       var name = btn.getAttribute("data-sub");

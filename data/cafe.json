@@ -1,4 +1,46 @@
 {
+  "hours": {
+    "show": true,
+    "title": "Cafe Hours",
+    "days": [
+      {
+        "open": false,
+        "from": "09:00",
+        "to": "15:30"
+      },
+      {
+        "open": true,
+        "from": "09:00",
+        "to": "15:30"
+      },
+      {
+        "open": true,
+        "from": "09:00",
+        "to": "15:30"
+      },
+      {
+        "open": true,
+        "from": "09:00",
+        "to": "15:30"
+      },
+      {
+        "open": true,
+        "from": "09:00",
+        "to": "15:30"
+      },
+      {
+        "open": true,
+        "from": "09:00",
+        "to": "15:30"
+      },
+      {
+        "open": true,
+        "from": "09:00",
+        "to": "15:30"
+      }
+    ],
+    "note": "Hours can change with the seasons."
+  },
   "specials": {
     "show": false,
     "heading": "Weekly Specials",

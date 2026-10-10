@@ -466,6 +466,27 @@ figure { margin: 0; }
 .specials-mini li:first-child { border-top: 0; }
 .specials-mini li span:last-child { font-weight: 700; color: var(--accent-soft); white-space: nowrap; }
 
+/* ---------- Cafe hours: week strip under the buttons on the Cafe page (data/cafe.json) ---------- */
+.hours-strip { margin-top: 1.8rem; }
+.hours-strip[hidden] { display: none; }
+.strip-top { display: flex; align-items: center; gap: 0.7rem; flex-wrap: wrap; margin-bottom: 0.6rem; }
+.hours-title { display: flex; align-items: center; gap: 0.45rem; margin: 0; font-family: var(--font-body); font-size: 0.78rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--navy); }
+.hours-title svg { width: 18px; height: 18px; fill: none; stroke: var(--green); stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+.hours-status { font-size: 0.78rem; font-weight: 700; border-radius: 999px; padding: 0.18rem 0.65rem; white-space: nowrap; }
+.hours-status.open { background: #e5f2ea; color: var(--green-dark); }
+.hours-status.closed { background: #eef1f5; color: var(--muted); }
+.hours-status::before { content: ""; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: currentColor; margin-right: 0.4rem; vertical-align: 1px; }
+.strip-days { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(7, minmax(0, 1fr)); gap: 0.35rem; }
+.strip-day { background: var(--white); border: 1px solid var(--line); border-radius: 10px; text-align: center; padding: 0.45rem 0.2rem; }
+.strip-day b { display: block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); }
+.strip-day span { display: block; font-size: 0.78rem; line-height: 1.25; color: var(--ink); margin-top: 0.15rem; }
+.strip-day.closed { background: #f1f2f4; border-style: dashed; }
+.strip-day.closed span { color: var(--muted); }
+.strip-day.today { border: 2px solid var(--green); box-shadow: 0 6px 14px -8px rgba(45, 106, 79, 0.6); }
+.strip-note { margin: 0.5rem 0 0; font-size: 0.82rem; color: var(--muted); font-style: italic; }
+.strip-note:empty { display: none; }
+@media (max-width: 640px) { .strip-days { grid-template-columns: repeat(4, minmax(0, 1fr)); } }
+
 
 /* ---------- Visit: map + Facebook ---------- */
 .visit { display: grid; gap: 2rem; }

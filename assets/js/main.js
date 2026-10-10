@@ -421,7 +421,7 @@
   }
 
   // ---------- Cafe menu and specials (data/cafe.json, edited on the owner page) ----------
-  var cafeTargets = document.querySelectorAll("[data-cafe-menu], [data-cafe-dogs], [data-specials], [data-specials-home]");
+  var cafeTargets = document.querySelectorAll("[data-cafe-menu], [data-cafe-dogs], [data-cafe-hours], [data-specials], [data-specials-home]");
   if (cafeTargets.length) {
     // Specials dates are calendar days at the course, whatever time zone the visitor is in.
     var courseToday = function () {
@@ -549,12 +549,68 @@
       }
     };
 
+    // Cafe hours as a week strip with "Open now / Closed now", worked out in Oregon time and refreshed every minute.
+    var DAY_SHORT = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];
+    var DAY_LONG = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"];
+    var validTime = function (s) { return /^([01]\d|2[0-3]):[0-5]\d$/.test(s || ""); };
+    var minutesOf = function (s) { var p = s.split(":"); return +p[0] * 60 + +p[1]; };
+    var timeText = function (s, withAmPm) {
+      var p = s.split(":"), h = +p[0];
+      return (h % 12 || 12) + (p[1] === "00" ? "" : ":" + p[1]) + (withAmPm ? (h < 12 ? " am" : " pm") : "");
+    };
+    var renderHours = function (hours) {
+      var box = document.querySelector("[data-cafe-hours]");
+      if (!box) return;
+      var days = (hours && hours.days) || [];
+      var isOpen = function (d) { return d && d.open && validTime(d.from) && validTime(d.to) && d.to > d.from; };
+      if (!hours || !hours.show || days.length !== 7) { box.hidden = true; return; }
+      var draw = function () {
+        var parts = new Intl.DateTimeFormat("en-US", { timeZone: "America/Los_Angeles", weekday: "short", hour: "2-digit", minute: "2-digit", hourCycle: "h23" }).formatToParts(new Date());
+        var get = function (type) { return parts.filter(function (p) { return p.type === type; })[0].value; };
+        var today = DAY_SHORT.indexOf(get("weekday"));
+        var now = (+get("hour") % 24) * 60 + +get("minute");
+        var t = days[today], status;
+        if (isOpen(t) && now >= minutesOf(t.from) && now < minutesOf(t.to)) {
+          status = { cls: "open", text: "Open now \u00b7 until " + timeText(t.to, true) };
+        } else {
+          var next = "";
+          for (var k = 0; k < 8 && !next; k++) {
+            var i = (today + k) % 7, d = days[i];
+            if (isOpen(d) && (k > 0 || now < minutesOf(d.from))) next = (k === 0 ? "" : k === 1 ? "tomorrow " : DAY_LONG[i] + " ") + timeText(d.from, true);
+          }
+          status = { cls: "closed", text: "Closed now" + (next ? " \u00b7 opens " + next : "") };
+        }
+        box.textContent = "";
+        var top = el("div", "strip-top");
+        var title = el("h3", "hours-title");
+        title.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+        title.appendChild(document.createTextNode(hours.title || "Cafe Hours"));
+        top.appendChild(title);
+        top.appendChild(el("span", "hours-status " + status.cls, status.text));
+        box.appendChild(top);
+        var list = el("ul", "strip-days");
+        days.forEach(function (d, i) {
+          var item = el("li", "strip-day" + (isOpen(d) ? "" : " closed") + (i === today ? " today" : ""));
+          item.title = DAY_LONG[i] + ": " + (isOpen(d) ? timeText(d.from, true) + " to " + timeText(d.to, true) : "closed");
+          item.appendChild(el("b", "", DAY_SHORT[i]));
+          item.appendChild(el("span", "", isOpen(d) ? timeText(d.from) + "\u2013" + timeText(d.to) : "Closed"));
+          list.appendChild(item);
+        });
+        box.appendChild(list);
+        box.appendChild(el("p", "strip-note", hours.note || ""));
+      };
+      draw();
+      box.hidden = false;
+      setInterval(draw, 60000);
+    };
+
     fetch("data/cafe.json?v=" + Date.now(), { cache: "no-store" })
       .then(function (response) {
         if (!response.ok) throw new Error("HTTP " + response.status);
         return response.json();
       })
       .then(function (data) {
+        renderHours(data.hours);
         renderSpecials(data.specials);
         renderMenu(data.menu || {});
         renderDogs(data.dogs || {});
