@@ -1,0 +1,8 @@
+# The owner page and notices.php rewrite the files in this folder, so browsers and Cloudflare
+# must check for a newer copy every time instead of keeping one for hours.
+<IfModule mod_expires.c>
+  ExpiresActive Off
+</IfModule>
+<IfModule mod_headers.c>
+  Header set Cache-Control "no-cache"
+</IfModule>

@@ -11,7 +11,8 @@
 <link rel="icon" href="assets/images/logo.png" type="image/png">
 <link rel="preload" href="assets/fonts/inter-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" href="assets/fonts/playfair-display-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="stylesheet" href="assets/css/styles.css?v=20261002-25">
+<link rel="stylesheet" href="assets/css/styles.css?v=20261010-2">
+<link rel="stylesheet" href="data/theme.css">
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
@@ -56,8 +57,30 @@
       <div class="btn-row"><a class="btn btn-accent" href="https://foreupsoftware.com/index.php/booking/21987/9520#teetimes" target="_blank" rel="noopener">Book Tee Time</a><a class="btn btn-outline" href="course.html">Course Layout</a></div>
     </div>
   </section>
-  <div class="notice">Welcome! <a href="rates.html">Click here for golf rates</a></div>
-  <div class="notice notice-alerts" data-notices hidden></div>
+  <section class="announce" aria-labelledby="announce-title" data-announce hidden>
+    <div class="notice announce-head">
+      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>
+      <h2 id="announce-title">Announcements</h2>
+    </div>
+    <div class="notice notice-alerts" data-notices hidden></div>
+  </section>
+
+  <section class="wx" aria-label="Weather at the course" data-weather>
+    <div class="container">
+      <div class="wx-grid">
+        <div class="wx-card">
+          <p class="wx-label">Now at the course</p>
+          <div class="wx-now" data-wx-now><span class="wx-desc">Loading weather&hellip;</span></div>
+        </div>
+        <div class="wx-card">
+          <p class="wx-label">Forecast</p>
+          <div class="wx-days" data-wx-days></div>
+        </div>
+        <div class="wx-card wx-sun" data-wx-sun></div>
+      </div>
+      <p class="wx-source">Weather from the <a href="https://forecast.weather.gov/MapClick.php?lat=44.6668&amp;lon=-124.053" target="_blank" rel="noopener">National Weather Service</a> (Newport airport) &middot; <span data-wx-updated></span></p>
+    </div>
+  </section>
 
   <section class="stats" aria-label="Course at a glance">
     <div class="container">
@@ -157,6 +180,10 @@
         <h2>The Clubhouse</h2>
         <p class="lead">Come enjoy a delicious burger before or after your game!</p>
         <p>Breakfast and lunch, a house-roasted turkey Clubhouse sandwich, smash burgers, soup of the moment &mdash; and the Good Dog menu, a dozen hot dogs named for past and present golf course dogs.</p>
+        <div class="specials-mini" data-specials-home hidden>
+          <p class="specials-mini-head"><strong data-specials-heading>Specials</strong><span data-specials-dates></span></p>
+          <ul></ul>
+        </div>
         <div class="btn-row"><a class="btn btn-accent" href="cafe.html">See the Menu</a></div>
       </div>
     </div>
@@ -240,6 +267,6 @@
   </div>
 </footer>
 
-<script src="assets/js/main.js?v=20261002-26"></script>
+<script src="assets/js/main.js?v=20261010-2"></script>
 </body>
 </html>

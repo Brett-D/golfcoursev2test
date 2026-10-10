@@ -1,0 +1,4 @@
+# The owner page sets its own headers (never cached); keep the host's 24-hour default off it.
+<IfModule mod_expires.c>
+  ExpiresActive Off
+</IfModule>

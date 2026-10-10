@@ -1,0 +1,232 @@
+{
+  "specials": {
+    "show": false,
+    "heading": "Weekly Specials",
+    "when": "week",
+    "week": "",
+    "from": "",
+    "to": "",
+    "note": "",
+    "home": true,
+    "items": []
+  },
+  "menu": {
+    "lead": "Menu items may change with the seasons.",
+    "foot": "*Consuming raw or undercooked meats, poultry, seafood, shellfish, or eggs may increase your risk of foodborne illness.",
+    "sections": [
+      {
+        "title": "Breakfast",
+        "column": 0,
+        "note": "",
+        "items": [
+          {
+            "name": "Sandwedge",
+            "option": "",
+            "price": "",
+            "desc": "Breakfast sandwich with choice of bacon or ham with a fried egg*, cheese and thin layer of Dijon spread on a toasted croissant muffin."
+          },
+          {
+            "name": "Golfer Skillet",
+            "option": "Half or Full",
+            "price": "",
+            "desc": "Homestyle potatoes, bacon, grilled onion, bell peppers and spinach mixed with cheese and topped with egg(s)."
+          },
+          {
+            "name": "Sweet Stack",
+            "option": "1 or 2 hot cakes",
+            "price": "",
+            "desc": "Griddled hot cakes topped with pecan granola, drizzled with warm maple cream (house-made with real maple syrup). Served with bacon. Choose 1 hot cake with 1 piece of bacon, or 2 hot cakes with 2 slices of bacon."
+          }
+        ]
+      },
+      {
+        "title": "Sides & Snacks",
+        "column": 0,
+        "note": "",
+        "items": [
+          {
+            "name": "Fries, sweet potato fries or fresh fried potato chips",
+            "option": "",
+            "price": "",
+            "desc": ""
+          },
+          {
+            "name": "Add bacon (2 slices), chicken sausage or ham",
+            "option": "",
+            "price": "",
+            "desc": ""
+          },
+          {
+            "name": "Homestyle breakfast potatoes",
+            "option": "",
+            "price": "",
+            "desc": "With onions and peppers."
+          },
+          {
+            "name": "Add egg, avocado or cheese (2 slices)",
+            "option": "",
+            "price": "",
+            "desc": ""
+          },
+          {
+            "name": "Side salad or lemon-dill slaw",
+            "option": "",
+            "price": "",
+            "desc": ""
+          },
+          {
+            "name": "Soup of the Moment",
+            "option": "Cup or Bowl",
+            "price": "",
+            "desc": "Always homemade."
+          },
+          {
+            "name": "Wedge Salad",
+            "option": "",
+            "price": "",
+            "desc": "Iceberg lettuce wedge, bacon, blue cheese crumbles, diced tomato, pickled onion and toast."
+          }
+        ]
+      },
+      {
+        "title": "Lunch",
+        "column": 1,
+        "note": "Served with choice of side: french fries, sweet potato fries, house chips, green salad or lemon-dill slaw. Gluten-free buns available.",
+        "items": [
+          {
+            "name": "Hazard Burger",
+            "option": "",
+            "price": "",
+            "desc": "1/3 pound smash burger patty*, American cheese, grilled onions, tomato, shredded lettuce, house pickles and Dijon spread. Bacon can be added."
+          },
+          {
+            "name": "Caddy Melt",
+            "option": "",
+            "price": "",
+            "desc": "Patty melt with Reuben vibes: our smash burger patty*, Swiss cheese, grilled onion, kraut & 10K island sauce grilled on marble rye."
+          },
+          {
+            "name": "Bogey BLT",
+            "option": "Half or Full",
+            "price": "",
+            "desc": "Thick cut bacon, shredded lettuce & heirloom tomato on toasted wheat bread with mayo and balsamic glaze drizzle."
+          },
+          {
+            "name": "The Standby Deli",
+            "option": "Half or Full",
+            "price": "",
+            "desc": "House roasted turkey or deli ham, layered with Tillamook white cheddar, lettuce, tomato, onion, mild pepper rings and Dijon spread on wheat bread."
+          },
+          {
+            "name": "The Clubhouse",
+            "option": "",
+            "price": "",
+            "desc": "House roasted turkey, ham, thick cut bacon, Tillamook white cheddar, lettuce, tomato, mayo, on a toasted burger bun."
+          },
+          {
+            "name": "Grilled Cheesy Par Threesy",
+            "option": "Half or Full",
+            "price": "",
+            "desc": "White cheddar, Swiss & American cheeses grilled on seasoned wheat bread. Ham or turkey can be added."
+          },
+          {
+            "name": "Fairway Veggie Sandwich",
+            "option": "",
+            "price": "",
+            "desc": "House-made vegan patty (oat and lentil based) grilled with cheese, lettuce, tomato, pickled onion, on toasted wheat bread. Avocado can be added."
+          }
+        ]
+      },
+      {
+        "title": "Baskets & Bowls",
+        "column": 1,
+        "note": "",
+        "items": [
+          {
+            "name": "Birdie Basket",
+            "option": "Small or Large",
+            "price": "",
+            "desc": "Gluten-free chicken strips served with fries and slaw."
+          },
+          {
+            "name": "Putter Together Combo",
+            "option": "",
+            "price": "",
+            "desc": "Cup of soup, green salad and toasted bread."
+          },
+          {
+            "name": "Out of Bounds Bowl",
+            "option": "Small or Large",
+            "price": "",
+            "desc": "Ask about our weekly changing salad & grain bowl with flavors that know no bounds! Gluten-free. Available weekdays."
+          }
+        ]
+      }
+    ]
+  },
+  "dogs": {
+    "items": [
+      {
+        "name": "The Sam",
+        "price": "",
+        "desc": "Classic: ketchup, mustard & relish"
+      },
+      {
+        "name": "The Brodie",
+        "price": "",
+        "desc": "Blue cheese, onion & fresh tomato"
+      },
+      {
+        "name": "The Rex",
+        "price": "",
+        "desc": "Melted cheese, onion & mustard"
+      },
+      {
+        "name": "The Ru",
+        "price": "",
+        "desc": "Chopped housemade dill pickles, raw onion & mustard"
+      },
+      {
+        "name": "The Mindy",
+        "price": "",
+        "desc": "Bacon bits & melted cheese"
+      },
+      {
+        "name": "The Kleet",
+        "price": "",
+        "desc": "Mild pepper rings, raw onion, mustard & ketchup"
+      },
+      {
+        "name": "The Dash",
+        "price": "",
+        "desc": "Grilled onion & jalapeño, cream cheese & mustard"
+      },
+      {
+        "name": "The Blaze",
+        "price": "",
+        "desc": "Kimchi & melted cheese"
+      },
+      {
+        "name": "The Gunther",
+        "price": "",
+        "desc": "Lemon-dill slaw & mustard"
+      },
+      {
+        "name": "The Hank",
+        "price": "",
+        "desc": "Grilled onion, sauerkraut & BBQ sauce"
+      },
+      {
+        "name": "The Lola",
+        "price": "",
+        "desc": "Grilled onion & bell peppers, mild pepper rings & mayo"
+      },
+      {
+        "name": "The Kelsey",
+        "price": "",
+        "desc": "Bacon bits, lettuce, tomato & mayo"
+      }
+    ],
+    "byo": "mustard, ketchup, sweet relish, dill pickles, onion, kraut, mild pepper rings, mayo, jalapeño, kimchi, fresh tomato."
+  }
+}

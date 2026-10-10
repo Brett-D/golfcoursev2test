@@ -218,6 +218,45 @@ ul { padding-left: 1.2em; }
 .notice-alerts[hidden] { display: none; }
 .notice-alerts p { margin: 0; }
 .notice-alerts p + p { margin-top: 0.2rem; }
+/* "Announcements" heading over the notices; hidden along with them when there are none. */
+.announce[hidden] { display: none; }
+.announce-head { display: flex; align-items: center; justify-content: center; gap: 0.55rem; }
+.announce-head h2 { margin: 0; font: 700 1.05rem/1.2 var(--font-body); letter-spacing: 0.16em; text-transform: uppercase; color: var(--navy-deep); }
+.announce-head svg { width: 22px; height: 22px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+
+/* ---------- Weather at the course (National Weather Service, filled in by main.js) ---------- */
+.wx { background: var(--cream); border-bottom: 1px solid var(--line); padding: 1.6rem 0; }
+.wx-grid { display: grid; gap: 1rem; grid-template-columns: 1fr; }
+@media (min-width: 900px) { .wx-grid { grid-template-columns: 1.05fr 1.6fr 1.05fr; } }
+.wx-card { background: var(--white); border: 1px solid var(--line); border-radius: var(--radius); box-shadow: var(--shadow-sm); padding: 1rem 1.2rem; }
+.wx-label { margin: 0 0 0.5rem; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
+.wx-now { display: flex; align-items: center; gap: 1rem; }
+.wx-now .wx-icon { width: 64px; height: 64px; flex: none; }
+.wx-temp { font: 700 2.6rem/1 var(--font-head); color: var(--navy); }
+.wx-desc { font-weight: 600; color: var(--navy); }
+.wx-wind { font-size: 0.9rem; color: var(--muted); }
+.wx-days { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0.4rem; text-align: center; }
+.wx-day { padding: 0.2rem 0.1rem; }
+.wx-day + .wx-day { border-left: 1px solid var(--line); }
+.wx-day b { display: block; font-size: 0.8rem; line-height: 1.2; min-height: 2.4em; color: var(--navy); }
+.wx-day .wx-icon { width: 38px; height: 38px; margin: 0.25rem auto; display: block; }
+.wx-day .t { font: 700 1.25rem/1 var(--font-head); color: var(--navy); }
+.wx-day .t.low { color: var(--blue); }
+.wx-day .pop { display: block; font-size: 0.75rem; color: var(--blue); margin-top: 0.2rem; min-height: 1em; }
+.wx-sun { display: grid; grid-template-columns: auto 1fr; gap: 0.2rem 1rem; align-items: center; }
+.wx-sun .wx-label { grid-column: 1 / -1; margin: 0; }
+.wx-sun svg.arc { grid-column: 1 / -1; width: 100%; height: 64px; }
+.wx-sun .k { font-size: 0.85rem; color: var(--muted); }
+.wx-sun .v { font-weight: 700; color: var(--navy); text-align: right; }
+.wx-sun .left { grid-column: 1 / -1; text-align: center; font-size: 0.85rem; font-weight: 600; color: var(--green-dark); margin-top: 0.25rem; }
+.wx-source { margin: 0.8rem 0 0; font-size: 0.75rem; color: var(--muted); text-align: center; }
+.wx-source a { color: inherit; }
+.wx-icon { fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.wx-icon .sun, .wx-icon .bolt { stroke: #e0a10b; fill: #fbd46a; }
+.wx-icon .moon { stroke: #7d8aa0; fill: #dfe5ee; }
+.wx-icon .cloud { stroke: #6b7b8f; fill: #eef2f6; }
+.wx-icon .drop { stroke: var(--blue); }
+.wx-icon .fogline { stroke: #8a96a6; }
 
 /* ---------- Stats ---------- */
 .stats { background: var(--navy); color: var(--white); }
@@ -394,10 +433,38 @@ figure { margin: 0; }
 .menu-note { font-size: 0.92rem; color: var(--muted); font-style: italic; margin-bottom: 1.4rem; }
 
 .dog-grid { display: grid; gap: 1.1rem 2rem; }
-@media (min-width: 700px) { .dog-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(6, auto); grid-auto-flow: column; } }
+@media (min-width: 700px) { .dog-grid { grid-template-columns: 1fr 1fr; grid-template-rows: repeat(var(--dog-rows, 6), auto); grid-auto-flow: column; } }
 .dog { padding-left: 1rem; border-left: 3px solid var(--accent); }
-.dog h4 { font-family: var(--font-body); font-size: 0.95rem; letter-spacing: 0.14em; text-transform: uppercase; margin: 0; color: var(--white); }
+.dog h4 { display: flex; justify-content: space-between; gap: 0.8rem; align-items: baseline; font-family: var(--font-body); font-size: 0.95rem; letter-spacing: 0.14em; text-transform: uppercase; margin: 0; color: var(--white); }
+.dog h4 span { color: var(--accent-soft); letter-spacing: 0.02em; white-space: nowrap; }
 .dog p { margin: 0; font-size: 0.95rem; color: rgba(255, 255, 255, 0.78); }
+.menu-status { text-align: center; color: var(--muted); }
+
+/* ---------- Cafe specials (data/cafe.json, set on the owner page) ---------- */
+.specials-section[hidden], .specials-mini[hidden] { display: none; }
+.specials-section { padding-top: 0; }
+.specials-card { max-width: 44rem; margin: 0 auto; background: var(--white); border-radius: var(--radius); box-shadow: var(--shadow); overflow: hidden; border: 1px solid var(--line); }
+.specials-head { background: var(--navy); color: var(--white); text-align: center; padding: 1.5rem 1rem 1.3rem; }
+.specials-head .eyebrow { color: var(--accent-soft); margin-bottom: 0.2rem; }
+.specials-head h2 { color: var(--white); margin: 0; }
+.specials-dates { display: inline-block; margin-top: 0.7rem; background: var(--accent); color: var(--navy-deep); border-radius: 999px; padding: 0.2rem 0.95rem; font-weight: 700; font-size: 0.88rem; letter-spacing: 0.04em; }
+.specials-dates:empty { display: none; }
+.special { display: flex; justify-content: space-between; gap: 1rem; padding: 1.1rem 1.6rem; border-top: 1px solid var(--line); }
+.special:first-child { border-top: 0; }
+.special h3 { margin: 0 0 0.15rem; font-family: var(--font-body); font-size: 0.98rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--navy); }
+.special p { margin: 0; color: var(--muted); font-size: 0.97rem; line-height: 1.5; }
+.special .price { font: 700 1.3rem var(--font-head); color: var(--green); white-space: nowrap; }
+.specials-note { margin: 0; padding: 0.75rem 1.6rem 1.05rem; text-align: center; font-size: 0.88rem; font-style: italic; color: var(--muted); border-top: 1px solid var(--line); }
+.specials-note:empty { display: none; }
+/* Short version in the Cafe section of the home page (navy background). */
+.specials-mini { margin: 0 0 1.6rem; padding: 1rem 1.2rem; border: 1px solid rgba(255, 255, 255, 0.18); border-left: 4px solid var(--accent); border-radius: 12px; background: rgba(255, 255, 255, 0.06); }
+.specials-mini-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 0.3rem 1rem; margin: 0 0 0.5rem; }
+.specials-mini-head strong { font-family: var(--font-head); font-size: 1.3rem; color: var(--white); }
+.specials-mini-head span { font-size: 0.85rem; font-weight: 600; color: var(--accent-soft); }
+.specials-mini ul { list-style: none; margin: 0; padding: 0; }
+.specials-mini li { display: flex; justify-content: space-between; gap: 1rem; padding: 0.3rem 0; border-top: 1px dashed rgba(255, 255, 255, 0.16); }
+.specials-mini li:first-child { border-top: 0; }
+.specials-mini li span:last-child { font-weight: 700; color: var(--accent-soft); white-space: nowrap; }
 
 
 /* ---------- Visit: map + Facebook ---------- */

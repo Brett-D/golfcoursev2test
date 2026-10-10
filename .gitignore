@@ -1,0 +1,4 @@
+# The owner page password lives on the server only.
+ownerpage/password.php
+# Copies the owner page keeps of the files it replaces.
+data/backups/

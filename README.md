@@ -8,14 +8,15 @@ small JavaScript file. No build step.
 
 | File | Purpose |
 | --- | --- |
-| `index.html` | Home: hero, about, signature hole 8, services, gallery, cafe, rates, map and Facebook |
+| `index.html` | Home: hero, announcements, weather, about, signature hole 8, services, gallery, cafe (with specials), rates, map and Facebook |
 | `course.html` | Hole-by-hole card stack, course map, printed yardage/handicap table, rules and etiquette |
 | `scorecard.html` | Digital scorecard with a layout picture of every hole (the yardage table at the bottom feeds it) |
 | `rates.html` | Green fees, carts, rentals and driving range |
 | `pro-shop.html` | Pro shop information |
-| `cafe.html` | The Clubhouse cafe and Good Dog menu |
+| `cafe.html` | The Clubhouse cafe: specials, the breakfast & lunch menu and the Good Dog menu |
 | `about.html` | History of the course and the Martin family |
 | `contact.html` | Contact details, message form, map and Facebook |
+| `ownerpage/` | Private settings page (prices, cafe menu and specials, colors); not linked from the site, see [Owner page](#owner-page) |
 
 ## Structure
 
@@ -23,7 +24,7 @@ small JavaScript file. No build step.
 assets/
   .htaccess        cache times for the site's own files (Apache/LiteSpeed hosting)
   css/styles.css   design system and page styles
-  js/main.js       mobile nav, parallax, rates loader, Facebook widget sizing, mailto form
+  js/main.js       mobile nav, parallax, rates/cafe/notices loaders, weather, Facebook widget sizing, contact form
   js/hole-viewer.js   shared full-size hole picture viewer (carousel and scorecard)
   js/hole-carousel.js hole card stack on the course page (par/yards read from the table on that page)
   js/scorecard.js  digital scorecard on scorecard.html (reads yardage/par/handicap from the table on that page)
@@ -32,15 +33,39 @@ assets/
   images/holes/vector/  hole-1..9.svg, the illustrated hole graphics used on the course page and the scorecard
   tools/make-hole-svgs.py  rebuilds those graphics from the printed scorecard PDF (see the notes at the top of the file)
 data/
+  .htaccess        tells browsers and Cloudflare to check these files for changes every time
   rates.json       golf rates shown on the Home and Golf Rates pages
+  cafe.json        cafe specials, breakfast & lunch menu and Good Dog menu
+  theme.css        website colors chosen on the owner page (loaded by every page; empty = colors in styles.css)
+  theme.json       the same colors, read by the owner page (created on the first color save)
   notices.json     saved copy of the ForeUp notices (kept up to date by notices.php)
+  backups/         earlier copies of the files above, made by the owner page (on the server only)
+ownerpage/
+  index.php        the owner page (agatebeachgolf.net/ownerpage)
+  password.example.php  template for password.php, which holds the password on the server only
 notices.php       reads the ForeUp notices on PHP hosting (Bluehost)
 htaccess-additions.txt  snippet to paste into Bluehost's public_html/.htaccess (not uploaded as a file)
 ```
 
+## Owner page
+
+<https://agatebeachgolf.net/ownerpage> is a private page for changing the website without editing files. Nothing on the site links to it; the password is what protects it.
+
+- **Prices**: every rate card (title, subtitle, lines and prices), which cards also show on the home page, and the note under the cards. Saving sets the "Updated" date to today.
+- **Cafe**: the specials (heading, items with prices, small print, and when they show: until turned off, for one chosen week, or from one date to another; weekly and dated specials appear and come down on their own), the breakfast & lunch menu (sections, items, sizes, prices, descriptions) and the Good Dog menu (names, prices, toppings, "build your own"). Specials can also show in the Cafe section of the home page.
+- **Colors**: ready-made themes or each color picked by hand, with a live preview of the home page. Saving changes every page.
+
+Changes are live as soon as they are saved. Each save keeps the previous file in `data/backups/` (the newest 30 of each), so a mistake can be undone by copying a backup back over the file in File Manager.
+
+**Setting the password** (once, and again whenever you want to change it): in Bluehost File Manager open `public_html/ownerpage`, copy `password.example.php` to `password.php`, edit `password.php` and put the password between the quotes in place of `CHANGE-ME` (at least 8 characters). Visitors can't read it: the server runs `.php` files instead of showing them. `password.php` is listed in `.gitignore`, so it never goes to GitHub; don't upload one from this folder. Until it is set, the owner page only shows these steps.
+
+Security: after 5 wrong passwords from one place (or 30 from anywhere) signing in is paused for 15 minutes; you're signed out after 4 hours without using the page; the page isn't shown to search engines. It needs PHP, so on GitHub Pages it doesn't work (the rest of the site does).
+
+**Important when uploading**: once the owner page has been used, the server has the real `data/rates.json`, `data/cafe.json`, `data/theme.css` and `data/theme.json`. Don't upload those files from this folder afterwards, or the owner's changes are replaced. If you want them in GitHub, download them from the server first.
+
 ## Editing prices
 
-All golf rates live in [`data/rates.json`](data/rates.json). Edit that file (or replace it with a new one) and commit it; no HTML changes are needed.
+The easiest way is the [owner page](#owner-page). The rates live in [`data/rates.json`](data/rates.json), which can also be edited by hand (then upload it); no HTML changes are needed.
 
 - `updated`: the date shown as "Updated ..." above the rates.
 - `range_note`: the sentence under the rate cards.
@@ -50,9 +75,13 @@ All golf rates live in [`data/rates.json`](data/rates.json). Edit that file (or 
 
 ## Course notices
 
-The notices under the Driving Range banner on the home page are the welcome message from the ForeUp booking page. ForeUp does not let other sites read it from the browser, so [notices.php](notices.php) reads it on the server and answers with JSON. It saves the result to [data/notices.json](data/notices.json) and only asks ForeUp again once that copy is more than 20 minutes old (and, if ForeUp is down, keeps serving the last saved copy). Edit the message in ForeUp as usual; it shows up on the site within about 20 minutes. The banner hides itself when the message is empty.
+The notices under the **Announcements** heading below the home page banner are the welcome message from the ForeUp booking page. The heading hides along with them when there are none. ForeUp does not let other sites read it from the browser, so [notices.php](notices.php) reads it on the server and answers with JSON. It saves the result to [data/notices.json](data/notices.json) and only asks ForeUp again once that copy is more than 20 minutes old (and, if ForeUp is down, keeps serving the last saved copy). Edit the message in ForeUp as usual; it shows up on the site within about 20 minutes. The banner hides itself when the message is empty.
 
 Upload `notices.php` next to `index.html` and make sure the `data/` folder is writable by PHP (the Bluehost default). Hosts without PHP, such as GitHub Pages, simply show the saved `data/notices.json` and never update it.
+
+## Weather
+
+The home page shows the current conditions at Newport airport (station KONP), a short forecast for the course and today's sunrise and sunset. The weather comes straight from the National Weather Service (`api.weather.gov`; free, no account or key, fine for business use) and refreshes every 20 minutes. Sunrise and sunset are worked out in `main.js`, so they show even if the weather service is down.
 
 ## Embeds
 
@@ -63,7 +92,7 @@ Upload `notices.php` next to `index.html` and make sure the `data/` folder is wr
 
 - The contact form opens the visitor's email client (`mailto:`) because the site is static.
 - Tee times and the customer portal link to ForeUP.
-- Rates are loaded with `fetch`, so open the site through a web server or GitHub Pages rather than double-clicking the HTML files.
+- Rates and the cafe menu are loaded with `fetch`, so open the site through a web server or GitHub Pages rather than double-clicking the HTML files.
 
 ## Run locally
 
@@ -78,7 +107,7 @@ Then open <http://localhost:8000>. The site can be hosted as-is on GitHub Pages 
 Cloudflare and browsers keep copies of the CSS and scripts for up to 24 hours and of the pages for 2 hours. To make a change show up straight away:
 
 1. Run `powershell -ExecutionPolicy Bypass -File tools\bump-version.ps1`. It gives the CSS, scripts and card pictures a new `?v=` number, so they count as new files.
-2. Upload every changed file. The version bump changes every `.html` page and `assets/js/*.js`, so upload those too.
+2. Upload every changed file. The version bump changes every `.html` page and `assets/js/*.js`, so upload those too. Don't upload `data/rates.json`, `data/cafe.json` or `data/theme.*` once the owner page is in use (see [Owner page](#owner-page)).
 3. If a page itself still looks old, clear the cache in Bluehost (Websites, Settings, Performance, Clear Cache) and hard refresh.
 
 ## Contact form

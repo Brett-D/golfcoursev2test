@@ -4,7 +4,7 @@
   Run it from the project folder before you upload changed files:
       powershell -ExecutionPolicy Bypass -File tools\bump-version.ps1
 
-  It rewrites the ?v=... on the CSS/JS links and on the card pictures in every page, and the ASSET_VERSION line in the
+  It rewrites the ?v=... on the CSS/JS links and on the card pictures in every page (and the owner page), and the ASSET_VERSION line in the
   scripts that load the hole pictures. Then upload the changed pages and files as usual (the pages and the scripts always
   change when the version changes).
 
@@ -21,7 +21,8 @@ $counter = 1
 if ($index -match 'styles\.css\?v=(\d{8})-(\d+)' -and $Matches[1] -eq $today) { $counter = [int]$Matches[2] + 1 }
 $version = "$today-$counter"
 
-$pages = Get-ChildItem -Path $root -Filter '*.html' | Where-Object { $_.Name -ne 'palette-preview.html' }
+$pages = @(Get-ChildItem -Path $root -Filter '*.html' | Where-Object { $_.Name -ne 'palette-preview.html' })
+$pages += Get-Item (Join-Path $root 'ownerpage\index.php')
 foreach ($page in $pages) {
     $text = [System.IO.File]::ReadAllText($page.FullName)
     $new = [regex]::Replace($text, '(assets/(?:css|js)/[\w-]+\.(?:css|js))(\?v=[\w-]+)?', ('$1?v=' + $version))
