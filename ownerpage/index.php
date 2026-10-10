@@ -211,6 +211,22 @@ function save_rates(array $in): void
 
 function save_cafe(array $in): void
 {
+    // Announcements at the top of the Cafe page; "from" and "until" are optional first and last days to show.
+    $a = is_array($in['announcements'] ?? null) ? $in['announcements'] : [];
+    $announcements = ['show' => !empty($a['show']), 'title' => clean($a['title'] ?? '', 40), 'items' => []];
+    foreach (list_of($a['items'] ?? null, 10) as $item) {
+        $text = clean($item['text'] ?? '', 300);
+        if ($text === '') {
+            continue;
+        }
+        $from = valid_day($item['from'] ?? null) ? $item['from'] : '';
+        $until = valid_day($item['until'] ?? null) ? $item['until'] : '';
+        if ($from !== '' && $until !== '' && $until < $from) {
+            reply(422, 'Check the announcement dates: "Until" must be on or after "From".');
+        }
+        $announcements['items'][] = ['text' => $text, 'from' => $from, 'until' => $until];
+    }
+
     // Hours: Monday to Sunday. Times are kept for closed days too, so switching a day back on keeps them.
     $h = is_array($in['hours'] ?? null) ? $in['hours'] : [];
     $hours = ['show' => !empty($h['show']), 'title' => clean($h['title'] ?? '', 40), 'days' => [], 'note' => clean($h['note'] ?? '', 200)];
@@ -299,7 +315,7 @@ function save_cafe(array $in): void
         }
     }
 
-    $cafe = ['hours' => $hours, 'specials' => $specials, 'menu' => $menu, 'dogs' => $dogs];
+    $cafe = ['announcements' => $announcements, 'hours' => $hours, 'specials' => $specials, 'menu' => $menu, 'dogs' => $dogs];
     save_file('cafe.json', to_json($cafe));
     reply(200, 'Cafe changes saved. They are on the website now.', ['data' => $cafe]);
 }
@@ -400,7 +416,7 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
 <meta name="robots" content="noindex, nofollow">
 <title>Website settings | Agate Beach Golf Course</title>
 <link rel="icon" href="../assets/images/logo.png" type="image/png">
-<link rel="stylesheet" href="../assets/css/styles.css?v=20261010-4">
+<link rel="stylesheet" href="../assets/css/styles.css?v=20261010-5">
 <style>
   body { background: #eef1f5; min-height: 100vh; }
   [hidden] { display: none !important; }
@@ -581,6 +597,20 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
   .closure-row.ended { opacity: 0.6; }
   .closures-empty { margin: 0 0 0.6rem; color: var(--muted); font-size: 0.9rem; }
   @media (max-width: 700px) { .closure-row { grid-template-columns: auto 1fr; } .closure-row input[type="text"] { grid-column: 1 / -1; } }
+  .pv-announce { padding: 1.2rem 1.3rem 1.3rem; background: #fff; border-bottom: 1px solid var(--line); }
+  .pv-announce .announce { border-radius: 10px; overflow: hidden; }
+  .pv-announce .notice { font-size: 0.9rem; }
+  .ann-row { border: 1px solid var(--line); border-radius: 10px; padding: 0.6rem; margin-bottom: 0.6rem; background: #fff; }
+  .ann-row textarea { width: 100%; padding: 0.5rem 0.7rem; border: 1px solid #c9d1db; border-radius: 8px; font: inherit; font-size: 0.92rem; resize: vertical; min-height: 2.6rem; }
+  .ann-row .ann-bottom { display: flex; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.45rem; font-size: 0.88rem; color: var(--muted); }
+  .ann-row .ann-bottom input[type="date"] { width: auto; padding: 0.3rem 0.45rem; border: 1px solid #c9d1db; border-radius: 8px; font: inherit; font-size: 0.88rem; }
+  .ann-row .ann-bottom .tools { margin-left: auto; }
+  .ann-row .tag { font-size: 0.75rem; font-weight: 700; border-radius: 999px; padding: 0.15rem 0.55rem; white-space: nowrap; }
+  .ann-row .tag.now { background: #e5f2ea; color: var(--green-dark); }
+  .ann-row .tag.later { background: #e8f0f8; color: var(--blue); }
+  .ann-row .tag.ended, .ann-row .tag.off { background: #eef1f5; color: var(--muted); }
+  .ann-row .tag.bad { background: #fbeceb; color: #a3352f; }
+  .ann-row.ended { opacity: 0.65; }
   [data-add-card] { margin-top: 0.2rem; }
 </style>
 </head>
@@ -667,14 +697,27 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
 
     <section class="cafe" data-pane="cafe" hidden>
       <div class="subtabs" role="group" aria-label="Cafe sections">
-        <button type="button" aria-pressed="true" data-sub="specials">Specials</button>
+        <button type="button" aria-pressed="true" data-sub="announce">Announcements</button>
+        <button type="button" aria-pressed="false" data-sub="specials">Specials</button>
         <button type="button" aria-pressed="false" data-sub="hours">Hours</button>
         <button type="button" aria-pressed="false" data-sub="menu">Breakfast &amp; Lunch menu</button>
         <button type="button" aria-pressed="false" data-sub="dogs">Good Dog menu</button>
       </div>
       <div class="cafe-grid">
         <div>
-          <div data-subpane="specials">
+          <div data-subpane="announce">
+            <label class="switch"><input type="checkbox" data-an-show> <span>Show announcements on the Cafe page</span></label>
+            <div class="ed-field">
+              <label for="an-title">Heading</label>
+              <input id="an-title" type="text" data-an-title maxlength="40">
+            </div>
+            <p class="label">Announcements</p>
+            <p class="hint" style="margin:-0.3rem 0 0.6rem">Shown in a strip right under the top photo of the Cafe page. Leave the dates empty to show one until you remove it, or pick dates and it appears and comes down by itself.</p>
+            <div data-an-items></div>
+            <button class="btn btn-sm btn-outline-dark" type="button" data-an-add>+ Add an announcement</button>
+          </div>
+
+          <div data-subpane="specials" hidden>
             <label class="switch"><input type="checkbox" data-sp-show> <span>Show specials on the website</span></label>
             <div class="sp-status" data-sp-status></div>
 
@@ -759,6 +802,10 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
         <div class="cafe-preview">
           <p class="label">How it will look on the Cafe page</p>
           <div class="cafe-preview-scroll" data-cafe-preview>
+            <div class="pv-announce" data-pv-announce-wrap>
+              <p class="pv-where">Right under the top photo</p>
+              <div data-pv-announce></div>
+            </div>
             <div class="pv-hours" data-pv-hours-wrap>
               <p class="pv-where">Under the &ldquo;View the Menu&rdquo; and &ldquo;Call&rdquo; buttons</p>
               <div class="btn-row"><span class="btn btn-sm btn-green">View the Menu</span><span class="btn btn-sm btn-outline-dark">Call (541) 265-7331</span></div>
@@ -981,7 +1028,7 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
   function fit(t) { t.style.height = "auto"; t.style.height = (t.scrollHeight + 2) + "px"; }
   function fitAll() {
     requestAnimationFrame(function () {
-      each(".item-ed textarea", function (t) { if (t.offsetParent) fit(t); });
+      each(".item-ed textarea, .ann-row textarea", function (t) { if (t.offsetParent) fit(t); });
     });
   }
 
@@ -1542,8 +1589,91 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
     setInterval(renderHoursPreview, 60000);
   }
 
+  // ---------- Cafe announcements (strip under the top photo of the Cafe page) ----------
+  var announce = null;
+  function announceState(item) {
+    var t = courseToday();
+    var from = validDay(item.from) ? item.from : "", until = validDay(item.until) ? item.until : "";
+    if (!(item.text || "").trim()) return { cls: "off", text: "Empty" };
+    if (from && until && until < from) return { cls: "bad", text: "Check dates" };
+    if (from && t < from) return { cls: "later", text: "Starts " + shortDay(from) };
+    if (until && t > until) return { cls: "ended", text: "Ended" };
+    return { cls: "now", text: until ? "Showing until " + shortDay(until) : "Showing" };
+  }
+  function renderAnnouncePreview() {
+    var box = document.querySelector("[data-pv-announce]");
+    box.textContent = "";
+    var live = announce.items.filter(function (item) { return announceState(item).cls === "now"; });
+    if (!announce.show || !live.length) {
+      box.appendChild(make("div", "pv-hidden", !announce.show ? "Announcements are turned off, so the Cafe page doesn\u2019t show them." : "Nothing to show today, so the Cafe page has no announcements strip."));
+      return;
+    }
+    var section = make("div", "announce");
+    var head = make("div", "notice announce-head");
+    head.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11v2a1 1 0 0 0 1 1h2l5 4V6L6 10H4a1 1 0 0 0-1 1z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>';
+    head.appendChild(make("h2", "", announce.title || "Announcements"));
+    section.appendChild(head);
+    var list = make("div", "notice notice-alerts");
+    live.forEach(function (item) { list.appendChild(make("p", "", item.text)); });
+    section.appendChild(list);
+    box.appendChild(section);
+  }
+  function announceChanged() { renderAnnouncePreview(); changed("cafe"); }
+
+  function drawAnnouncements() {
+    var wrap = document.querySelector("[data-an-items]");
+    wrap.textContent = "";
+    if (!announce.items.length) wrap.appendChild(make("p", "closures-empty", "No announcements yet."));
+    announce.items.forEach(function (item, i) {
+      var row = make("div", "ann-row");
+      var text = field(item, "text", "Announcement, e.g. Pumpkin pie is back this weekend!", function () { paint(); announceChanged(); }, "textarea", 300);
+      row.appendChild(text);
+      var bottom = make("div", "ann-bottom");
+      var from = make("input"); from.type = "date"; from.value = item.from || ""; from.setAttribute("aria-label", "Show from");
+      var until = make("input"); until.type = "date"; until.value = item.until || ""; until.setAttribute("aria-label", "Show until");
+      var tag = make("span", "tag");
+      var paint = function () {
+        var st = announceState(item);
+        tag.className = "tag " + st.cls; tag.textContent = st.text;
+        row.classList.toggle("ended", st.cls === "ended");
+      };
+      from.addEventListener("input", function () { item.from = from.value; paint(); announceChanged(); });
+      until.addEventListener("input", function () { item.until = until.value; paint(); announceChanged(); });
+      bottom.appendChild(make("span", "", "Show from"));
+      bottom.appendChild(from);
+      bottom.appendChild(make("span", "", "until"));
+      bottom.appendChild(until);
+      bottom.appendChild(tag);
+      bottom.appendChild(listTools(announce.items, i, function () { drawAnnouncements(); announceChanged(); }, "announcement"));
+      row.appendChild(bottom);
+      paint();
+      wrap.appendChild(row);
+    });
+    fitAll();
+  }
+
+  function setUpAnnouncements() {
+    announce = cafe.announcements = cafe.announcements || { show: true, title: "Announcements", items: [] };
+    announce.items = (announce.items || []).map(function (a) { return { text: a.text || "", from: a.from || "", until: a.until || "" }; });
+    var show = document.querySelector("[data-an-show]");
+    show.checked = !!announce.show;
+    show.addEventListener("change", function () { announce.show = show.checked; announceChanged(); });
+    var title = document.querySelector("[data-an-title]");
+    title.value = announce.title || "";
+    title.addEventListener("input", function () { announce.title = title.value; announceChanged(); });
+    document.querySelector("[data-an-add]").addEventListener("click", function () {
+      announce.items.push({ text: "", from: "", until: "" });
+      drawAnnouncements(); changed("cafe");
+      var rows = document.querySelectorAll("[data-an-items] .ann-row");
+      rows[rows.length - 1].querySelector("textarea").focus();
+    });
+    drawAnnouncements();
+    renderAnnouncePreview();
+  }
+
   function setUpCafe(data) {
     cafe = data;
+    setUpAnnouncements();
     setUpHours();
     specials = cafe.specials = cafe.specials || { show: false, heading: "Weekly Specials", when: "week", items: [], home: true };
     menu = cafe.menu = cafe.menu || { lead: "", foot: "", sections: [] };
@@ -1578,7 +1708,7 @@ $h = static fn(string $s): string => htmlspecialchars($s, ENT_QUOTES, 'UTF-8');
   }
 
   // Sub-tabs: show one editor and scroll the preview to the matching part of the Cafe page.
-  var previewTargets = { specials: "[data-pv-specials]", hours: "[data-pv-hours-wrap]", menu: "[data-pv-menu-wrap]", dogs: "[data-pv-dogs-wrap]" };
+  var previewTargets = { announce: "[data-pv-announce-wrap]", specials: "[data-pv-specials]", hours: "[data-pv-hours-wrap]", menu: "[data-pv-menu-wrap]", dogs: "[data-pv-dogs-wrap]" };
   each("[data-sub]", function (btn) {
     btn.addEventListener("click", function () {
       var name = btn.getAttribute("data-sub");

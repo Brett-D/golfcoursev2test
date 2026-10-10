@@ -421,7 +421,7 @@
   }
 
   // ---------- Cafe menu and specials (data/cafe.json, edited on the owner page) ----------
-  var cafeTargets = document.querySelectorAll("[data-cafe-menu], [data-cafe-dogs], [data-cafe-hours], [data-specials], [data-specials-home]");
+  var cafeTargets = document.querySelectorAll("[data-cafe-menu], [data-cafe-dogs], [data-cafe-hours], [data-cafe-announce], [data-specials], [data-specials-home]");
   if (cafeTargets.length) {
     // Specials dates are calendar days at the course, whatever time zone the visitor is in.
     var courseToday = function () {
@@ -640,12 +640,32 @@
       setInterval(draw, 60000);
     };
 
+    // Cafe announcements: each can have a first and last day to show (blank = no limit).
+    var renderCafeAnnouncements = function (a) {
+      var box = document.querySelector("[data-cafe-announce]");
+      if (!box) return;
+      var today = courseToday();
+      var live = ((a && a.show && a.items) || []).filter(function (item) {
+        if (!item.text || !item.text.trim()) return false;
+        if (validDay(item.from) && today < item.from) return false;
+        if (validDay(item.until) && today > item.until) return false;
+        return true;
+      });
+      box.hidden = !live.length;
+      if (!live.length) return;
+      box.querySelector("[data-cafe-announce-title]").textContent = a.title || "Announcements";
+      var list = box.querySelector("[data-cafe-announce-list]");
+      list.textContent = "";
+      live.forEach(function (item) { list.appendChild(el("p", "", item.text)); });
+    };
+
     fetch("data/cafe.json?v=" + Date.now(), { cache: "no-store" })
       .then(function (response) {
         if (!response.ok) throw new Error("HTTP " + response.status);
         return response.json();
       })
       .then(function (data) {
+        renderCafeAnnouncements(data.announcements);
         renderHours(data.hours);
         renderSpecials(data.specials);
         renderMenu(data.menu || {});

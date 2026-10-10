@@ -13,7 +13,7 @@ small JavaScript file. No build step.
 | `scorecard.html` | Digital scorecard with a layout picture of every hole (the yardage table at the bottom feeds it) |
 | `rates.html` | Green fees, carts, rentals and driving range |
 | `pro-shop.html` | Pro shop information |
-| `cafe.html` | The Clubhouse cafe: hours, specials, the breakfast & lunch menu and the Good Dog menu |
+| `cafe.html` | The Clubhouse cafe: announcements, hours, specials, the breakfast & lunch menu and the Good Dog menu |
 | `about.html` | History of the course and the Martin family |
 | `contact.html` | Contact details, message form, map and Facebook |
 | `ownerpage/` | Private settings page (prices, cafe menu and specials, colors); not linked from the site, see [Owner page](#owner-page) |
@@ -35,7 +35,7 @@ assets/
 data/
   .htaccess        tells browsers and Cloudflare to check these files for changes every time
   rates.json       golf rates shown on the Home and Golf Rates pages
-  cafe.json        cafe hours, specials, breakfast & lunch menu and Good Dog menu
+  cafe.json        cafe announcements, hours and closed dates, specials, breakfast & lunch menu and Good Dog menu
   theme.css        website colors chosen on the owner page (loaded by every page; empty = colors in styles.css)
   theme.json       the same colors, read by the owner page (created on the first color save)
   notices.json     saved copy of the ForeUp notices (kept up to date by notices.php)
@@ -52,7 +52,7 @@ htaccess-additions.txt  snippet to paste into Bluehost's public_html/.htaccess (
 <https://agatebeachgolf.net/ownerpage> is a private page for changing the website without editing files. Nothing on the site links to it; the password is what protects it.
 
 - **Prices**: every rate card (title, subtitle, lines and prices), which cards also show on the home page, and the note under the cards. Saving sets the "Updated" date to today.
-- **Cafe**: the hours (each day open or closed with opening and closing times, a heading and a note; shown as a week strip under the "View the Menu" and "Call" buttons, with "Open now / Closed now" worked out in Oregon time) and **closed dates** for breaks, holidays or events (from/through dates and an optional reason; the Cafe page announces them up to 30 days ahead, marks those days "Closed", says when the cafe reopens, and drops them once they're over), the specials (heading, items with prices, small print, and when they show: until turned off, for one chosen week, or from one date to another; weekly and dated specials appear and come down on their own), the breakfast & lunch menu (sections, items, sizes, prices, descriptions) and the Good Dog menu (names, prices, toppings, "build your own"). Specials can also show in the Cafe section of the home page.
+- **Cafe**: **announcements** in a strip right under the top photo of the Cafe page (heading, any number of messages, each with optional "show from" and "until" days so it appears and comes down by itself), the hours (each day open or closed with opening and closing times, a heading and a note; shown as a week strip under the "View the Menu" and "Call" buttons, with "Open now / Closed now" worked out in Oregon time) and **closed dates** for breaks, holidays or events (from/through dates and an optional reason; the Cafe page announces them up to 30 days ahead, marks those days "Closed", says when the cafe reopens, and drops them once they're over), the specials (heading, items with prices, small print, and when they show: until turned off, for one chosen week, or from one date to another; weekly and dated specials appear and come down on their own), the breakfast & lunch menu (sections, items, sizes, prices, descriptions) and the Good Dog menu (names, prices, toppings, "build your own"). Specials can also show in the Cafe section of the home page.
 - **Colors**: ready-made themes or each color picked by hand, with a live preview of the home page. Saving changes every page.
 
 Changes are live as soon as they are saved. Each save keeps the previous file in `data/backups/` (the newest 30 of each), so a mistake can be undone by copying a backup back over the file in File Manager.

@@ -1,4 +1,15 @@
 {
+  "announcements": {
+    "show": true,
+    "title": "Announcements",
+    "items": [
+      {
+        "text": "The Cafe is closed through Monday, Oct 12. We reopen Tuesday, Oct 13 at 9 am.",
+        "from": "",
+        "until": "2026-10-12"
+      }
+    ]
+  },
   "hours": {
     "show": true,
     "title": "Cafe Hours",
